@@ -32,9 +32,9 @@
             flex-direction: column;
         }
 
-        /* --- Navigation --- */
+        /* --- Navigation (Compact) --- */
         .top-nav {
-            padding: 15px 5%;
+            padding: 10px 5%;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -46,110 +46,109 @@
 
         .member-counter-top {
             font-family: 'Orbitron';
-            font-size: 0.9rem;
+            font-size: 0.8rem;
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 8px;
             background: rgba(255,255,255,0.05);
-            padding: 6px 18px;
+            padding: 4px 14px;
             border-radius: 50px;
             border: 1px solid var(--accent);
             color: var(--accent);
         }
 
-        .nav-btns { display: flex; gap: 20px; }
-        .nav-btn { color: #888; text-decoration: none; cursor: pointer; transition: var(--transition); font-size: 0.85rem; font-weight: 600; }
+        .nav-btns { display: flex; gap: 15px; }
+        .nav-btn { color: #888; text-decoration: none; cursor: pointer; transition: var(--transition); font-size: 0.75rem; font-weight: 600; }
         .nav-btn:hover { color: var(--accent); transform: translateY(-2px); }
 
-        /* --- Hero --- */
-        .hero-section { text-align: center; padding: 40px 20px 20px; }
-        .main-logo { width: 90px; height: 90px; object-fit: contain; margin-bottom: 15px; filter: drop-shadow(0 0 15px var(--accent)); }
-        .hero-title { font-family: 'Orbitron'; font-size: 2.2rem; letter-spacing: 12px; text-transform: uppercase; color: var(--accent); margin-right: -12px; }
-        .hero-subtitle { font-size: 0.7rem; color: #555; letter-spacing: 4px; margin-top: 5px; font-weight: 400; }
+        /* --- Hero (Compact) --- */
+        .hero-section { text-align: center; padding: 30px 20px 15px; }
+        .main-logo { width: 70px; height: 70px; object-fit: contain; margin-bottom: 10px; filter: drop-shadow(0 0 10px var(--accent)); }
+        .hero-title { font-family: 'Orbitron'; font-size: 1.8rem; letter-spacing: 10px; text-transform: uppercase; color: var(--accent); margin-right: -10px; }
+        .hero-subtitle { font-size: 0.65rem; color: #555; letter-spacing: 3px; margin-top: 3px; font-weight: 400; }
 
         /* --- Search & Filter --- */
-        .search-container { max-width: 1200px; margin: 0 auto 30px; padding: 0 20px; width: 100%; }
+        .search-container { max-width: 1200px; margin: 0 auto 20px; padding: 0 20px; width: 100%; }
         .search-box input {
-            width: 100%; padding: 12px 25px; background: #0a0a0a; border: 1px solid #1a1a1a;
-            border-radius: 100px; color: #fff; outline: none; transition: var(--transition); font-family: 'Bai Jamjuree';
+            width: 100%; padding: 10px 20px; background: #0a0a0a; border: 1px solid #1a1a1a;
+            border-radius: 100px; color: #fff; outline: none; transition: var(--transition); font-family: 'Bai Jamjuree'; font-size: 0.85rem;
         }
         .search-box input:focus { border-color: var(--accent); background: #111; }
         
-        .filter-group { display: flex; justify-content: center; gap: 8px; flex-wrap: wrap; margin-top: 20px; }
+        .filter-group { display: flex; justify-content: center; gap: 6px; flex-wrap: wrap; margin-top: 15px; }
         .f-btn {
             background: #0a0a0a; border: 1px solid #1a1a1a; color: #555;
-            padding: 6px 14px; border-radius: 100px; cursor: pointer; font-size: 0.7rem; transition: var(--transition);
+            padding: 5px 12px; border-radius: 100px; cursor: pointer; font-size: 0.65rem; transition: var(--transition);
         }
         .f-btn.active { background: var(--accent); color: #000; border-color: var(--accent); font-weight: 700; }
 
-        /* --- Member Grid (3 Columns) --- */
-        .grid-header { max-width: 1200px; margin: 20px auto 10px; padding: 0 20px; color: #444; font-family: 'Orbitron'; font-size: 0.8rem; display: flex; align-items: center; gap: 10px; }
+        /* --- Member Grid (Adjusted to 4 Columns) --- */
+        .grid-header { max-width: 1200px; margin: 15px auto 10px; padding: 0 20px; color: #444; font-family: 'Orbitron'; font-size: 0.75rem; display: flex; align-items: center; gap: 8px; }
         
         .grid-container {
             display: grid; 
-            grid-template-columns: repeat(3, 1fr); /* บังคับ 3 คอลัมน์หลัก */
-            gap: 20px; 
-            padding: 0 20px 50px; 
+            grid-template-columns: repeat(4, 1fr); /* ปรับเป็น 4 คอลัมน์ */
+            gap: 12px; 
+            padding: 0 20px 40px; 
             max-width: 1200px; 
             margin: 0 auto; 
             flex: 1;
             width: 100%;
         }
 
-        /* ปรับสัดส่วนสำหรับ Tablet และ Mobile */
-        @media (max-width: 1024px) { .grid-container { grid-template-columns: repeat(2, 1fr); } }
-        @media (max-width: 650px) { .grid-container { grid-template-columns: 1fr; } }
+        /* Responsive Breakpoints */
+        @media (max-width: 1100px) { .grid-container { grid-template-columns: repeat(3, 1fr); } }
+        @media (max-width: 800px) { .grid-container { grid-template-columns: repeat(2, 1fr); } }
+        @media (max-width: 500px) { .grid-container { grid-template-columns: 1fr; } }
 
         .member-card {
-            background: var(--card-bg); border: 1px solid var(--border); border-radius: 15px;
-            padding: 15px; display: flex; align-items: center; gap: 15px; transition: var(--transition);
+            background: var(--card-bg); border: 1px solid var(--border); border-radius: 12px;
+            padding: 10px; display: flex; align-items: center; gap: 12px; transition: var(--transition);
             animation: fadeInUp 0.5s ease forwards; opacity: 0;
             position: relative; overflow: hidden;
         }
         @keyframes fadeInUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
         
         .member-card:hover { 
-            transform: translateY(-5px); 
+            transform: translateY(-3px); 
             border-color: var(--accent); 
             background: #121212;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.5); 
+            box-shadow: 0 8px 20px rgba(0,0,0,0.5); 
         }
 
         .avatar-box { 
-            width: 55px; height: 55px; border-radius: 50%; overflow: hidden; 
+            width: 45px; height: 45px; border-radius: 50%; overflow: hidden; 
             border: 2px solid #222; flex-shrink: 0; transition: var(--transition);
         }
         .member-card:hover .avatar-box { border-color: var(--accent); }
         .avatar-box img { width: 100%; height: 100%; object-fit: cover; }
 
         .member-info { flex: 1; min-width: 0; }
-        .member-info h3 { font-size: 0.95rem; font-family: 'Bai Jamjuree'; font-weight: 600; margin-bottom: 4px; color: #fff; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .member-info h3 { font-size: 0.85rem; font-family: 'Bai Jamjuree'; font-weight: 600; margin-bottom: 2px; color: #fff; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
         
-        .tag-row { display: flex; align-items: center; gap: 6px; }
+        .tag-row { display: flex; align-items: center; gap: 5px; }
         .role-label { 
-            background: #1a1a1a; color: #888; padding: 2px 8px; border-radius: 4px; 
-            font-size: 0.6rem; font-weight: 600; text-transform: uppercase;
+            background: #1a1a1a; color: #888; padding: 1px 6px; border-radius: 3px; 
+            font-size: 0.55rem; font-weight: 600; text-transform: uppercase;
         }
-        .fb-link { color: #00c3ff; text-decoration: none; font-size: 0.85rem; transition: 0.3s; margin-left: auto; }
+        .fb-link { color: #00c3ff; text-decoration: none; font-size: 0.75rem; transition: 0.3s; margin-left: auto; }
         .fb-link:hover { opacity: 0.7; transform: scale(1.1); }
 
         /* --- Footer --- */
-        footer { padding: 30px; text-align: center; font-size: 0.7rem; color: #333; border-top: 1px solid var(--border); margin-top: auto; }
+        footer { padding: 20px; text-align: center; font-size: 0.65rem; color: #333; border-top: 1px solid var(--border); margin-top: auto; }
 
         /* --- Admin System --- */
         .modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.95); z-index: 1000; align-items: center; justify-content: center; backdrop-filter: blur(10px); }
         .admin-window { background: #080808; width: 95%; max-width: 800px; height: 85vh; border: 1px solid #222; border-radius: 20px; overflow: hidden; display: flex; flex-direction: column; }
-        .admin-header { padding: 20px; background: #111; border-bottom: 1px solid #222; display: flex; justify-content: space-between; align-items: center; }
+        .admin-header { padding: 15px; background: #111; border-bottom: 1px solid #222; display: flex; justify-content: space-between; align-items: center; }
         .admin-tabs { display: flex; background: #0c0c0c; border-bottom: 1px solid #222; }
-        .tab { padding: 12px 20px; cursor: pointer; color: #444; font-size: 0.75rem; font-weight: 700; transition: 0.3s; }
+        .tab { padding: 10px 18px; cursor: pointer; color: #444; font-size: 0.7rem; font-weight: 700; transition: 0.3s; }
         .tab.active { color: var(--accent); border-bottom: 2px solid var(--accent); }
-        .admin-body { padding: 20px; overflow-y: auto; flex: 1; }
-        .admin-form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
-        input, select { width: 100%; padding: 12px; background: #000; border: 1px solid #222; color: #fff; border-radius: 8px; margin-top: 5px; font-family: 'Bai Jamjuree'; outline: none; }
-        input:focus { border-color: var(--accent); }
-        label { font-size: 0.75rem; color: #666; font-weight: 600; }
-        .btn-save { width: 100%; padding: 15px; background: var(--accent); color: #000; border: none; border-radius: 8px; font-weight: 900; cursor: pointer; margin-top: 15px; font-family: 'Orbitron'; transition: 0.3s; }
-        .btn-save:hover { opacity: 0.9; transform: scale(0.99); }
+        .admin-body { padding: 15px; overflow-y: auto; flex: 1; }
+        .admin-form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+        input, select { width: 100%; padding: 10px; background: #000; border: 1px solid #222; color: #fff; border-radius: 8px; margin-top: 4px; font-family: 'Bai Jamjuree'; outline: none; font-size: 0.85rem; }
+        label { font-size: 0.7rem; color: #666; font-weight: 600; }
+        .btn-save { width: 100%; padding: 12px; background: var(--accent); color: #000; border: none; border-radius: 8px; font-weight: 900; cursor: pointer; margin-top: 15px; font-family: 'Orbitron'; transition: 0.3s; font-size: 0.9rem; }
     </style>
 </head>
 <body>
@@ -187,12 +186,12 @@
     </footer>
 
     <div id="loginModal" class="modal">
-        <div class="admin-window" style="max-width: 350px; height: auto;">
-            <div class="admin-body" style="text-align: center; padding: 30px;">
-                <h3 style="font-family:'Orbitron'; margin-bottom: 20px;">LOGIN</h3>
+        <div class="admin-window" style="max-width: 320px; height: auto;">
+            <div class="admin-body" style="text-align: center; padding: 25px;">
+                <h3 style="font-family:'Orbitron'; margin-bottom: 15px; font-size: 1.1rem;">LOGIN</h3>
                 <input type="password" id="adminPass" placeholder="Password">
                 <button class="btn-save" onclick="handleLogin()">LOGIN</button>
-                <p onclick="closeModals()" style="margin-top: 15px; color: #444; cursor: pointer; font-size: 0.7rem;">CLOSE</p>
+                <p onclick="closeModals()" style="margin-top: 15px; color: #444; cursor: pointer; font-size: 0.65rem;">CLOSE</p>
             </div>
         </div>
     </div>
@@ -200,7 +199,7 @@
     <div id="adminPanel" class="modal">
         <div class="admin-window">
             <div class="admin-header">
-                <h4 style="font-family:'Orbitron';">DATABASE MANAGEMENT</h4>
+                <h4 style="font-family:'Orbitron'; font-size: 0.9rem;">DATABASE MANAGEMENT</h4>
                 <button onclick="closeModals()" style="background:none; border:none; color:#fff; cursor:pointer;"><i class="fa-solid fa-xmark"></i></button>
             </div>
             <div class="admin-tabs">
@@ -215,15 +214,15 @@
                     <div style="grid-column: span 2;"><label>Avatar URL</label><input type="text" id="mImg"></div>
                     <div style="grid-column: span 2;">
                         <label>Category</label>
-                        <div id="mRoleCheckboxes" style="display:grid; grid-template-columns: 1fr 1fr; gap:10px; margin-top:10px;"></div>
+                        <div id="mRoleCheckboxes" style="display:grid; grid-template-columns: 1fr 1fr; gap:8px; margin-top:8px;"></div>
                     </div>
                 </div>
                 <button class="btn-save" id="saveBtn" onclick="saveMember()">SAVE MEMBER</button>
-                <div id="adminMemberList" style="margin-top: 20px;"></div>
+                <div id="adminMemberList" style="margin-top: 15px;"></div>
             </div>
             <div class="admin-body" id="settingsTabContent" style="display: none;">
                 <label>Site Logo URL</label><input type="text" id="setLogo">
-                <label>Theme Color</label><input type="color" id="setTheme" style="height:50px; padding:5px; cursor:pointer;">
+                <label>Theme Color</label><input type="color" id="setTheme" style="height:45px; padding:3px; cursor:pointer;">
                 <button class="btn-save" onclick="saveSettings()">UPDATE SETTINGS</button>
             </div>
         </div>
@@ -240,7 +239,6 @@
         let isAdmin = false;
         const defaultCats = ["Leader", "Member", "Wellesley", "Kodomo"];
 
-        // Modal Handlers
         function openAdmin() { isAdmin ? document.getElementById('adminPanel').style.display='flex' : document.getElementById('loginModal').style.display='flex'; }
         function closeModals() { document.querySelectorAll('.modal').forEach(m => m.style.display='none'); }
         function handleLogin() {
@@ -254,7 +252,6 @@
             document.getElementById('settingsTabContent').style.display = tab === 'settings' ? 'block' : 'none';
         }
 
-        // Settings Observer
         db.ref('settings').on('value', snap => {
             const data = snap.val();
             if(data) {
@@ -270,19 +267,17 @@
             alert("Settings Updated!");
         }
 
-        // Categories & Filter Rendering
         function renderCategories() {
             let filterHtml = `<button class="f-btn active" onclick="setFilter('all', this)">All</button>`;
             let checkHtml = '';
             defaultCats.forEach(name => {
                 filterHtml += `<button class="f-btn" onclick="setFilter('${name}', this)">${name}</button>`;
-                checkHtml += `<label style="font-size:0.7rem; color:#888; display:flex; align-items:center; gap:5px;"><input type="checkbox" name="roles" value="${name}"> ${name}</label>`;
+                checkHtml += `<label style="font-size:0.65rem; color:#888; display:flex; align-items:center; gap:5px;"><input type="checkbox" name="roles" value="${name}"> ${name}</label>`;
             });
             document.getElementById('filterArea').innerHTML = filterHtml;
             document.getElementById('mRoleCheckboxes').innerHTML = checkHtml;
         }
 
-        // Members Observer
         db.ref('members').on('value', snap => {
             allMembers = [];
             const data = snap.val();
@@ -291,11 +286,11 @@
                 const m = {...data[id], id};
                 allMembers.push(m);
                 adminHtml += `
-                <div style="display:flex; justify-content:space-between; align-items:center; background:#111; padding:12px; border-radius:10px; margin-bottom:8px; border:1px solid #222;">
-                    <span style="font-size:0.85rem;">${m.name}</span>
+                <div style="display:flex; justify-content:space-between; align-items:center; background:#111; padding:8px; border-radius:8px; margin-bottom:6px; border:1px solid #222;">
+                    <span style="font-size:0.75rem;">${m.name}</span>
                     <div>
-                        <button onclick="editMember('${id}')" style="color:#00ffff; background:none; border:none; cursor:pointer; margin-right:15px; font-size:1rem;"><i class="fa-solid fa-pen-to-square"></i></button>
-                        <button onclick="deleteMember('${id}')" style="color:#ff4444; background:none; border:none; cursor:pointer; font-size:1rem;"><i class="fa-solid fa-trash"></i></button>
+                        <button onclick="editMember('${id}')" style="color:#00ffff; background:none; border:none; cursor:pointer; margin-right:10px; font-size:0.85rem;"><i class="fa-solid fa-pen-to-square"></i></button>
+                        <button onclick="deleteMember('${id}')" style="color:#ff4444; background:none; border:none; cursor:pointer; font-size:0.85rem;"><i class="fa-solid fa-trash"></i></button>
                     </div>
                 </div>`;
             }
@@ -303,7 +298,6 @@
             renderMembers();
         });
 
-        // Member CRUD
         async function saveMember() {
             const id = document.getElementById('editId').value;
             const roles = Array.from(document.querySelectorAll('input[name="roles"]:checked')).map(cb => cb.value);
@@ -339,7 +333,7 @@
             document.getElementById('memberTabContent').scrollTo({top: 0, behavior: 'smooth'});
         }
 
-        async function deleteMember(id) { if(confirm("Are you sure you want to delete this member?")) await db.ref('members/'+id).remove(); }
+        async function deleteMember(id) { if(confirm("Are you sure you want to delete?")) await db.ref('members/'+id).remove(); }
         
         function setFilter(role, btn) {
             currentFilter = role;
@@ -348,7 +342,6 @@
             renderMembers();
         }
 
-        // Final UI Rendering
         function renderMembers() {
             const search = document.getElementById('searchInput').value.toLowerCase();
             const filtered = allMembers.filter(m => {
@@ -359,7 +352,7 @@
             document.getElementById('memberList').innerHTML = filtered.map((m, idx) => {
                 const roles = Array.isArray(m.role) ? m.role : [m.role];
                 return `
-                <div class="member-card" style="animation-delay: ${idx * 0.05}s">
+                <div class="member-card" style="animation-delay: ${idx * 0.03}s">
                     <div class="avatar-box"><img src="${m.image}" onerror="this.src='https://via.placeholder.com/150'"></div>
                     <div class="member-info">
                         <h3>${m.name}</h3>
