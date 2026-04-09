@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DEMOWATSUT</title>
+    <title>WELLESLEY DATABASE</title>
     
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;900&family=Bai+Jamjuree:wght@300;400;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Bai+Jamjuree:wght@300;400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
@@ -13,12 +13,11 @@
 
     <style>
         :root {
-            --accent: #d4af37;
-            --accent-glow: rgba(212, 175, 55, 0.3);
-            --bg: #050505;
-            --bg-img: url('');
-            --glass: rgba(255, 255, 255, 0.03);
-            --glass-border: rgba(255, 255, 255, 0.1);
+            --accent: #ffffff;
+            --accent-glow: rgba(255, 255, 255, 0.2);
+            --bg: #000000;
+            --card-bg: #111111;
+            --border: rgba(255, 255, 255, 0.1);
             --transition: all 0.3s ease;
         }
 
@@ -26,216 +25,233 @@
 
         body {
             background-color: var(--bg);
-            background-image: var(--bg-img);
-            background-size: cover;
-            background-position: center;
-            background-attachment: fixed;
+            background-image: radial-gradient(circle at top, #111 0%, #000 100%);
             color: #fff;
             font-family: 'Bai Jamjuree', sans-serif;
             min-height: 100vh;
         }
 
-        ::-webkit-scrollbar { width: 5px; }
+        /* --- Custom Scrollbar --- */
+        ::-webkit-scrollbar { width: 4px; }
         ::-webkit-scrollbar-track { background: #000; }
-        ::-webkit-scrollbar-thumb { background: var(--accent); }
+        ::-webkit-scrollbar-thumb { background: #333; }
 
-        /* --- Nav Style --- */
-        .nav-outer { padding: 20px 5%; position: sticky; top: 0; z-index: 1000; }
-        .nav-container {
-            background: rgba(10, 10, 10, 0.85); border: 1px solid var(--glass-border);
-            border-radius: 15px; padding: 12px 30px; display: flex;
-            justify-content: space-between; align-items: center; backdrop-filter: blur(15px);
+        /* --- Header & Logo --- */
+        .top-nav {
+            padding: 20px 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(0,0,0,0.8);
+            border-bottom: 1px solid var(--border);
+            position: sticky; top: 0; z-index: 100;
         }
-        .nav-left { font-family: 'Orbitron'; font-weight: 900; letter-spacing: 2px; }
-        .nav-right { display: flex; gap: 20px; }
-        .nav-link { color: #eee; text-decoration: none; font-size: 0.85rem; cursor: pointer; transition: 0.3s; }
-        .nav-link:hover { color: var(--accent); }
+        .logo-text { font-family: 'Orbitron'; font-weight: 700; letter-spacing: 3px; font-size: 1.2rem; }
+        .nav-btns { display: flex; gap: 20px; }
+        .nav-btn { color: #888; text-decoration: none; cursor: pointer; transition: 0.3s; font-size: 0.9rem; }
+        .nav-btn:hover { color: #fff; }
 
-        /* --- Hero --- */
-        .hero { text-align: center; padding: 40px 20px; }
-        .main-title { font-family: 'Orbitron'; font-size: 3rem; letter-spacing: 10px; text-transform: uppercase; margin-bottom: 10px; }
+        .hero-section { text-align: center; padding: 60px 20px; }
+        .main-logo { width: 120px; margin-bottom: 20px; filter: drop-shadow(0 0 10px rgba(255,255,255,0.3)); }
+        .hero-title { font-family: 'Orbitron'; font-size: 2.5rem; letter-spacing: 8px; text-transform: uppercase; text-shadow: 0 0 20px var(--accent-glow); }
+        .hero-subtitle { font-size: 0.7rem; color: #666; letter-spacing: 4px; margin-top: 10px; }
 
         /* --- Search & Filters --- */
-        .controls { max-width: 800px; margin: 0 auto 30px; padding: 0 20px; text-align: center; }
+        .search-container { max-width: 600px; margin: 0 auto 40px; padding: 0 20px; }
+        .search-box { position: relative; }
         .search-box input {
-            width: 100%; padding: 12px 25px; background: rgba(255,255,255,0.05);
-            border: 1px solid var(--glass-border); border-radius: 100px; color: #fff; outline: none;
+            width: 100%; padding: 15px 25px; background: #111; border: 1px solid #222;
+            border-radius: 100px; color: #fff; outline: none; transition: 0.3s;
         }
-        .filter-group { display: flex; justify-content: center; gap: 8px; flex-wrap: wrap; margin-top: 15px; }
+        .search-box input:focus { border-color: #444; box-shadow: 0 0 15px rgba(255,255,255,0.05); }
+
+        .filter-group { display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; margin-top: 20px; }
         .f-btn {
-            background: rgba(255,255,255,0.05); border: 1px solid var(--glass-border);
-            color: #fff; padding: 5px 15px; border-radius: 100px; cursor: pointer; font-size: 0.7rem; transition: 0.3s;
+            background: #111; border: 1px solid #222; color: #666;
+            padding: 6px 20px; border-radius: 100px; cursor: pointer; font-size: 0.75rem; transition: 0.3s;
         }
-        .f-btn.active { background: var(--accent); color: #000; border-color: var(--accent); }
+        .f-btn.active { background: #ffc107; color: #000; border-color: #ffc107; }
 
-        /* --- Grid & Cards --- */
+        /* --- Member Grid --- */
+        .member-count { text-align: center; margin-bottom: 20px; font-size: 1.2rem; font-family: 'Orbitron'; }
         .grid-container {
-            display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 20px; padding: 0 5% 100px; max-width: 1400px; margin: 0 auto;
+            display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 20px; padding: 0 5% 100px; max-width: 1200px; margin: 0 auto;
         }
-        .card {
-            background: rgba(15, 15, 15, 0.8); border: 1px solid var(--glass-border);
-            border-radius: 18px; padding: 18px; display: flex; align-items: center; gap: 15px;
-        }
-        .avatar-wrap { width: 70px; height: 70px; flex-shrink: 0; }
-        .avatar { width: 100%; height: 100%; border-radius: 50%; object-fit: cover; border: 2px solid #222; }
-        .info h3 { font-size: 1rem; margin-bottom: 5px; font-family: 'Orbitron'; }
-        .role-tag { background: #333; color: #ccc; padding: 2px 10px; border-radius: 4px; font-size: 0.65rem; }
 
-        /* --- Admin Modal & Foldable --- */
-        .modal-overlay {
-            display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.9);
-            z-index: 2000; backdrop-filter: blur(10px); align-items: center; justify-content: center;
+        /* Member Card (Wellesley Style) */
+        .member-card {
+            background: #111; border: 1px solid #222; border-radius: 15px;
+            padding: 15px; display: flex; align-items: center; gap: 20px;
+            transition: 0.3s;
         }
-        .admin-box {
-            background: #0a0a0a; width: 95%; max-width: 500px; max-height: 90vh;
-            border: 1px solid var(--accent); padding: 20px; overflow-y: auto; border-radius: 12px;
-        }
-        .admin-section { margin-bottom: 12px; border: 1px solid #222; border-radius: 8px; overflow: hidden; }
-        .admin-header { padding: 12px; background: #111; cursor: pointer; display: flex; justify-content: space-between; font-size: 0.75rem; font-family: 'Orbitron'; color: var(--accent); }
-        .admin-content { padding: 15px; display: none; background: #050505; }
+        .member-card:hover { transform: translateY(-3px); border-color: #444; background: #151515; }
         
-        input, select { width: 100%; padding: 10px; margin-bottom: 10px; background: #000; border: 1px solid #333; color: #fff; border-radius: 5px; font-size: 0.9rem; }
-        .primary-btn { width: 100%; padding: 12px; background: var(--accent); border: none; font-weight: 900; font-family: 'Orbitron'; cursor: pointer; color:#000; border-radius: 5px; }
+        .avatar-box { width: 70px; height: 70px; border-radius: 50%; overflow: hidden; border: 2px solid #222; flex-shrink: 0; }
+        .avatar-box img { width: 100%; height: 100%; object-fit: cover; }
+        
+        .member-info h3 { font-size: 1.1rem; font-family: 'Orbitron'; margin-bottom: 5px; color: #eee; }
+        .tag-row { display: flex; align-items: center; gap: 10px; }
+        .role-badge { background: #222; color: #aaa; padding: 2px 12px; border-radius: 5px; font-size: 0.65rem; font-weight: 600; text-transform: uppercase; }
+        .fb-link { color: #0084ff; text-decoration: none; font-size: 0.8rem; }
 
-        /* --- Admin List Items --- */
-        .admin-list-item {
-            display: flex; justify-content: space-between; align-items: center;
-            padding: 8px; border-bottom: 1px solid #222; font-size: 0.8rem;
+        /* --- Admin UI (Oneless Style) --- */
+        .modal {
+            display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.95);
+            z-index: 1000; align-items: center; justify-content: center; backdrop-filter: blur(10px);
         }
-        .action-btns i { cursor: pointer; margin-left: 10px; transition: 0.2s; }
-        .fa-edit:hover { color: var(--accent); }
-        .fa-trash:hover { color: #ff4d4d; }
+        .admin-window {
+            background: #0a0a0a; width: 90%; max-width: 800px; max-height: 90vh;
+            border: 1px solid #222; border-radius: 15px; overflow: hidden; display: flex; flex-direction: column;
+        }
+        .admin-header { padding: 20px; border-bottom: 1px solid #222; display: flex; justify-content: space-between; align-items: center; }
+        .admin-body { padding: 25px; overflow-y: auto; }
 
-        .music-player { position: fixed; bottom: 20px; left: 20px; background: rgba(0,0,0,0.8); padding: 8px 15px; border-radius: 50px; border: 1px solid var(--glass-border); display: flex; align-items: center; gap: 10px; z-index: 900; }
-        #yt-player { display: none; }
+        .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 20px; }
+        @media (max-width: 600px) { .form-grid { grid-template-columns: 1fr; } }
+
+        .input-group { margin-bottom: 15px; }
+        .input-group label { display: block; font-size: 0.7rem; color: #555; margin-bottom: 5px; text-transform: uppercase; }
+        input, select {
+            width: 100%; padding: 12px; background: #000; border: 1px solid #222;
+            color: #fff; border-radius: 8px; outline: none; transition: 0.3s;
+        }
+        input:focus { border-color: var(--accent); }
+
+        .btn-save {
+            width: 100%; padding: 15px; background: #fff; color: #000; border: none;
+            border-radius: 8px; font-weight: 900; cursor: pointer; font-family: 'Orbitron';
+        }
+
+        .manage-list { margin-top: 30px; border-top: 1px solid #222; padding-top: 20px; }
+        .admin-item {
+            display: flex; justify-content: space-between; align-items: center;
+            background: #111; padding: 12px 20px; border-radius: 8px; margin-bottom: 10px;
+        }
+        .admin-item-info span { font-size: 0.85rem; color: #888; }
+        .admin-actions i { cursor: pointer; margin-left: 15px; transition: 0.2s; }
+        .fa-edit:hover { color: #ffc107; }
+        .fa-trash:hover { color: #ff4444; }
+
     </style>
 </head>
 <body>
 
-    <div class="nav-outer">
-        <nav class="nav-container">
-            <div class="nav-left">
-                <i class="fa-solid fa-shield-cat" style="color:var(--accent)"></i> <span id="navTitle">DEMOWATSUT</span>
-            </div>
-            <div class="nav-right">
-                <a class="nav-link" onclick="location.reload()"><i class="fa-solid fa-house"></i> Home</a>
-                <a class="nav-link" onclick="openLogin()"><i class="fa-solid fa-lock"></i> Admin</a>
-            </div>
-        </nav>
-    </div>
+    <nav class="top-nav">
+        <div class="logo-text">WELLESLEY</div>
+        <div class="nav-btns">
+            <a class="nav-btn" onclick="location.reload()"><i class="fa-solid fa-users"></i> Members</a>
+            <a class="nav-btn" onclick="openAdmin()"><i class="fa-solid fa-shield-halved"></i> Admin</a>
+        </div>
+    </nav>
 
-    <header class="hero">
-        <h1 class="main-title">DATABASE</h1>
-        <p style="letter-spacing: 5px; font-size: 0.6rem; color: #555;">MEMBERS: <span id="countNumber" style="color:var(--accent)">0</span></p>
+    <header class="hero-section">
+        <img src="https://img5.pic.in.th/file/secure-sv1/Untitled-17361494911.png" alt="Logo" class="main-logo">
+        <h1 class="hero-title">WELLESLEY</h1>
+        <p class="hero-subtitle">SINCE 2024</p>
     </header>
 
-    <div class="controls">
-        <div class="search-box"><input type="text" id="searchInput" placeholder="Search data..." onkeyup="renderMembers()"></div>
-        <div class="filter-group" id="filterArea"></div>
+    <div class="search-container">
+        <div class="search-box">
+            <input type="text" id="searchInput" placeholder="Search members..." onkeyup="renderMembers()">
+        </div>
+        <div class="filter-group" id="filterArea">
+            </div>
     </div>
 
-    <div class="grid-container" id="memberList"></div>
+    <div class="member-count"><i class="fa-solid fa-user-group"></i> MEMBERS (<span id="countNumber">0</span>)</div>
+    
+    <div class="grid-container" id="memberList">
+        </div>
 
-    <div id="loginModal" class="modal-overlay">
-        <div class="admin-box">
-            <h2 style="font-family:'Orbitron'; color:var(--accent); margin-bottom:15px;">LOGIN</h2>
-            <input type="password" id="adminPass" placeholder="ENTER PASSWORD">
-            <button class="primary-btn" onclick="handleLogin()">ACCESS</button>
-            <button style="width:100%; background:none; border:none; color:#555; margin-top:10px; cursor:pointer;" onclick="closeModals()">CLOSE</button>
+    <div id="loginModal" class="modal">
+        <div class="admin-window" style="max-width: 400px;">
+            <div class="admin-body" style="text-align: center;">
+                <h2 style="font-family:'Orbitron'; margin-bottom: 20px;">SYSTEM ACCESS</h2>
+                <input type="password" id="adminPass" placeholder="ENTER PASSWORD" style="text-align: center; margin-bottom: 15px;">
+                <button class="btn-save" onclick="handleLogin()">ACCESS</button>
+                <p onclick="closeModals()" style="margin-top: 15px; color: #444; cursor: pointer; font-size: 0.8rem;">CLOSE</p>
+            </div>
         </div>
     </div>
 
-    <div id="adminPanel" class="modal-overlay">
-        <div class="admin-box">
-            <div style="display:flex; justify-content:space-between; margin-bottom:15px;">
-                <h3 style="font-family:'Orbitron'; color:var(--accent);">ADMIN PANEL</h3>
-                <button onclick="handleLogout()" style="background:none; border:none; color:red; cursor:pointer;">EXIT</button>
+    <div id="adminPanel" class="modal">
+        <div class="admin-window">
+            <div class="admin-header">
+                <h3 style="font-family:'Orbitron';">DATABASE MANAGEMENT</h3>
+                <button onclick="closeModals()" style="background:none; border:none; color:#fff; cursor:pointer;"><i class="fa-solid fa-xmark"></i></button>
             </div>
-
-            <div class="admin-section">
-                <div class="admin-header" onclick="toggleAdminSection(this)"><span id="formTitle">+ ADD / EDIT MEMBER</span> <i class="fa-solid fa-chevron-down"></i></div>
-                <div class="admin-content" id="formContent" style="display:block;">
+            <div class="admin-body">
+                <div id="formSection">
                     <input type="hidden" id="editId">
-                    <input type="text" id="mName" placeholder="Display Name">
-                    <select id="mRoleSelect"></select>
-                    <input type="text" id="mImg" placeholder="Image URL">
-                    <input type="text" id="mFB" placeholder="Social Link">
-                    <button class="primary-btn" id="saveBtn" onclick="saveMember()">SAVE DATA</button>
-                    <button id="cancelEdit" style="display:none; width:100%; background:none; color:#777; border:none; margin-top:5px; cursor:pointer;" onclick="resetForm()">Cancel Edit</button>
-                </div>
-            </div>
-
-            <div class="admin-section">
-                <div class="admin-header" onclick="toggleAdminSection(this)"><span>👥 MANAGE MEMBERS</span> <i class="fa-solid fa-chevron-down"></i></div>
-                <div class="admin-content" id="adminMemberList">
+                    <div class="form-grid">
+                        <div class="input-group">
+                            <label>Display Name</label>
+                            <input type="text" id="mName" placeholder="เช่น Ahfei Wellesley">
+                        </div>
+                        <div class="input-group">
+                            <label>Category / Role</label>
+                            <select id="mRoleSelect"></select>
+                        </div>
+                        <div class="input-group">
+                            <label>Image URL</label>
+                            <input type="text" id="mImg" placeholder="Link รูปโปรไฟล์">
+                        </div>
+                        <div class="input-group">
+                            <label>Facebook Link</label>
+                            <input type="text" id="mFB" placeholder="Link Facebook">
+                        </div>
                     </div>
-            </div>
+                    <button class="btn-save" id="saveBtn" onclick="saveMember()">SAVE MEMBER</button>
+                </div>
 
-            <div class="admin-section">
-                <div class="admin-header" onclick="toggleAdminSection(this)"><span># CATEGORIES</span> <i class="fa-solid fa-chevron-down"></i></div>
-                <div class="admin-content">
-                    <input type="text" id="newCat" placeholder="New Unit Name">
-                    <button class="primary-btn" onclick="addCategory()">ADD UNIT</button>
-                    <div id="adminCatList" style="margin-top:10px;"></div>
+                <div class="manage-list">
+                    <h4 style="font-family:'Orbitron'; font-size: 0.8rem; color:#666; margin-bottom: 15px;">MANAGE MEMBERS</h4>
+                    <div id="adminMemberList"></div>
+                </div>
+                
+                <div class="manage-list">
+                    <h4 style="font-family:'Orbitron'; font-size: 0.8rem; color:#666; margin-bottom: 15px;">ADD CATEGORY</h4>
+                    <div style="display: flex; gap: 10px;">
+                        <input type="text" id="newCat" placeholder="Unit Name">
+                        <button onclick="addCategory()" style="background:#222; color:#fff; border:none; padding: 0 20px; border-radius: 8px; cursor: pointer;">ADD</button>
+                    </div>
+                    <div id="adminCatList" style="margin-top: 10px;"></div>
                 </div>
             </div>
-
-            <div class="admin-section">
-                <div class="admin-header" onclick="toggleAdminSection(this)"><span>🎨 THEME & MUSIC</span> <i class="fa-solid fa-chevron-down"></i></div>
-                <div class="admin-content">
-                    <label style="font-size:0.7rem;">Theme Color:</label>
-                    <input type="color" id="themeColor">
-                    <input type="text" id="bgUrlInput" placeholder="Wallpaper URL">
-                    <input type="text" id="musicIdInput" placeholder="YouTube Video ID">
-                    <button class="primary-btn" onclick="saveSettings()">APPLY THEME</button>
-                </div>
-            </div>
-
-            <button class="primary-btn" style="background:#222; color:#fff;" onclick="closeModals()">DONE</button>
         </div>
     </div>
-
-    <div class="music-player">
-        <button onclick="toggleMusic()" style="background:var(--accent); border:none; width:30px; height:30px; border-radius:50%; cursor:pointer;">
-            <i class="fas fa-play" id="playIcon"></i>
-        </button>
-        <span id="trackName" style="font-size: 0.55rem; color:#fff; font-family:'Orbitron';">BGM: -</span>
-    </div>
-
-    <div id="yt-player"></div>
 
     <script>
+        // --- Firebase Config (ใช้ของคุณเดิม) ---
         const firebaseConfig = { databaseURL: "https://demoadmin-a4b1f-default-rtdb.asia-southeast1.firebasedatabase.app/" };
         firebase.initializeApp(firebaseConfig);
         const db = firebase.database();
 
         let allMembers = [];
-        let categories = [];
         let currentFilter = 'all';
         let isAdmin = false;
 
-        // --- Core ---
-        function openLogin() { isAdmin ? document.getElementById('adminPanel').style.display='flex' : document.getElementById('loginModal').style.display='flex'; }
+        // --- Functions ---
+        function openAdmin() {
+            isAdmin ? document.getElementById('adminPanel').style.display='flex' : document.getElementById('loginModal').style.display='flex';
+        }
+        
+        function closeModals() {
+            document.querySelectorAll('.modal').forEach(m => m.style.display='none');
+        }
+
         function handleLogin() {
-            if(document.getElementById('adminPass').value === 'demo912') { isAdmin=true; closeModals(); openLogin(); }
-            else alert("Wrong Key");
-        }
-        function handleLogout() { isAdmin=false; location.reload(); }
-        function closeModals() { document.querySelectorAll('.modal-overlay').forEach(m => m.style.display='none'); }
-        function toggleAdminSection(el) {
-            const content = el.nextElementSibling;
-            content.style.display = (content.style.display==='block') ? 'none' : 'block';
+            if(document.getElementById('adminPass').value === 'demo912') {
+                isAdmin = true;
+                closeModals();
+                openAdmin();
+            } else {
+                alert("Incorrect Password");
+            }
         }
 
-        // --- Database Watchers ---
-        db.ref('settings').on('value', snap => {
-            const s = snap.val() || {};
-            if(s.color) document.documentElement.style.setProperty('--accent', s.color);
-            if(s.bg) document.documentElement.style.setProperty('--bg-img', `url('${s.bg}')`);
-            if(player && s.music) player.loadVideoById(s.music);
-        });
-
+        // --- Real-time Data ---
         db.ref('categories').on('value', snap => {
             const data = snap.val();
             let html = `<button class="f-btn active" onclick="setFilter('all', this)">All</button>`;
@@ -245,7 +261,7 @@
                 const name = data[id].name;
                 html += `<button class="f-btn" onclick="setFilter('${name}', this)">${name}</button>`;
                 selectHtml += `<option value="${name}">${name}</option>`;
-                adminCatHtml += `<div class="admin-list-item">${name} <i class="fa-solid fa-trash" onclick="deleteCat('${id}')"></i></div>`;
+                adminCatHtml += `<div class="admin-item" style="padding:5px 15px; font-size:0.8rem;">${name} <i class="fa-solid fa-trash" onclick="deleteCat('${id}')"></i></div>`;
             }
             document.getElementById('filterArea').innerHTML = html;
             document.getElementById('mRoleSelect').innerHTML = selectHtml;
@@ -260,9 +276,12 @@
                 const m = {...data[id], id};
                 allMembers.push(m);
                 adminListHtml += `
-                    <div class="admin-list-item">
-                        <span>${m.name} (${m.role})</span>
-                        <div class="action-btns">
+                    <div class="admin-item">
+                        <div class="admin-item-info">
+                            <strong>${m.name}</strong><br>
+                            <span>${m.role}</span>
+                        </div>
+                        <div class="admin-actions">
                             <i class="fa-solid fa-edit" onclick="editMember('${id}')"></i>
                             <i class="fa-solid fa-trash" onclick="deleteMember('${id}')"></i>
                         </div>
@@ -281,13 +300,13 @@
                 image: document.getElementById('mImg').value || 'https://via.placeholder.com/150',
                 facebook: document.getElementById('mFB').value || '#'
             };
-            if(!data.name) return alert("Enter Name");
-            
+            if(!data.name) return alert("Please enter name");
+
             if(id) await db.ref('members/'+id).set(data);
             else await db.ref('members').push(data);
-            
+
             resetForm();
-            alert("Data Saved!");
+            alert("Success!");
         }
 
         function editMember(id) {
@@ -297,41 +316,25 @@
             document.getElementById('mRoleSelect').value = m.role;
             document.getElementById('mImg').value = m.image;
             document.getElementById('mFB').value = m.facebook;
-            document.getElementById('formTitle').innerText = "✏️ EDITING: " + m.name;
-            document.getElementById('saveBtn').innerText = "UPDATE DATA";
-            document.getElementById('cancelEdit').style.display = "block";
-            document.getElementById('formContent').style.display = "block";
+            document.getElementById('saveBtn').innerText = "UPDATE MEMBER";
         }
 
         async function deleteMember(id) { if(confirm("Delete this member?")) await db.ref('members/'+id).remove(); }
         async function deleteCat(id) { if(confirm("Delete this category?")) await db.ref('categories/'+id).remove(); }
-        
-        function resetForm() {
-            document.getElementById('editId').value = '';
-            document.getElementById('mName').value = '';
-            document.getElementById('mImg').value = '';
-            document.getElementById('mFB').value = '';
-            document.getElementById('formTitle').innerText = "+ ADD NEW MEMBER";
-            document.getElementById('saveBtn').innerText = "SAVE MEMBER";
-            document.getElementById('cancelEdit').style.display = "none";
-        }
-
         async function addCategory() {
             const name = document.getElementById('newCat').value;
             if(name) await db.ref('categories').push({ name });
             document.getElementById('newCat').value = '';
         }
 
-        async function saveSettings() {
-            await db.ref('settings').update({
-                color: document.getElementById('themeColor').value,
-                bg: document.getElementById('bgUrlInput').value,
-                music: document.getElementById('musicIdInput').value
-            });
-            alert("Applied!");
+        function resetForm() {
+            document.getElementById('editId').value = '';
+            document.getElementById('mName').value = '';
+            document.getElementById('mImg').value = '';
+            document.getElementById('mFB').value = '';
+            document.getElementById('saveBtn').innerText = "SAVE MEMBER";
         }
 
-        // --- Rendering ---
         function setFilter(role, btn) {
             currentFilter = role;
             document.querySelectorAll('.f-btn').forEach(b => b.classList.remove('active'));
@@ -342,40 +345,22 @@
         function renderMembers() {
             const search = document.getElementById('searchInput').value.toLowerCase();
             const filtered = allMembers.filter(m => (currentFilter==='all' || m.role===currentFilter) && m.name.toLowerCase().includes(search));
+            
             document.getElementById('countNumber').innerText = filtered.length;
             document.getElementById('memberList').innerHTML = filtered.map(m => `
-                <div class="card">
-                    <div class="avatar-wrap"><img src="${m.image}" class="avatar" onerror="this.src='https://via.placeholder.com/150'"></div>
-                    <div class="info">
+                <div class="member-card">
+                    <div class="avatar-box">
+                        <img src="${m.image}" onerror="this.src='https://via.placeholder.com/150'">
+                    </div>
+                    <div class="member-info">
                         <h3>${m.name}</h3>
-                        <div style="display:flex; align-items:center; gap:10px;">
-                            <span class="role-tag">${m.role}</span>
-                            <a href="${m.facebook}" target="_blank" style="color:#00acee; font-size:0.8rem;"><i class="fab fa-facebook"></i></a>
+                        <div class="tag-row">
+                            <span class="role-badge">${m.role}</span>
+                            <a href="${m.facebook}" target="_blank" class="fb-link">Facebook</a>
                         </div>
                     </div>
                 </div>`).join('');
         }
-
-        // --- Music ---
-        let player;
-        function onYouTubeIframeAPIReady() {
-            db.ref('settings/music').once('value', snap => {
-                const mid = snap.val() || 'xy3AcmW0lrQ';
-                player = new YT.Player('yt-player', {
-                    height: '0', width: '0', videoId: mid,
-                    playerVars: { 'autoplay': 1, 'loop': 1, 'playlist': mid },
-                    events: { 'onReady': e => { e.target.setVolume(30); document.getElementById('trackName').innerText = "BGM: Active"; } }
-                });
-            });
-        }
-        function toggleMusic() {
-            const icon = document.getElementById('playIcon');
-            if (player.getPlayerState() === 1) { player.pauseVideo(); icon.className = "fas fa-play"; }
-            else { player.playVideo(); icon.className = "fas fa-pause"; }
-        }
-        var tag = document.createElement('script'); tag.src = "https://www.youtube.com/iframe_api";
-        document.head.append(tag);
-        document.addEventListener('click', () => { if(player) player.playVideo(); }, { once: true });
     </script>
 </body>
 </html>
