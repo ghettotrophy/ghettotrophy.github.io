@@ -118,7 +118,7 @@
         <div style="font-family: 'Orbitron'; font-size: 10px; letter-spacing: 2px;">
             MEMBERS: <span id="countNum" style="color:var(--accent)">0</span>
         </div>
-        <button class="config-btn" onclick="openModal('loginModal')"><i class="fa-solid fa-shield-halved"></i> ACCESS PANEL</button>
+        <button class="config-btn" onclick="openModal('loginModal')"><i class="fa-solid fa-shield-halved"></i> ADMIN</button>
     </nav>
 
     <header class="hero">
@@ -142,7 +142,7 @@
 
         <div class="admin-grid">
             <div class="admin-card">
-                <h3 style="font-family:'Orbitron'; font-size:14px; margin-bottom:15px; color:var(--accent);"><i class="fa-solid fa-gears"></i> SITE CONFIG</h3>
+                <h3 style="font-family:'Orbitron'; font-size:14px; margin-bottom:15px; color:var(--accent);"><i class="fa-solid fa-gears"></i> กำหนดหัวข้อต่างๆ</h3>
                 <label>SITE NAME</label><input type="text" id="configSiteName">
                 <label>DESCRIPTION</label><input type="text" id="configSiteDesc">
                 <label>THEME COLOR</label><input type="color" id="configThemeColor" style="height:40px;">
@@ -152,7 +152,7 @@
             </div>
 
             <div class="admin-card">
-                <h3 style="font-family:'Orbitron'; font-size:14px; margin-bottom:15px; color:var(--accent);"><i class="fa-solid fa-tags"></i> ROLE MANAGER</h3>
+                <h3 style="font-family:'Orbitron'; font-size:14px; margin-bottom:15px; color:var(--accent);"><i class="fa-solid fa-tags"></i> TOPIC ROLE</h3>
                 <div style="background:#000; padding:15px; border-radius:8px; margin-bottom:15px;">
                     <label>ROLE NAME</label><input type="text" id="newRoleName" placeholder="Admin, VIP, etc.">
                     <label>ROLE COLOR</label><input type="color" id="newRoleColor" value="#ffc107" style="height:40px;">
@@ -162,7 +162,7 @@
             </div>
 
             <div class="admin-card">
-                <h3 style="font-family:'Orbitron'; font-size:14px; margin-bottom:15px; color:var(--accent);"><i class="fa-solid fa-user-plus"></i> ADD NEW MEMBER</h3>
+                <h3 style="font-family:'Orbitron'; font-size:14px; margin-bottom:15px; color:var(--accent);"><i class="fa-solid fa-user-plus"></i> เพิ่ม/ลบรายชื่อ</h3>
                 <div style="background:#000; padding:15px; border-radius:8px;">
                     <label>NAME</label><input type="text" id="newMemName">
                     <label>IMAGE URL</label><input type="text" id="newMemImg">
@@ -175,7 +175,7 @@
         </div>
 
         <div class="admin-card" style="max-width:1400px; margin: 0 auto;">
-            <h3 style="font-family:'Orbitron'; font-size:14px; margin-bottom:15px; color:var(--accent);">MANAGE MEMBERS</h3>
+            <h3 style="font-family:'Orbitron'; font-size:14px; margin-bottom:15px; color:var(--accent);">แก้ไขสมาชิค</h3>
             <div id="adminMemberList" style="display:grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap:15px;"></div>
         </div>
     </div>
