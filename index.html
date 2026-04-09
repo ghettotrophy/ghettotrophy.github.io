@@ -14,7 +14,7 @@
 
     <style>
         :root {
-            --accent: #ffc107;
+            --accent: #ffc107; /* สีเริ่มต้น */
             --bg: #0a0a0a;
             --card-bg: rgba(255, 255, 255, 0.03);
             --border: rgba(255, 255, 255, 0.08);
@@ -23,7 +23,7 @@
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { background-color: var(--bg); color: #fff; font-family: 'Inter', sans-serif; overflow-x: hidden; }
+        body { background-color: var(--bg); color: #fff; font-family: 'Inter', sans-serif; overflow-x: hidden; transition: background 0.3s; }
 
         #customAlert {
             position: fixed; top: 20px; right: 20px; z-index: 10000;
@@ -45,17 +45,16 @@
         .nav-btn { pointer-events: auto; color: #fff; text-decoration: none; cursor: pointer; font-size: 0.7rem; font-weight: 700; opacity: 0.6; transition: var(--transition); letter-spacing: 2px; background: var(--glass); padding: 10px 20px; border-radius: 12px; border: 1px solid var(--border); }
         .nav-btn:hover { opacity: 1; border-color: var(--accent); color: var(--accent); }
 
-        .hero-section { padding: 140px 20px 60px; text-align: center; }
+        .hero-section { padding: 140px 20px 60px; text-align: center; display: flex; flex-direction: column; align-items: center; justify-content: center; }
         .hero-title { font-family: 'Orbitron'; font-size: clamp(2.5rem, 8vw, 4.5rem); letter-spacing: 15px; text-transform: uppercase; margin: 10px 0; font-weight: 700; }
         .glow-text { text-shadow: 0 0 25px var(--accent); color: var(--accent) !important; }
 
-        .logo-container { position: relative; margin-bottom: 25px; }
-        #siteLogo { height: auto; transition: none; }
+        .logo-container { display: flex; justify-content: center; width: 100%; margin-bottom: 25px; }
+        #siteLogo { height: auto; display: block; margin: 0 auto; }
 
-        /* Multi-Style Member Cards */
         .grid-container { 
             display: grid; 
-            grid-template-columns: repeat(3, 1fr); /* บังคับ 3 คนต่อบรรทัด */
+            grid-template-columns: repeat(3, 1fr);
             gap: 20px; padding: 40px 5%; max-width: 1400px; margin: 0 auto;
         }
         @media (max-width: 900px) { .grid-container { grid-template-columns: repeat(2, 1fr); } }
@@ -67,30 +66,21 @@
             transition: var(--transition);
         }
         
-        /* สไตล์ที่ 2: Border Gradient */
         .style-gradient { border: 2px solid transparent; background-image: linear-gradient(var(--bg), var(--bg)), linear-gradient(45deg, var(--accent), #fff); background-origin: border-box; background-clip: padding-box, border-box; }
-        /* สไตล์ที่ 3: Glassmorphism */
         .style-glass { backdrop-filter: blur(10px); background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.15); }
 
-        .member-name { 
-            font-size: 1rem; font-family: 'Orbitron'; 
-            white-space: normal; overflow: visible; /* ชื่อไม่ตัด ... */
-            word-break: break-all;
-        }
-
+        .member-name { font-size: 1rem; font-family: 'Orbitron'; word-break: break-all; }
         .avatar-wrapper { width: 65px; height: 65px; border-radius: 12px; overflow: hidden; flex-shrink: 0; border: 1px solid var(--border); }
         .avatar-wrapper img { width: 100%; height: 100%; object-fit: cover; }
 
-        /* Admin Window */
         .modal { position: fixed; inset: 0; background: rgba(0,0,0,0.95); z-index: 1000; display: none; align-items: center; justify-content: center; backdrop-filter: blur(15px); }
-        .modal.active { display: flex; }
         .admin-window { background: #111; width: 95%; max-width: 1100px; height: 85vh; border-radius: 20px; border: 1px solid #222; display: flex; flex-direction: column; overflow: hidden; }
         .admin-body { padding: 30px; overflow-y: auto; display: grid; grid-template-columns: 1fr 1fr; gap: 25px; }
         @media (max-width: 800px) { .admin-body { grid-template-columns: 1fr; } }
 
         .admin-section { background: #181818; padding: 25px; border-radius: 15px; border: 1px solid #222; }
-        label { font-size: 0.7rem; color: var(--accent); letter-spacing: 1px; text-transform: uppercase; }
-        input, select { background: #000; border: 1px solid #333; color: #fff; padding: 12px; border-radius: 8px; width: 100%; margin: 8px 0 18px; outline: none; font-family: 'Inter'; }
+        label { font-size: 0.7rem; color: var(--accent); letter-spacing: 1px; text-transform: uppercase; display: block; margin-top: 10px; }
+        input, select { background: #000; border: 1px solid #333; color: #fff; padding: 12px; border-radius: 8px; width: 100%; margin: 8px 0 10px; outline: none; font-family: 'Inter'; }
         
         .btn-primary { background: var(--accent); color: #000; border: none; width: 100%; padding: 15px; border-radius: 10px; font-weight: 700; cursor: pointer; font-family: 'Orbitron'; font-size: 0.75rem; transition: 0.3s; }
         .btn-primary:hover { filter: brightness(1.2); }
@@ -124,14 +114,19 @@
 
     <div style="text-align: center; padding-bottom: 40px;">
         <input type="text" id="searchInput" placeholder="SEARCH..." onkeyup="renderMembers()" style="max-width: 500px; text-align: center; background: var(--card-bg); border-radius: 50px; border: 1px solid var(--border);">
-        <div id="categoryFilter" style="display:flex; justify-content:center; flex-wrap: wrap; gap:10px;"></div>
     </div>
 
     <div id="memberList" class="grid-container"></div>
 
     <div id="loginModal" class="modal">
-        <div style="background:#161616; padding:40px; border-radius:20px; width:350px; text-align:center;">
-            <input type="password" id="adminPass" placeholder="Access Code">
+        <div style="background:#161616; padding:40px; border-radius:24px; width:380px; text-align:center; border: 1px solid var(--border);">
+            <h2 style="font-family:'Orbitron'; font-size:1.2rem; margin-bottom:25px; color:var(--accent); letter-spacing:3px;">ADMIN LOGIN</h2>
+            <div style="text-align:left; margin-bottom:15px;">
+                <label>USERNAME</label>
+                <input type="text" id="adminUser" placeholder="User">
+                <label>PASSWORD</label>
+                <input type="password" id="adminPass" placeholder="Pass">
+            </div>
             <button class="btn-primary" onclick="handleLogin()">LOGIN</button>
             <p onclick="closeModals()" style="margin-top:20px; cursor:pointer; font-size:0.6rem; opacity:0.5;">CANCEL</p>
         </div>
@@ -146,12 +141,14 @@
             <div class="admin-body">
                 <div class="admin-section">
                     <label>Site Name</label><input type="text" id="confName">
-                    <label>Sub Name (Below Title)</label><input type="text" id="confDesc">
-                    <label>Logo URL</label><input type="text" id="confLogo">
+                    <label>Sub Name</label><input type="text" id="confDesc">
+                    <label>Logo URL (Center)</label><input type="text" id="confLogo">
                     <label>Logo Size (px)</label><input type="number" id="confLogoSize">
-                    <label>Music URL (Direct Link)</label><input type="text" id="confMusic">
-                    <div style="margin-bottom:15px; display:flex; gap:10px;">
-                        <input type="checkbox" id="confAutoPlay" style="width:auto;"> <label>Autoplay Music</label>
+                    <label>Favicon URL</label><input type="text" id="confFavicon">
+                    <label>Theme Color</label><input type="color" id="confTheme" style="height:50px; cursor:pointer;">
+                    <label>Music URL</label><input type="text" id="confMusic">
+                    <div style="margin:10px 0; display:flex; gap:10px; align-items:center;">
+                        <input type="checkbox" id="confAutoPlay" style="width:auto; margin:0;"> <label style="margin:0;">Autoplay Music</label>
                     </div>
                     <label>Card Style</label>
                     <div style="display:grid; grid-template-columns: 1fr 1fr 1fr; gap:10px; margin-top:10px;">
@@ -163,7 +160,7 @@
                 </div>
 
                 <div class="admin-section">
-                    <label>Categories (Ex: LEADER, STAFF)</label>
+                    <label>Categories (LEADER, STAFF)</label>
                     <input type="text" id="confCats">
                     <div id="memberForm">
                         <input type="hidden" id="editId">
@@ -184,43 +181,69 @@
         firebase.initializeApp(firebaseConfig);
         const db = firebase.database();
 
-        let allMembers = [], siteConfig = {}, isAdmin = false, currentFilter = 'ALL', selectedStyle = 'default';
+        let allMembers = [], siteConfig = {}, isAdmin = false, selectedStyle = 'default';
 
         // --- Auth ---
         function openAdmin() { (isAdmin ? document.getElementById('adminPanel') : document.getElementById('loginModal')).style.display = 'flex'; }
         function closeModals() { document.querySelectorAll('.modal').forEach(m => m.style.display = 'none'); }
+        
         function handleLogin() {
-            if(document.getElementById('adminPass').value === 'ghett9871') {
+            const user = document.getElementById('adminUser').value;
+            const pass = document.getElementById('adminPass').value;
+            if(user !== "" && pass === 'ghett9871') {
                 isAdmin = true; closeModals(); openAdmin();
-            } else alert("Wrong Code");
+                showAlert("WELCOME ADMIN");
+            } else alert("Invalid Login");
+        }
+
+        function showAlert(txt) {
+            const a = document.getElementById('customAlert');
+            a.innerText = txt; a.style.display = 'block';
+            setTimeout(() => a.style.display = 'none', 3000);
         }
 
         // --- Config Logic ---
         db.ref('config').on('value', snap => {
             const d = snap.val() || {}; siteConfig = d;
+            
+            // Apply Site Content
             document.getElementById('siteNameDisplay').innerText = d.name || 'GHETTO';
             document.getElementById('siteDescDisplay').innerText = d.desc || 'SYSTEM OPERATIONAL';
-            const logo = document.getElementById('siteLogo');
-            if(d.logo) { logo.src = d.logo; logo.style.width = (d.logoSize || 120) + 'px'; logo.style.display = 'block'; }
             
+            // Logo Center
+            const logo = document.getElementById('siteLogo');
+            if(d.logo) { 
+                logo.src = d.logo; 
+                logo.style.width = (d.logoSize || 120) + 'px'; 
+                logo.style.display = 'block'; 
+            } else { logo.style.display = 'none'; }
+
+            // Favicon
+            if(d.favicon) document.getElementById('favicon').href = d.favicon;
+
+            // Theme Color
+            if(d.themeColor) document.documentElement.style.setProperty('--accent', d.themeColor);
+
+            // Music
             const music = document.getElementById('bgMusic');
             if(d.music && music.src !== d.music) {
                 music.src = d.music;
-                if(d.autoplay) music.play().catch(() => console.log("User interaction required"));
+                if(d.autoplay) music.play().catch(() => {});
             }
 
-            // Sync Inputs
+            // Sync Admin Inputs
             document.getElementById('confName').value = d.name || '';
             document.getElementById('confDesc').value = d.desc || '';
             document.getElementById('confLogo').value = d.logo || '';
             document.getElementById('confLogoSize').value = d.logoSize || 120;
+            document.getElementById('confFavicon').value = d.favicon || '';
+            document.getElementById('confTheme').value = d.themeColor || '#ffc107';
             document.getElementById('confMusic').value = d.music || '';
             document.getElementById('confAutoPlay').checked = d.autoplay || false;
             document.getElementById('confCats').value = d.categories || '';
             selectedStyle = d.cardStyle || 'default';
             updateStyleUI();
 
-            // Cats
             const cats = d.categories ? d.categories.split(',').map(c => c.trim()) : [];
             let opt = '<option value="">SELECT ROLE</option>';
             cats.forEach(c => opt += `<option value="${c}">${c}</option>`);
@@ -242,12 +265,14 @@
                 desc: document.getElementById('confDesc').value,
                 logo: document.getElementById('confLogo').value,
                 logoSize: document.getElementById('confLogoSize').value,
+                favicon: document.getElementById('confFavicon').value,
+                themeColor: document.getElementById('confTheme').value,
                 music: document.getElementById('confMusic').value,
                 autoplay: document.getElementById('confAutoPlay').checked,
                 cardStyle: selectedStyle,
                 categories: document.getElementById('confCats').value
             });
-            alert("Updated!");
+            showAlert("SYSTEM UPDATED!");
         }
 
         // --- Member Logic ---
@@ -256,9 +281,12 @@
             let adminHtml = '';
             for(let id in data) {
                 const m = {...data[id], id}; allMembers.push(m);
-                adminHtml += `<div style="display:flex; justify-content:space-between; padding:10px; background:#000; margin-bottom:5px;">
+                adminHtml += `<div style="display:flex; justify-content:space-between; padding:10px; background:#000; margin-bottom:5px; border-radius:8px;">
                     <span>${m.name}</span>
-                    <div><i class="fa-solid fa-edit" onclick="editMember('${id}')"></i> <i class="fa-solid fa-trash" onclick="deleteMember('${id}')"></i></div>
+                    <div style="display:flex; gap:10px; color:var(--accent); cursor:pointer;">
+                        <i class="fa-solid fa-edit" onclick="editMember('${id}')"></i> 
+                        <i class="fa-solid fa-trash" onclick="deleteMember('${id}')"></i>
+                    </div>
                 </div>`;
             }
             document.getElementById('adminMemberList').innerHTML = adminHtml;
@@ -277,7 +305,7 @@
                     <div>
                         <div class="member-name">${m.name}</div>
                         <div style="font-size:0.6rem; color:var(--accent); font-family:'Orbitron';">${m.role || 'MEMBER'}</div>
-                        ${m.facebook ? `<a href="${m.facebook}" target="_blank" style="color:#fff; font-size:0.8rem;"><i class="fa-brands fa-facebook"></i></a>` : ''}
+                        ${m.facebook ? `<a href="${m.facebook}" target="_blank" style="color:#fff; font-size:0.8rem; opacity:0.6;"><i class="fa-brands fa-facebook"></i></a>` : ''}
                     </div>
                 </div>
             `).join('');
@@ -291,8 +319,10 @@
                 image: document.getElementById('mImg').value,
                 facebook: document.getElementById('mFB').value
             };
+            if(!data.name) return alert("Enter Name");
             id ? await db.ref('members/'+id).set(data) : await db.ref('members').push(data);
             resetForm();
+            showAlert("MEMBER SAVED!");
         }
 
         function editMember(id) {
@@ -302,11 +332,11 @@
             document.getElementById('mRoleSelect').value = m.role;
             document.getElementById('mImg').value = m.image;
             document.getElementById('mFB').value = m.facebook;
-            document.getElementById('saveBtn').innerText = "UPDATE";
+            document.getElementById('saveBtn').innerText = "UPDATE MEMBER";
         }
 
-        async function deleteMember(id) { if(confirm("Delete?")) await db.ref('members/'+id).remove(); }
-        function resetForm() { document.getElementById('editId').value = ''; document.getElementById('mName').value = ''; document.getElementById('saveBtn').innerText = "ADD"; }
+        async function deleteMember(id) { if(confirm("Delete this member?")) await db.ref('members/'+id).remove(); }
+        function resetForm() { document.getElementById('editId').value = ''; document.getElementById('mName').value = ''; document.getElementById('saveBtn').innerText = "ADD MEMBER"; }
 
         function toggleMusic() {
             const a = document.getElementById('bgMusic'), i = document.getElementById('musicIcon');
