@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Member System - WELLESLEY</title>
+    <title>DEMOWATSUT</title>
     
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Bai+Jamjuree:wght@300;400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -16,7 +16,6 @@
             --accent: #ffffff;
             --bg: #000000;
             --card-bg: #0e0e0e;
-            --input-bg: #0a0a0a;
             --border: rgba(255, 255, 255, 0.08);
             --transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
         }
@@ -29,6 +28,7 @@
             color: #fff;
             font-family: 'Bai Jamjuree', sans-serif;
             min-height: 100vh;
+            overflow-x: hidden;
         }
 
         /* --- Navigation --- */
@@ -43,170 +43,186 @@
             position: sticky; top: 0; z-index: 100;
         }
 
+        .member-counter-top {
+            font-family: 'Orbitron';
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: rgba(255,255,255,0.05);
+            padding: 6px 18px;
+            border-radius: 50px;
+            border: 1px solid var(--border);
+        }
+
         .nav-btns { display: flex; gap: 20px; }
-        .nav-btn { color: #888; text-decoration: none; cursor: pointer; transition: var(--transition); font-size: 0.85rem; font-weight: 600; display: flex; align-items: center; gap: 8px; }
-        .nav-btn:hover { color: #fff; }
+        .nav-btn { color: #888; text-decoration: none; cursor: pointer; transition: var(--transition); font-size: 0.85rem; font-weight: 600; }
+        .nav-btn:hover { color: #fff; transform: translateY(-2px); }
 
         /* --- Hero --- */
-        .hero-section { text-align: center; padding: 60px 20px 40px; }
-        .main-logo { width: 120px; margin-bottom: 20px; filter: drop-shadow(0 0 20px rgba(255,255,255,0.2)); }
-        .hero-title { font-family: 'Orbitron'; font-size: 2.5rem; letter-spacing: 12px; text-transform: uppercase; font-weight: 900; text-shadow: 0 0 20px rgba(255,255,255,0.4); }
-        .hero-subtitle { font-size: 0.75rem; color: #666; letter-spacing: 5px; margin-top: 8px; }
+        .hero-section { text-align: center; padding: 50px 20px; }
+        .main-logo { width: 90px; margin-bottom: 15px; filter: drop-shadow(0 0 15px rgba(255,255,255,0.2)); }
+        .hero-title { font-family: 'Orbitron'; font-size: 2rem; letter-spacing: 10px; text-transform: uppercase; }
+        .hero-subtitle { font-size: 0.7rem; color: #555; letter-spacing: 4px; margin-top: 5px; font-weight: 400; }
 
-        /* --- Search & Filters --- */
-        .search-container { max-width: 700px; margin: 0 auto 50px; padding: 0 20px; }
+        /* --- Search --- */
+        .search-container { max-width: 650px; margin: 0 auto 40px; padding: 0 20px; }
         .search-box input {
-            width: 100%; padding: 15px 30px; background: var(--input-bg); border: 1px solid #1a1a1a;
+            width: 100%; padding: 14px 28px; background: #0a0a0a; border: 1px solid #1a1a1a;
             border-radius: 100px; color: #fff; outline: none; transition: var(--transition); font-family: 'Bai Jamjuree';
         }
-        .filter-group { display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; margin-top: 25px; }
+        .search-box input:focus { border-color: #444; background: #111; box-shadow: 0 0 20px rgba(255,255,255,0.05); }
+        .filter-group { display: flex; justify-content: center; gap: 8px; flex-wrap: wrap; margin-top: 25px; }
         .f-btn {
-            background: #0a0a0a; border: 1px solid #1a1a1a; color: #666;
-            padding: 8px 20px; border-radius: 100px; cursor: pointer; font-size: 0.8rem; transition: var(--transition);
+            background: #0a0a0a; border: 1px solid #1a1a1a; color: #555;
+            padding: 7px 16px; border-radius: 100px; cursor: pointer; font-size: 0.75rem; transition: var(--transition);
         }
-        .f-btn.active { background: #ffcc00; color: #000; border-color: #ffcc00; font-weight: 700; }
+        .f-btn.active { background: #fff; color: #000; border-color: #fff; font-weight: 700; }
 
-        /* --- Member Display --- */
-        .member-header-info { text-align: center; margin-bottom: 30px; font-family: 'Orbitron'; color: #888; letter-spacing: 2px; }
+        /* --- Member Card --- */
         .grid-container {
-            display: grid; grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
-            gap: 25px; padding: 0 5% 100px; max-width: 1400px; margin: 0 auto;
+            display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+            gap: 20px; padding: 0 5% 100px; max-width: 1300px; margin: 0 auto;
         }
 
         .member-card {
-            background: var(--card-bg); border: 1px solid var(--border); border-radius: 20px;
-            padding: 20px; display: flex; align-items: center; gap: 20px; transition: var(--transition);
+            background: var(--card-bg); border: 1px solid var(--border); border-radius: 18px;
+            padding: 18px; display: flex; align-items: center; gap: 18px; transition: var(--transition);
+            animation: fadeInUp 0.5s ease forwards; opacity: 0;
         }
-        .avatar-box { width: 80px; height: 80px; border-radius: 50%; overflow: hidden; border: 2px solid #222; }
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
+        .member-card:hover { transform: translateY(-5px); border-color: #333; box-shadow: 0 10px 30px rgba(0,0,0,0.6); }
+
+        .avatar-box { width: 70px; height: 70px; border-radius: 50%; overflow: hidden; border: 2px solid #1a1a1a; flex-shrink: 0; }
         .avatar-box img { width: 100%; height: 100%; object-fit: cover; }
-        .member-info h3 { font-family: 'Orbitron'; font-size: 1.2rem; margin-bottom: 8px; }
-        .tag-row { display: flex; align-items: center; gap: 8px; }
-        .role-badge { background: #222; color: #fff; padding: 4px 12px; border-radius: 6px; font-size: 0.7rem; font-weight: 600; }
-        .fb-link { color: #00bfff; text-decoration: none; font-size: 0.9rem; margin-left: auto; }
 
-        /* --- Admin UI (New Design) --- */
-        .modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.95); z-index: 1000; overflow-y: auto; padding: 40px 20px; }
-        .admin-dashboard { background: #080808; width: 100%; max-width: 900px; margin: auto; border: 1px solid #222; border-radius: 15px; overflow: hidden; }
-        .admin-header { padding: 20px 30px; background: #111; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #222; }
-        .admin-body { padding: 30px; }
-        
-        .management-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; margin-bottom: 30px; }
-        .input-group { display: flex; flex-direction: column; gap: 8px; }
-        .input-group label { font-size: 0.8rem; color: #888; text-transform: uppercase; letter-spacing: 1px; }
-        
-        input, select { background: #000; border: 1px solid #222; color: #fff; padding: 12px 15px; border-radius: 8px; outline: none; transition: 0.3s; }
-        input:focus { border-color: #444; }
-
-        .role-selector { grid-column: span 2; background: #0c0c0c; padding: 20px; border-radius: 10px; border: 1px solid #1a1a1a; }
-        .checkbox-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 10px; margin-top: 10px; }
-
-        .btn-row { display: flex; gap: 10px; margin-top: 10px; }
-        .btn-save { flex: 4; padding: 15px; background: #fff; color: #000; border: none; border-radius: 8px; font-weight: 900; cursor: pointer; font-family: 'Orbitron'; }
-        .btn-clear { flex: 1; background: #222; color: #fff; border: none; border-radius: 8px; cursor: pointer; }
-
-        /* Admin Member Table List */
-        .admin-member-list { margin-top: 40px; border-top: 1px solid #222; padding-top: 30px; }
-        .admin-item { display: flex; align-items: center; justify-content: space-between; background: #0e0e0e; padding: 15px 25px; border-radius: 10px; margin-bottom: 10px; border: 1px solid #1a1a1a; }
-        .admin-item-info { display: flex; align-items: center; gap: 15px; }
-        .admin-item-circle { width: 40px; height: 40px; border-radius: 50%; border: 1px solid #333; }
-        .admin-actions { display: flex; gap: 15px; }
-        .admin-actions i { cursor: pointer; transition: 0.3s; padding: 8px; border-radius: 5px; }
-        .btn-edit:hover { background: rgba(255,255,255,0.1); color: #fff; }
-        .btn-del:hover { background: rgba(255,0,0,0.1); color: #ff4444; }
-
-        /* Login Modal */
-        .login-box { background: #080808; padding: 40px; border-radius: 20px; border: 1px solid #222; text-align: center; width: 100%; max-width: 400px; margin: auto; }
-
-        @media (max-width: 768px) {
-            .management-grid { grid-template-columns: 1fr; }
-            .role-selector { grid-column: span 1; }
+        .member-info h3 { font-size: 1.1rem; font-family: 'Orbitron'; margin-bottom: 6px; color: #eee; }
+        .tag-row { display: flex; align-items: center; gap: 6px; flex-wrap: nowrap; overflow: hidden; }
+        .role-badge { 
+            background: #1a1a1a; color: #888; padding: 3px 9px; border-radius: 5px; 
+            font-size: 0.65rem; font-weight: 600; white-space: nowrap; flex-shrink: 0;
         }
+        .plus-badge { 
+            background: #fff; color: #000; cursor: pointer; font-size: 0.7rem; font-weight: 900; 
+            width: 22px; height: 22px; display: flex; align-items: center; justify-content: center; 
+            border-radius: 5px; transition: 0.3s; flex-shrink: 0;
+        }
+        .hidden-roles { display: none; align-items: center; gap: 6px; }
+        .hidden-roles.show { display: flex; animation: slideRight 0.3s ease; }
+        @keyframes slideRight { from { opacity: 0; transform: translateX(-10px); } to { opacity: 1; transform: translateX(0); } }
+        .fb-link { color: #0084ff; text-decoration: none; font-size: 0.9rem; margin-left: auto; transition: 0.3s; }
+
+        /* --- Admin UI (Updated to match image) --- */
+        .modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.92); z-index: 1000; align-items: center; justify-content: center; backdrop-filter: blur(10px); }
+        .admin-window { background: #080808; width: 95%; max-width: 900px; height: 85vh; border: 1px solid #222; border-radius: 20px; overflow: hidden; display: flex; flex-direction: column; }
+        .admin-header { padding: 20px 25px; background: #111; border-bottom: 1px solid #222; display: flex; justify-content: space-between; align-items: center; }
+        .admin-body { padding: 25px; overflow-y: auto; flex: 1; }
+        
+        .admin-form-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; margin-bottom: 25px; }
+        .admin-form-grid input { width: 100%; }
+        
+        input, select { padding: 12px 15px; background: #000; border: 1px solid #222; color: #fff; border-radius: 10px; outline: none; font-family: 'Bai Jamjuree'; transition: 0.3s; }
+        input:focus { border-color: #555; }
+        
+        .role-check-container { grid-column: span 2; background: #0e0e0e; padding: 15px; border-radius: 12px; border: 1px solid #1a1a1a; }
+        
+        .btn-save { width: 100%; padding: 15px; background: #fff; color: #000; border: none; border-radius: 10px; font-weight: 900; cursor: pointer; font-family: 'Orbitron'; transition: 0.3s; }
+        .btn-save:hover { background: #ccc; }
+
+        /* Table List UI in Admin */
+        .admin-table-list { margin-top: 30px; border-top: 1px solid #222; padding-top: 20px; }
+        .admin-member-item { 
+            display: flex; align-items: center; justify-content: space-between; 
+            padding: 12px 15px; background: #111; border-radius: 10px; margin-bottom: 10px; 
+            border: 1px solid #1a1a1a; transition: 0.3s;
+        }
+        .admin-member-item:hover { border-color: #444; }
+        .item-info { display: flex; align-items: center; gap: 12px; }
+        .item-avatar { width: 40px; height: 40px; border-radius: 50%; object-fit: cover; border: 1px solid #333; }
+        .item-name { font-size: 0.9rem; font-weight: 600; }
+        .item-actions { display: flex; gap: 10px; }
+        .action-btn { background: none; border: none; color: #666; cursor: pointer; font-size: 1rem; transition: 0.3s; padding: 5px; }
+        .action-btn.edit:hover { color: #fff; }
+        .action-btn.delete:hover { color: #ff4444; }
     </style>
 </head>
 <body>
 
     <nav class="top-nav">
-        <div></div>
+        <div class="member-counter-top">
+            <i class="fa-solid fa-user-group"></i> <span id="countNumber">0</span>
+        </div>
         <div class="nav-btns">
-            <a class="nav-btn" onclick="location.reload()"><i class="fa-solid fa-users"></i> Members</a>
-            <a class="nav-btn" onclick="openAdmin()"><i class="fa-solid fa-shield-halved"></i> Admin</a>
+            <a class="nav-btn" onclick="location.reload()"><i class="fa-solid fa-users"></i> สมาชิก</a>
+            <a class="nav-btn" onclick="openAdmin()"><i class="fa-solid fa-shield-halved"></i> ผู้ดูแล</a>
         </div>
     </nav>
 
     <header class="hero-section">
         <img src="https://img5.pic.in.th/file/secure-sv1/Untitled-17361494911.png" alt="Logo" class="main-logo">
-        <h1 class="hero-title">WELLESLEY</h1>
-        <p class="hero-subtitle">SINCE 2024</p>
+        <h1 class="hero-title">DATABASE</h1>
+        <p class="hero-subtitle">MEMBER MANAGEMENT SYSTEM</p>
     </header>
 
     <div class="search-container">
         <div class="search-box">
-            <input type="text" id="searchInput" placeholder="Search members..." onkeyup="renderMembers()">
+            <input type="text" id="searchInput" placeholder="ค้นหาชื่อสมาชิกที่นี่..." onkeyup="renderMembers()">
         </div>
         <div class="filter-group" id="filterArea"></div>
-    </div>
-
-    <div class="member-header-info">
-        <i class="fa-solid fa-user-tag"></i> MEMBERS (<span id="countNumber">0</span>)
     </div>
 
     <div class="grid-container" id="memberList"></div>
 
     <div id="loginModal" class="modal">
-        <div class="login-box">
-            <h2 style="font-family:'Orbitron'; margin-bottom: 25px;">RESTRICTED AREA</h2>
-            <input type="password" id="adminPass" placeholder="Enter Password" style="width:100%; text-align:center; margin-bottom:20px; font-size:1.2rem; letter-spacing:5px;">
-            <button class="btn-save" onclick="handleLogin()">ACCESS SYSTEM</button>
-            <p onclick="closeModals()" style="margin-top:20px; color:#444; cursor:pointer; font-size:0.8rem;">BACK TO HOME</p>
+        <div class="admin-window" style="max-width: 380px; height: auto;">
+            <div class="admin-body" style="text-align: center; padding: 40px 25px;">
+                <h2 style="font-family:'Orbitron'; margin-bottom: 25px; letter-spacing: 2px;">ADMIN LOGIN</h2>
+                <input type="password" id="adminPass" placeholder="กรอกรหัสผ่าน" style="text-align: center; margin-bottom: 20px; width: 100%;">
+                <button class="btn-save" onclick="handleLogin()">ENTER SYSTEM</button>
+                <p onclick="closeModals()" style="margin-top: 20px; color: #444; cursor: pointer; font-size: 0.8rem;">CANCEL</p>
+            </div>
         </div>
     </div>
 
     <div id="adminPanel" class="modal">
-        <div class="admin-dashboard">
+        <div class="admin-window">
             <div class="admin-header">
-                <h3 style="font-family:'Orbitron'; letter-spacing:2px;"><i class="fa-solid fa-gear"></i> ADMIN DASHBOARD</h3>
+                <h3 style="font-family:'Orbitron'; letter-spacing: 1px;"><i class="fa-solid fa-gears"></i> ADMIN PANEL</h3>
                 <button onclick="closeModals()" style="background:none; border:none; color:#fff; cursor:pointer; font-size: 1.5rem;"><i class="fa-solid fa-xmark"></i></button>
             </div>
-            
             <div class="admin-body">
-                <div id="adminForm">
+                <div id="formSection">
                     <input type="hidden" id="editId">
-                    <div class="management-grid">
-                        <div class="input-group">
-                            <label>Display Name</label>
-                            <input type="text" id="mName" placeholder="เช่น Aef Wellesley">
+                    <div class="admin-form-grid">
+                        <div style="display: flex; flex-direction: column; gap: 5px;">
+                            <label style="font-size: 0.7rem; color: #555; padding-left: 5px;">ชื่อที่แสดง</label>
+                            <input type="text" id="mName" placeholder="ระบุชื่อ">
                         </div>
-                        <div class="input-group">
-                            <label>Facebook Profile Link</label>
-                            <input type="text" id="mFB" placeholder="https://facebook.com/...">
+                        <div style="display: flex; flex-direction: column; gap: 5px;">
+                            <label style="font-size: 0.7rem; color: #555; padding-left: 5px;">ลิงก์ Facebook</label>
+                            <input type="text" id="mFB" placeholder="https://...">
                         </div>
-                        <div class="input-group" style="grid-column: span 2;">
-                            <label>Profile Image URL</label>
+                        <div style="grid-column: span 2; display: flex; flex-direction: column; gap: 5px;">
+                            <label style="font-size: 0.7rem; color: #555; padding-left: 5px;">URL รูปภาพโปรไฟล์</label>
                             <input type="text" id="mImg" placeholder="https://...">
                         </div>
-                        
-                        <div class="role-selector">
-                            <label><i class="fa-solid fa-tags"></i> SYSTEM CATEGORIES</label>
-                            <div id="mRoleCheckboxes" class="checkbox-grid"></div>
+                        <div class="role-check-container">
+                            <span style="font-size:0.7rem; color:#555; display:block; margin-bottom:10px;">เลือกหัวข้อ (Categories)</span>
+                            <div id="mRoleCheckboxes" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 10px;"></div>
                         </div>
                     </div>
-
-                    <div class="btn-row">
-                        <button class="btn-save" id="saveBtn" onclick="saveMember()">SAVE MEMBER DATA</button>
-                        <button class="btn-clear" onclick="resetForm()"><i class="fa-solid fa-rotate-right"></i></button>
-                    </div>
+                    <button class="btn-save" id="saveBtn" onclick="saveMember()">บันทึกข้อมูลสมาชิก</button>
                 </div>
 
-                <div class="admin-member-list">
-                    <h4 style="font-family:'Orbitron'; margin-bottom:20px; color:#555; font-size:0.8rem;">MANAGE MEMBERS</h4>
-                    <div id="adminListContent"></div>
+                <div class="admin-table-list">
+                    <h4 style="font-family:'Orbitron'; font-size: 0.8rem; color: #444; margin-bottom: 15px; letter-spacing: 1px;">MEMBER LIST</h4>
+                    <div id="adminMemberList"></div>
                 </div>
             </div>
         </div>
     </div>
 
     <script>
-        // --- Firebase Configuration ---
         const firebaseConfig = { databaseURL: "https://demoadmin-a4b1f-default-rtdb.asia-southeast1.firebasedatabase.app/" };
         firebase.initializeApp(firebaseConfig);
         const db = firebase.database();
@@ -214,34 +230,43 @@
         let allMembers = [];
         let currentFilter = 'all';
         let isAdmin = false;
-        const defaultCats = ["Leader", "Member", "Wellesley", "Kodomo"];
+        const defaultCats = ["DEMOWATSUT", "DEMO", "WINTERFELL DEMO", "DOKKADON"];
 
-        function openAdmin() { isAdmin ? document.getElementById('adminPanel').style.display='block' : document.getElementById('loginModal').style.display='flex'; }
+        function openAdmin() { isAdmin ? document.getElementById('adminPanel').style.display='flex' : document.getElementById('loginModal').style.display='flex'; }
         function closeModals() { document.querySelectorAll('.modal').forEach(m => m.style.display='none'); }
 
         function handleLogin() {
             if(document.getElementById('adminPass').value === 'demo912') {
                 isAdmin = true; closeModals(); openAdmin();
-            } else { alert("Incorrect Password"); }
+            } else { alert("รหัสผ่านไม่ถูกต้อง"); }
         }
 
-        // Handle Categories/Filters
+        function toggleBadges(btn, id) {
+            const hiddenBox = document.getElementById('extra-'+id);
+            if(hiddenBox.classList.contains('show')) {
+                hiddenBox.classList.remove('show');
+                btn.innerText = '+';
+            } else {
+                hiddenBox.classList.add('show');
+                btn.innerText = '-';
+            }
+        }
+
         db.ref('categories').on('value', snap => {
             const data = snap.val();
-            let filterHtml = `<button class="f-btn active" onclick="setFilter('all', this)">All</button>`;
+            let filterHtml = `<button class="f-btn active" onclick="setFilter('all', this)">ทั้งหมด</button>`;
             let checkHtml = '';
             let catNames = [...defaultCats];
             if(data) { for(let id in data) { if(!catNames.includes(data[id].name)) catNames.push(data[id].name); } }
 
             catNames.forEach(name => {
                 filterHtml += `<button class="f-btn" onclick="setFilter('${name}', this)">${name}</button>`;
-                checkHtml += `<label style="display:flex; align-items:center; gap:8px; font-size:0.85rem; cursor:pointer;"><input type="checkbox" name="roles" value="${name}"> ${name}</label>`;
+                checkHtml += `<label style="display:flex; align-items:center; gap:8px; font-size:0.75rem; cursor:pointer;"><input type="checkbox" name="roles" value="${name}"> ${name}</label>`;
             });
             document.getElementById('filterArea').innerHTML = filterHtml;
             document.getElementById('mRoleCheckboxes').innerHTML = checkHtml;
         });
 
-        // Handle Real-time Members List
         db.ref('members').on('value', snap => {
             allMembers = [];
             const data = snap.val();
@@ -250,21 +275,18 @@
                 const m = {...data[id], id};
                 allMembers.push(m);
                 adminHtml += `
-                    <div class="admin-item">
-                        <div class="admin-item-info">
-                            <img src="${m.image}" class="admin-item-circle" onerror="this.src='https://via.placeholder.com/50'">
-                            <div>
-                                <div style="font-weight:600;">${m.name}</div>
-                                <div style="font-size:0.6rem; color:#444;">ID: ${id}</div>
-                            </div>
+                    <div class="admin-member-item">
+                        <div class="item-info">
+                            <img src="${m.image}" class="item-avatar" onerror="this.src='https://via.placeholder.com/50'">
+                            <span class="item-name">${m.name}</span>
                         </div>
-                        <div class="admin-actions">
-                            <i class="fa-solid fa-pen-to-square btn-edit" onclick="editMember('${id}')"></i>
-                            <i class="fa-solid fa-trash btn-del" onclick="deleteMember('${id}')"></i>
+                        <div class="item-actions">
+                            <button class="action-btn edit" onclick="editMember('${id}')"><i class="fa-solid fa-pen-to-square"></i></button>
+                            <button class="action-btn delete" onclick="deleteMember('${id}')"><i class="fa-solid fa-trash-can"></i></button>
                         </div>
                     </div>`;
             }
-            document.getElementById('adminListContent').innerHTML = adminHtml;
+            document.getElementById('adminMemberList').innerHTML = adminHtml;
             renderMembers();
         });
 
@@ -277,15 +299,18 @@
                 image: document.getElementById('mImg').value || 'https://via.placeholder.com/150',
                 facebook: document.getElementById('mFB').value || '#'
             };
-            if(!data.name || roles.length === 0) return alert("กรุณาใส่ชื่อและเลือกหัวข้ออย่างน้อย 1 อย่าง");
-            
-            if(id) {
-                await db.ref('members/'+id).set(data);
-            } else {
-                await db.ref('members').push(data);
-            }
-            resetForm();
-            alert("บันทึกข้อมูลเรียบร้อยแล้ว");
+            if(!data.name || roles.length === 0) return alert("กรุณากรอกชื่อและเลือกหัวข้อ");
+            id ? await db.ref('members/'+id).set(data) : await db.ref('members').push(data);
+            resetForm(); alert("ทำรายการสำเร็จ");
+        }
+
+        function resetForm() {
+            document.getElementById('editId').value = '';
+            document.getElementById('mName').value = '';
+            document.getElementById('mImg').value = '';
+            document.getElementById('mFB').value = '';
+            document.querySelectorAll('input[name="roles"]').forEach(cb => cb.checked = false);
+            document.getElementById('saveBtn').innerText = "บันทึกข้อมูลสมาชิก";
         }
 
         function editMember(id) {
@@ -295,22 +320,11 @@
             document.getElementById('mImg').value = m.image;
             document.getElementById('mFB').value = m.facebook;
             document.querySelectorAll('input[name="roles"]').forEach(cb => cb.checked = m.role.includes(cb.value));
-            document.getElementById('saveBtn').innerText = "UPDATE MEMBER DATA";
-            window.scrollTo({ top: 0, behavior: 'smooth' });
+            document.getElementById('saveBtn').innerText = "แก้ไขข้อมูล";
+            document.querySelector('.admin-body').scrollTo({ top: 0, behavior: 'smooth' });
         }
 
-        async function deleteMember(id) {
-            if(confirm("ยืนยันการลบสมาชิกนี้?")) await db.ref('members/'+id).remove();
-        }
-
-        function resetForm() {
-            document.getElementById('editId').value = '';
-            document.getElementById('mName').value = '';
-            document.getElementById('mImg').value = '';
-            document.getElementById('mFB').value = '';
-            document.querySelectorAll('input[name="roles"]').forEach(cb => cb.checked = false);
-            document.getElementById('saveBtn').innerText = "SAVE MEMBER DATA";
-        }
+        async function deleteMember(id) { if(confirm("ต้องการลบข้อมูลนี้ใช่หรือไม่?")) await db.ref('members/'+id).remove(); }
 
         function setFilter(role, btn) {
             currentFilter = role;
@@ -329,19 +343,28 @@
             document.getElementById('countNumber').innerText = filtered.length;
             document.getElementById('memberList').innerHTML = filtered.map((m, idx) => {
                 const roles = Array.isArray(m.role) ? m.role : [m.role];
+                const firstRole = roles[0];
+                const otherRoles = roles.slice(1);
+                
                 return `
-                <div class="member-card" style="animation: fadeInUp 0.5s ease forwards; animation-delay: ${idx * 0.05}s">
+                <div class="member-card" style="animation-delay: ${idx * 0.05}s">
                     <div class="avatar-box">
                         <img src="${m.image}" onerror="this.src='https://via.placeholder.com/150'">
                     </div>
-                    <div class="member-info" style="flex:1;">
+                    <div class="member-info" style="flex:1; overflow:hidden;">
                         <h3>${m.name}</h3>
                         <div class="tag-row">
-                            <span class="role-badge">${roles[0]}</span>
-                            <a href="${m.facebook}" target="_blank" class="fb-link">Facebook</a>
+                            <span class="role-badge" style="color:#fff; border-color:#333;">${firstRole}</span>
+                            ${otherRoles.length > 0 ? `
+                                <div class="plus-badge" onclick="toggleBadges(this, '${m.id}')">+</div>
+                                <div class="hidden-roles" id="extra-${m.id}">
+                                    ${otherRoles.map(r => `<span class="role-badge">${r}</span>`).join('')}
+                                </div>
+                            ` : ''}
+                            <a href="${m.facebook}" target="_blank" class="fb-link"><i class="fa-brands fa-facebook"></i></a>
                         </div>
                     </div>
-                </div>`;
+                </div>`
             }).join('');
         }
     </script>
