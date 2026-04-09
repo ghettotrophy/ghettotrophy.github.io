@@ -14,86 +14,154 @@
 
     <style>
         :root {
-            --accent: #ffc107; /* สีเริ่มต้น */
+            --accent: #ffc107;
             --bg: #0a0a0a;
             --card-bg: rgba(255, 255, 255, 0.03);
             --border: rgba(255, 255, 255, 0.08);
-            --transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
-            --glass: rgba(20, 20, 20, 0.85);
+            --transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1); /* Ultra Smooth Ease-Out */
+            --glass: rgba(15, 15, 15, 0.8);
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { background-color: var(--bg); color: #fff; font-family: 'Inter', sans-serif; overflow-x: hidden; transition: background 0.3s; }
+        /* Base Setup */
+        html { scroll-behavior: smooth; }
+        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-font-smoothing: antialiased; }
+        body { 
+            background-color: var(--bg); 
+            color: #fff; 
+            font-family: 'Inter', sans-serif; 
+            overflow-x: hidden; 
+            transition: background 0.5s ease;
+        }
+
+        /* Keyframes */
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); filter: blur(10px); }
+            to { opacity: 1; transform: translateY(0); filter: blur(0); }
+        }
+
+        @keyframes alertIn {
+            0% { transform: translateY(-100px) scale(0.9); opacity: 0; }
+            100% { transform: translateY(0) scale(1); opacity: 1; }
+        }
 
         #customAlert {
-            position: fixed; top: 20px; right: 20px; z-index: 10000;
-            background: var(--accent); color: #000; padding: 15px 30px;
-            border-radius: 12px; font-weight: 700; display: none;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.4);
-            animation: slideIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: fixed; top: 30px; left: 50%; transform: translateX(-50%);
+            z-index: 10000; background: var(--accent); color: #000;
+            padding: 12px 35px; border-radius: 50px; font-weight: 800;
+            display: none; font-family: 'Orbitron'; font-size: 0.8rem;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+            animation: alertIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
-        @keyframes slideIn { from { transform: translateX(120%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
 
+        /* Fixed Elements */
         .member-count {
             position: fixed; top: 25px; left: 25px; z-index: 101;
-            font-family: 'Orbitron'; font-size: 0.7rem; letter-spacing: 2px;
-            background: var(--glass); padding: 10px 20px; border-radius: 50px;
-            backdrop-filter: blur(15px); border: 1px solid var(--border);
-        }
-
-        .top-nav { padding: 25px 5%; display: flex; justify-content: flex-end; position: absolute; width: 100%; z-index: 100; pointer-events: none; }
-        .nav-btn { pointer-events: auto; color: #fff; text-decoration: none; cursor: pointer; font-size: 0.7rem; font-weight: 700; opacity: 0.6; transition: var(--transition); letter-spacing: 2px; background: var(--glass); padding: 10px 20px; border-radius: 12px; border: 1px solid var(--border); }
-        .nav-btn:hover { opacity: 1; border-color: var(--accent); color: var(--accent); }
-
-        .hero-section { padding: 140px 20px 60px; text-align: center; display: flex; flex-direction: column; align-items: center; justify-content: center; }
-        .hero-title { font-family: 'Orbitron'; font-size: clamp(2.5rem, 8vw, 4.5rem); letter-spacing: 15px; text-transform: uppercase; margin: 10px 0; font-weight: 700; }
-        .glow-text { text-shadow: 0 0 25px var(--accent); color: var(--accent) !important; }
-
-        .logo-container { display: flex; justify-content: center; width: 100%; margin-bottom: 25px; }
-        #siteLogo { height: auto; display: block; margin: 0 auto; }
-
-        .grid-container { 
-            display: grid; 
-            grid-template-columns: repeat(3, 1fr);
-            gap: 20px; padding: 40px 5%; max-width: 1400px; margin: 0 auto;
-        }
-        @media (max-width: 900px) { .grid-container { grid-template-columns: repeat(2, 1fr); } }
-        @media (max-width: 600px) { .grid-container { grid-template-columns: 1fr; } }
-
-        .member-card { 
-            background: var(--card-bg); border: 1px solid var(--border); border-radius: 15px; 
-            padding: 20px; display: flex; align-items: center; gap: 15px; overflow: hidden;
+            font-family: 'Orbitron'; font-size: 0.65rem; letter-spacing: 2px;
+            background: var(--glass); padding: 12px 22px; border-radius: 50px;
+            backdrop-filter: blur(20px); border: 1px solid var(--border);
             transition: var(--transition);
         }
+
+        .top-nav { padding: 25px 5%; display: flex; justify-content: flex-end; position: fixed; width: 100%; z-index: 100; pointer-events: none; }
+        .nav-btn { 
+            pointer-events: auto; color: #fff; text-decoration: none; cursor: pointer; 
+            font-size: 0.65rem; font-weight: 700; background: var(--glass); 
+            padding: 12px 22px; border-radius: 50px; border: 1px solid var(--border);
+            backdrop-filter: blur(20px); transition: var(--transition); letter-spacing: 2px;
+        }
+        .nav-btn:hover { border-color: var(--accent); color: var(--accent); transform: translateY(-2px); box-shadow: 0 5px 15px rgba(0,0,0,0.3); }
+
+        /* Hero */
+        .hero-section { padding: 180px 20px 80px; text-align: center; }
+        .hero-title { 
+            font-family: 'Orbitron'; font-size: clamp(2.5rem, 10vw, 5rem); 
+            letter-spacing: 20px; text-transform: uppercase; margin: 15px 0; 
+            font-weight: 700; animation: fadeInUp 1s ease forwards;
+        }
+        .hero-subtitle { animation: fadeInUp 1.2s ease forwards; }
+
+        .logo-container { 
+            display: flex; justify-content: center; width: 100%; margin-bottom: 30px; 
+            animation: fadeInUp 0.8s ease forwards;
+        }
+        #siteLogo { height: auto; display: block; filter: drop-shadow(0 0 20px rgba(255,255,255,0.1)); transition: var(--transition); }
+        #siteLogo:hover { transform: scale(1.05); }
+
+        /* Grid & Cards */
+        .grid-container { 
+            display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 25px; padding: 20px 5% 100px; max-width: 1400px; margin: 0 auto;
+        }
+
+        .member-card { 
+            background: var(--card-bg); border: 1px solid var(--border); border-radius: 20px; 
+            padding: 24px; display: flex; align-items: center; gap: 20px;
+            transition: var(--transition); position: relative;
+            animation: fadeInUp 0.8s ease backwards;
+        }
+        .member-card:hover { 
+            background: rgba(255, 255, 255, 0.06); transform: translateY(-8px) scale(1.02);
+            border-color: var(--accent); box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+        }
         
+        .avatar-wrapper { 
+            width: 75px; height: 75px; border-radius: 18px; overflow: hidden; 
+            flex-shrink: 0; border: 2px solid var(--border); transition: var(--transition);
+        }
+        .member-card:hover .avatar-wrapper { border-color: var(--accent); transform: rotate(-3deg); }
+        .avatar-wrapper img { width: 100%; height: 100%; object-fit: cover; transition: 0.5s ease; }
+        .member-card:hover .avatar-wrapper img { transform: scale(1.1); }
+
+        .member-name { font-size: 1.1rem; font-family: 'Orbitron'; margin-bottom: 4px; }
+
+        /* Styles */
         .style-gradient { border: 2px solid transparent; background-image: linear-gradient(var(--bg), var(--bg)), linear-gradient(45deg, var(--accent), #fff); background-origin: border-box; background-clip: padding-box, border-box; }
-        .style-glass { backdrop-filter: blur(10px); background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.15); }
+        .style-glass { backdrop-filter: blur(15px); background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.1); }
 
-        .member-name { font-size: 1rem; font-family: 'Orbitron'; word-break: break-all; }
-        .avatar-wrapper { width: 65px; height: 65px; border-radius: 12px; overflow: hidden; flex-shrink: 0; border: 1px solid var(--border); }
-        .avatar-wrapper img { width: 100%; height: 100%; object-fit: cover; }
+        /* Search Bar */
+        #searchInput {
+            width: 100%; max-width: 450px; padding: 18px 30px;
+            background: var(--glass); border: 1px solid var(--border);
+            border-radius: 50px; color: #fff; font-family: 'Inter';
+            outline: none; backdrop-filter: blur(20px); transition: var(--transition);
+            margin-bottom: 20px;
+        }
+        #searchInput:focus { border-color: var(--accent); box-shadow: 0 0 30px rgba(255,193,7,0.1); transform: scale(1.02); }
 
-        .modal { position: fixed; inset: 0; background: rgba(0,0,0,0.95); z-index: 1000; display: none; align-items: center; justify-content: center; backdrop-filter: blur(15px); }
-        .admin-window { background: #111; width: 95%; max-width: 1100px; height: 85vh; border-radius: 20px; border: 1px solid #222; display: flex; flex-direction: column; overflow: hidden; }
-        .admin-body { padding: 30px; overflow-y: auto; display: grid; grid-template-columns: 1fr 1fr; gap: 25px; }
-        @media (max-width: 800px) { .admin-body { grid-template-columns: 1fr; } }
+        /* Modals */
+        .modal { 
+            position: fixed; inset: 0; background: rgba(0,0,0,0.9); z-index: 1000; 
+            display: none; align-items: center; justify-content: center; backdrop-filter: blur(20px);
+            opacity: 0; transition: opacity 0.4s ease;
+        }
+        .modal.show { display: flex; opacity: 1; }
 
-        .admin-section { background: #181818; padding: 25px; border-radius: 15px; border: 1px solid #222; }
-        label { font-size: 0.7rem; color: var(--accent); letter-spacing: 1px; text-transform: uppercase; display: block; margin-top: 10px; }
-        input, select { background: #000; border: 1px solid #333; color: #fff; padding: 12px; border-radius: 8px; width: 100%; margin: 8px 0 10px; outline: none; font-family: 'Inter'; }
-        
-        .btn-primary { background: var(--accent); color: #000; border: none; width: 100%; padding: 15px; border-radius: 10px; font-weight: 700; cursor: pointer; font-family: 'Orbitron'; font-size: 0.75rem; transition: 0.3s; }
-        .btn-primary:hover { filter: brightness(1.2); }
+        .admin-window { 
+            background: #0f0f0f; width: 95%; max-width: 1000px; height: 85vh; 
+            border-radius: 30px; border: 1px solid #222; overflow: hidden;
+            transform: translateY(30px); transition: 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .modal.show .admin-window { transform: translateY(0); }
 
-        .music-player { position: fixed; bottom: 35px; right: 35px; z-index: 100; background: var(--accent); color: #000; width: 55px; height: 55px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: 0.3s; }
-        .style-preview { padding: 10px; border: 1px solid #333; margin-bottom: 10px; border-radius: 10px; cursor: pointer; font-size: 0.8rem; text-align: center; }
-        .style-preview.selected { border-color: var(--accent); background: rgba(255,193,7,0.1); }
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: var(--bg); }
+        ::-webkit-scrollbar-thumb { background: #333; border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: var(--accent); }
+
+        .music-player { 
+            position: fixed; bottom: 35px; right: 35px; z-index: 100; 
+            background: var(--accent); color: #000; width: 60px; height: 60px; 
+            border-radius: 50%; display: flex; align-items: center; justify-content: center; 
+            cursor: pointer; transition: var(--transition); box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+        .music-player:hover { transform: rotate(15deg) scale(1.1); filter: brightness(1.1); }
     </style>
 </head>
 <body>
 
-    <div id="customAlert">DONE!</div>
-    <div class="member-count">MEMBER: <span id="countNum">0</span></div>
+    <div id="customAlert">SYSTEM UPDATED</div>
+    <div class="member-count">DATABASE: <span id="countNum">0</span></div>
 
     <div class="music-player" onclick="toggleMusic()">
         <i id="musicIcon" class="fa-solid fa-play"></i>
@@ -101,7 +169,7 @@
     <audio id="bgMusic" loop></audio>
 
     <nav class="top-nav">
-        <a class="nav-btn" onclick="openAdmin()"><i class="fa-solid fa-shield-halved"></i> CONTROL</a>
+        <a class="nav-btn" onclick="openAdmin()"><i class="fa-solid fa-gear"></i> CONFIG</a>
     </nav>
 
     <header class="hero-section">
@@ -109,68 +177,70 @@
             <img src="" alt="" id="siteLogo" style="display: none;">
         </div>
         <h1 class="hero-title" id="siteNameDisplay">GHETTO</h1>
-        <p class="hero-subtitle" id="siteDescDisplay" style="opacity: 0.5; letter-spacing: 4px; font-size: 0.8rem;"></p>
+        <p class="hero-subtitle" id="siteDescDisplay" style="opacity: 0.4; letter-spacing: 6px; font-size: 0.75rem; text-transform: uppercase;"></p>
     </header>
 
-    <div style="text-align: center; padding-bottom: 40px;">
-        <input type="text" id="searchInput" placeholder="SEARCH..." onkeyup="renderMembers()" style="max-width: 500px; text-align: center; background: var(--card-bg); border-radius: 50px; border: 1px solid var(--border);">
+    <div style="display: flex; justify-content: center; padding: 0 20px;">
+        <input type="text" id="searchInput" placeholder="SEARCH MEMBER..." onkeyup="renderMembers()">
     </div>
 
     <div id="memberList" class="grid-container"></div>
 
     <div id="loginModal" class="modal">
-        <div style="background:#161616; padding:40px; border-radius:24px; width:380px; text-align:center; border: 1px solid var(--border);">
-            <h2 style="font-family:'Orbitron'; font-size:1.2rem; margin-bottom:25px; color:var(--accent); letter-spacing:3px;">ADMIN LOGIN</h2>
-            <div style="text-align:left; margin-bottom:15px;">
-                <label>USERNAME</label>
-                <input type="text" id="adminUser" placeholder="User">
-                <label>PASSWORD</label>
-                <input type="password" id="adminPass" placeholder="Pass">
-            </div>
-            <button class="btn-primary" onclick="handleLogin()">LOGIN</button>
-            <p onclick="closeModals()" style="margin-top:20px; cursor:pointer; font-size:0.6rem; opacity:0.5;">CANCEL</p>
+        <div style="background:#111; padding:50px; border-radius:30px; width:400px; text-align:center; border: 1px solid #222;">
+            <h2 style="font-family:'Orbitron'; font-size:1.1rem; margin-bottom:30px; color:var(--accent); letter-spacing:4px;">ADMIN SECURE</h2>
+            <input type="text" id="adminUser" placeholder="Username" style="text-align:center; border-radius:15px;">
+            <input type="password" id="adminPass" placeholder="Password" style="text-align:center; border-radius:15px;">
+            <button class="btn-primary" onclick="handleLogin()" style="margin-top:15px;">ACCESS SYSTEM</button>
+            <p onclick="closeModals()" style="margin-top:25px; cursor:pointer; font-size:0.6rem; opacity:0.3; letter-spacing:1px;">DISCARD</p>
         </div>
     </div>
 
     <div id="adminPanel" class="modal">
         <div class="admin-window">
-            <div style="padding: 20px; border-bottom:1px solid #222; display:flex; justify-content:space-between;">
-                <span style="color:var(--accent); font-family:'Orbitron';">ADMIN CONTROL</span>
-                <i class="fa-solid fa-xmark" onclick="closeModals()" style="cursor:pointer;"></i>
+            <div style="padding: 25px; border-bottom:1px solid #222; display:flex; justify-content:space-between; align-items:center; background:#111;">
+                <span style="color:var(--accent); font-family:'Orbitron'; font-size:0.8rem; letter-spacing:2px;">DASHBOARD V2.0</span>
+                <i class="fa-solid fa-circle-xmark" onclick="closeModals()" style="cursor:pointer; opacity:0.5; font-size:1.2rem;"></i>
             </div>
             <div class="admin-body">
                 <div class="admin-section">
-                    <label>Site Name</label><input type="text" id="confName">
-                    <label>Sub Name</label><input type="text" id="confDesc">
-                    <label>Logo URL (Center)</label><input type="text" id="confLogo">
-                    <label>Logo Size (px)</label><input type="number" id="confLogoSize">
-                    <label>Favicon URL</label><input type="text" id="confFavicon">
-                    <label>Theme Color</label><input type="color" id="confTheme" style="height:50px; cursor:pointer;">
-                    <label>Music URL</label><input type="text" id="confMusic">
-                    <div style="margin:10px 0; display:flex; gap:10px; align-items:center;">
-                        <input type="checkbox" id="confAutoPlay" style="width:auto; margin:0;"> <label style="margin:0;">Autoplay Music</label>
+                    <label>General Identity</label>
+                    <input type="text" id="confName" placeholder="Site Name">
+                    <input type="text" id="confDesc" placeholder="Site Description">
+                    <label>Branding</label>
+                    <input type="text" id="confLogo" placeholder="Logo Image URL">
+                    <input type="number" id="confLogoSize" placeholder="Logo Size (px)">
+                    <input type="text" id="confFavicon" placeholder="Favicon URL">
+                    <label>Visual & Sound</label>
+                    <div style="display:flex; gap:15px; align-items:center; margin-bottom:15px;">
+                        <input type="color" id="confTheme" style="width:60px; height:45px; padding:2px; border:none;">
+                        <span style="font-size:0.7rem; opacity:0.5;">Accent Color</span>
                     </div>
-                    <label>Card Style</label>
-                    <div style="display:grid; grid-template-columns: 1fr 1fr 1fr; gap:10px; margin-top:10px;">
+                    <input type="text" id="confMusic" placeholder="BGM URL (Direct Link)">
+                    <div style="display:flex; gap:10px; align-items:center; margin-bottom:20px;">
+                        <input type="checkbox" id="confAutoPlay" style="width:auto;"> <label style="margin:0;">Enable Autoplay</label>
+                    </div>
+                    <label>Card Visual</label>
+                    <div style="display:grid; grid-template-columns: 1fr 1fr 1fr; gap:10px;">
                         <div class="style-preview" id="s1" onclick="selectStyle('default')">Modern</div>
                         <div class="style-preview" id="s2" onclick="selectStyle('style-gradient')">Neon</div>
                         <div class="style-preview" id="s3" onclick="selectStyle('style-glass')">Glass</div>
                     </div>
-                    <button class="btn-primary" style="margin-top:20px" onclick="saveConfig()">SAVE SYSTEM</button>
+                    <button class="btn-primary" style="margin-top:30px" onclick="saveConfig()">SYNC CHANGES</button>
                 </div>
 
                 <div class="admin-section">
-                    <label>Categories (LEADER, STAFF)</label>
-                    <input type="text" id="confCats">
-                    <div id="memberForm">
+                    <label>Role Management</label>
+                    <input type="text" id="confCats" placeholder="e.g. CEO, STAFF, MEMBER">
+                    <div id="memberForm" style="background:#0a0a0a; padding:20px; border-radius:15px; border:1px solid #222;">
                         <input type="hidden" id="editId">
-                        <label>Member Name</label><input type="text" id="mName">
-                        <label>Role</label><select id="mRoleSelect"></select>
-                        <label>Avatar URL</label><input type="text" id="mImg">
-                        <label>Facebook</label><input type="text" id="mFB">
-                        <button class="btn-primary" onclick="saveMember()" id="saveBtn">ADD MEMBER</button>
+                        <input type="text" id="mName" placeholder="Full Name">
+                        <select id="mRoleSelect"></select>
+                        <input type="text" id="mImg" placeholder="Avatar URL">
+                        <input type="text" id="mFB" placeholder="Social Link">
+                        <button class="btn-primary" onclick="saveMember()" id="saveBtn">UPDATE LIST</button>
                     </div>
-                    <div id="adminMemberList" style="margin-top:20px; max-height:200px; overflow-y:auto;"></div>
+                    <div id="adminMemberList" style="margin-top:20px; max-height:280px; overflow-y:auto; padding-right:5px;"></div>
                 </div>
             </div>
         </div>
@@ -183,55 +253,42 @@
 
         let allMembers = [], siteConfig = {}, isAdmin = false, selectedStyle = 'default';
 
-        // --- Auth ---
-        function openAdmin() { (isAdmin ? document.getElementById('adminPanel') : document.getElementById('loginModal')).style.display = 'flex'; }
-        function closeModals() { document.querySelectorAll('.modal').forEach(m => m.style.display = 'none'); }
+        function openAdmin() { 
+            const m = isAdmin ? document.getElementById('adminPanel') : document.getElementById('loginModal');
+            m.classList.add('show');
+        }
+        
+        function closeModals() { 
+            document.querySelectorAll('.modal').forEach(m => m.classList.remove('show'));
+        }
         
         function handleLogin() {
             const user = document.getElementById('adminUser').value;
             const pass = document.getElementById('adminPass').value;
             if(user !== "" && pass === 'ghett9871') {
-                isAdmin = true; closeModals(); openAdmin();
-                showAlert("WELCOME ADMIN");
-            } else alert("Invalid Login");
+                isAdmin = true; closeModals(); setTimeout(openAdmin, 400);
+                showAlert("SYSTEM AUTHENTICATED");
+            } else alert("Access Denied");
         }
 
         function showAlert(txt) {
             const a = document.getElementById('customAlert');
             a.innerText = txt; a.style.display = 'block';
-            setTimeout(() => a.style.display = 'none', 3000);
+            setTimeout(() => { a.style.opacity = '0'; setTimeout(()=> {a.style.display='none'; a.style.opacity='1'}, 500)}, 2500);
         }
 
-        // --- Config Logic ---
         db.ref('config').on('value', snap => {
             const d = snap.val() || {}; siteConfig = d;
-            
-            // Apply Site Content
             document.getElementById('siteNameDisplay').innerText = d.name || 'GHETTO';
             document.getElementById('siteDescDisplay').innerText = d.desc || 'SYSTEM OPERATIONAL';
-            
-            // Logo Center
             const logo = document.getElementById('siteLogo');
-            if(d.logo) { 
-                logo.src = d.logo; 
-                logo.style.width = (d.logoSize || 120) + 'px'; 
-                logo.style.display = 'block'; 
-            } else { logo.style.display = 'none'; }
-
-            // Favicon
+            if(d.logo) { logo.src = d.logo; logo.style.width = (d.logoSize || 120) + 'px'; logo.style.display = 'block'; }
+            else { logo.style.display = 'none'; }
             if(d.favicon) document.getElementById('favicon').href = d.favicon;
-
-            // Theme Color
             if(d.themeColor) document.documentElement.style.setProperty('--accent', d.themeColor);
-
-            // Music
             const music = document.getElementById('bgMusic');
-            if(d.music && music.src !== d.music) {
-                music.src = d.music;
-                if(d.autoplay) music.play().catch(() => {});
-            }
+            if(d.music && music.src !== d.music) { music.src = d.music; if(d.autoplay) music.play().catch(()=>{}); }
 
-            // Sync Admin Inputs
             document.getElementById('confName').value = d.name || '';
             document.getElementById('confDesc').value = d.desc || '';
             document.getElementById('confLogo').value = d.logo || '';
@@ -272,20 +329,19 @@
                 cardStyle: selectedStyle,
                 categories: document.getElementById('confCats').value
             });
-            showAlert("SYSTEM UPDATED!");
+            showAlert("CONFIG SYNCED");
         }
 
-        // --- Member Logic ---
         db.ref('members').on('value', snap => {
             allMembers = []; const data = snap.val();
             let adminHtml = '';
             for(let id in data) {
                 const m = {...data[id], id}; allMembers.push(m);
-                adminHtml += `<div style="display:flex; justify-content:space-between; padding:10px; background:#000; margin-bottom:5px; border-radius:8px;">
+                adminHtml += `<div style="display:flex; justify-content:space-between; padding:12px; background:#000; margin-bottom:8px; border-radius:12px; border:1px solid #222; font-size:0.8rem;">
                     <span>${m.name}</span>
-                    <div style="display:flex; gap:10px; color:var(--accent); cursor:pointer;">
-                        <i class="fa-solid fa-edit" onclick="editMember('${id}')"></i> 
-                        <i class="fa-solid fa-trash" onclick="deleteMember('${id}')"></i>
+                    <div style="display:flex; gap:12px; color:var(--accent); cursor:pointer;">
+                        <i class="fa-solid fa-pen-to-square" onclick="editMember('${id}')"></i> 
+                        <i class="fa-solid fa-trash-can" onclick="deleteMember('${id}')"></i>
                     </div>
                 </div>`;
             }
@@ -299,13 +355,15 @@
             const list = document.getElementById('memberList');
             const filtered = allMembers.filter(m => m.name.toLowerCase().includes(search));
             
-            list.innerHTML = filtered.map(m => `
-                <div class="member-card ${siteConfig.cardStyle || 'default'}">
+            list.innerHTML = filtered.map((m, index) => `
+                <div class="member-card ${siteConfig.cardStyle || 'default'}" style="animation-delay: ${index * 0.1}s">
                     <div class="avatar-wrapper"><img src="${m.image || 'https://via.placeholder.com/150'}"></div>
                     <div>
                         <div class="member-name">${m.name}</div>
-                        <div style="font-size:0.6rem; color:var(--accent); font-family:'Orbitron';">${m.role || 'MEMBER'}</div>
-                        ${m.facebook ? `<a href="${m.facebook}" target="_blank" style="color:#fff; font-size:0.8rem; opacity:0.6;"><i class="fa-brands fa-facebook"></i></a>` : ''}
+                        <div style="font-size:0.6rem; color:var(--accent); font-family:'Orbitron'; font-weight:700; letter-spacing:1px;">${m.role || 'MEMBER'}</div>
+                        <div style="margin-top:8px;">
+                            ${m.facebook ? `<a href="${m.facebook}" target="_blank" style="color:#fff; font-size:0.9rem; opacity:0.4; transition:0.3s;" onmouseover="this.style.opacity=1" onmouseout="this.style.opacity=0.4"><i class="fa-brands fa-facebook"></i></a>` : ''}
+                        </div>
                     </div>
                 </div>
             `).join('');
@@ -319,10 +377,10 @@
                 image: document.getElementById('mImg').value,
                 facebook: document.getElementById('mFB').value
             };
-            if(!data.name) return alert("Enter Name");
+            if(!data.name) return alert("Missing Information");
             id ? await db.ref('members/'+id).set(data) : await db.ref('members').push(data);
             resetForm();
-            showAlert("MEMBER SAVED!");
+            showAlert("MEMBER UPDATED");
         }
 
         function editMember(id) {
@@ -332,10 +390,10 @@
             document.getElementById('mRoleSelect').value = m.role;
             document.getElementById('mImg').value = m.image;
             document.getElementById('mFB').value = m.facebook;
-            document.getElementById('saveBtn').innerText = "UPDATE MEMBER";
+            document.getElementById('saveBtn').innerText = "SAVE CHANGES";
         }
 
-        async function deleteMember(id) { if(confirm("Delete this member?")) await db.ref('members/'+id).remove(); }
+        async function deleteMember(id) { if(confirm("Confirm deletion?")) await db.ref('members/'+id).remove(); }
         function resetForm() { document.getElementById('editId').value = ''; document.getElementById('mName').value = ''; document.getElementById('saveBtn').innerText = "ADD MEMBER"; }
 
         function toggleMusic() {
