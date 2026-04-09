@@ -31,11 +31,7 @@
             min-height: 100vh;
         }
 
-        ::-webkit-scrollbar { width: 4px; }
-        ::-webkit-scrollbar-track { background: #000; }
-        ::-webkit-scrollbar-thumb { background: #333; }
-
-        /* --- Header & Logo --- */
+        /* --- Header & Navigation --- */
         .top-nav {
             padding: 20px 5%;
             display: flex;
@@ -46,11 +42,9 @@
             position: sticky; top: 0; z-index: 100;
         }
 
-        /* จำนวนสมาชิกซ้ายบน */
         .member-counter-top {
             font-family: 'Orbitron';
             font-size: 1.1rem;
-            color: #fff;
             display: flex;
             align-items: center;
             gap: 8px;
@@ -65,6 +59,7 @@
         .nav-btn { color: #888; text-decoration: none; cursor: pointer; transition: 0.3s; font-size: 0.9rem; }
         .nav-btn:hover { color: #fff; }
 
+        /* --- Hero Section --- */
         .hero-section { text-align: center; padding: 60px 20px; }
         .main-logo { width: 120px; margin-bottom: 20px; filter: drop-shadow(0 0 10px rgba(255,255,255,0.3)); }
         .hero-title { font-family: 'Orbitron'; font-size: 2.5rem; letter-spacing: 8px; text-transform: uppercase; text-shadow: 0 0 20px var(--accent-glow); }
@@ -72,18 +67,14 @@
 
         /* --- Search & Filters --- */
         .search-container { max-width: 600px; margin: 0 auto 40px; padding: 0 20px; }
-        .search-box { position: relative; }
         .search-box input {
             width: 100%; padding: 15px 25px; background: #111; border: 1px solid #222;
             border-radius: 100px; color: #fff; outline: none; transition: 0.3s;
         }
-        .search-box input:focus { border-color: #444; box-shadow: 0 0 15px rgba(255,255,255,0.05); }
-
         .filter-group { display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; margin-top: 20px; }
         .f-btn {
             background: #111; border: 1px solid #222; color: #666;
-            padding: 6px 20px; border-radius: 100px; cursor: pointer; font-size: 0.75rem; transition: 0.3s;
-            font-family: 'Orbitron';
+            padding: 6px 20px; border-radius: 100px; cursor: pointer; font-size: 0.75rem; transition: 0.3s; font-family: 'Orbitron';
         }
         .f-btn.active { background: #ffc107; color: #000; border-color: #ffc107; }
 
@@ -92,23 +83,17 @@
             display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
             gap: 20px; padding: 0 5% 100px; max-width: 1200px; margin: 0 auto;
         }
-
         .member-card {
             background: #111; border: 1px solid #222; border-radius: 15px;
-            padding: 15px; display: flex; align-items: center; gap: 20px;
-            transition: 0.3s;
+            padding: 15px; display: flex; align-items: center; gap: 20px; transition: 0.3s;
         }
-        .member-card:hover { transform: translateY(-3px); border-color: #444; background: #151515; }
-        
         .avatar-box { width: 70px; height: 70px; border-radius: 50%; overflow: hidden; border: 2px solid #222; flex-shrink: 0; }
         .avatar-box img { width: 100%; height: 100%; object-fit: cover; }
-        
         .member-info h3 { font-size: 1.1rem; font-family: 'Orbitron'; margin-bottom: 5px; color: #eee; }
-        .tag-row { display: flex; align-items: center; gap: 10px; }
         .role-badge { background: #222; color: #aaa; padding: 2px 12px; border-radius: 5px; font-size: 0.65rem; font-weight: 600; text-transform: uppercase; }
         .fb-link { color: #0084ff; text-decoration: none; font-size: 0.8rem; }
 
-        /* --- Admin UI --- */
+        /* --- Admin UI (Modernized) --- */
         .modal {
             display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.95);
             z-index: 1000; align-items: center; justify-content: center; backdrop-filter: blur(10px);
@@ -117,34 +102,34 @@
             background: #0a0a0a; width: 90%; max-width: 800px; max-height: 90vh;
             border: 1px solid #222; border-radius: 15px; overflow: hidden; display: flex; flex-direction: column;
         }
-        .admin-header { padding: 20px; border-bottom: 1px solid #222; display: flex; justify-content: space-between; align-items: center; }
+        .admin-header { 
+            padding: 20px; 
+            border-bottom: 1px solid #222; 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            background: #000;
+        }
+        .admin-header-actions { display: flex; align-items: center; gap: 20px; }
+        .home-link { color: #fff; text-decoration: none; font-size: 0.8rem; font-family: 'Orbitron'; display: flex; align-items: center; gap: 5px; opacity: 0.7; transition: 0.3s; }
+        .home-link:hover { opacity: 1; }
+
         .admin-body { padding: 25px; overflow-y: auto; }
-
         .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 20px; }
-        @media (max-width: 600px) { .form-grid { grid-template-columns: 1fr; } }
-
-        .input-group { margin-bottom: 15px; }
-        .input-group label { display: block; font-size: 0.7rem; color: #555; margin-bottom: 5px; text-transform: uppercase; }
         input, select {
             width: 100%; padding: 12px; background: #000; border: 1px solid #222;
             color: #fff; border-radius: 8px; outline: none; transition: 0.3s;
         }
-        input:focus { border-color: var(--accent); }
-
         .btn-save {
             width: 100%; padding: 15px; background: #fff; color: #000; border: none;
             border-radius: 8px; font-weight: 900; cursor: pointer; font-family: 'Orbitron';
         }
-
-        .manage-list { margin-top: 30px; border-top: 1px solid #222; padding-top: 20px; }
         .admin-item {
             display: flex; justify-content: space-between; align-items: center;
             background: #111; padding: 12px 20px; border-radius: 8px; margin-bottom: 10px;
         }
-        .admin-item-info span { font-size: 0.85rem; color: #888; }
-        .admin-actions i { cursor: pointer; margin-left: 15px; transition: 0.2s; }
-        .fa-edit:hover { color: #ffc107; }
         .fa-trash:hover { color: #ff4444; }
+        .fa-edit:hover { color: #ffc107; }
 
     </style>
 </head>
@@ -154,9 +139,7 @@
         <div class="member-counter-top">
             <i class="fa-solid fa-user-group"></i> <span id="countNumber">0</span>
         </div>
-        
         <div class="logo-text">DEMOWATSUT</div>
-        
         <div class="nav-btns">
             <a class="nav-btn" onclick="location.reload()"><i class="fa-solid fa-users"></i> Members</a>
             <a class="nav-btn" onclick="openAdmin()"><i class="fa-solid fa-shield-halved"></i> Admin</a>
@@ -192,45 +175,45 @@
     <div id="adminPanel" class="modal">
         <div class="admin-window">
             <div class="admin-header">
-                <h3 style="font-family:'Orbitron';">DATABASE MANAGEMENT</h3>
-                <button onclick="closeModals()" style="background:none; border:none; color:#fff; cursor:pointer;"><i class="fa-solid fa-xmark"></i></button>
+                <h3 style="font-family:'Orbitron'; letter-spacing: 2px;">DATABASE MANAGEMENT</h3>
+                <div class="admin-header-actions">
+                    <a href="javascript:void(0)" class="home-link" onclick="closeModals()"><i class="fa-solid fa-house"></i> HOME</a>
+                    <button onclick="closeModals()" style="background:none; border:none; color:#fff; cursor:pointer; font-size: 1.2rem;"><i class="fa-solid fa-xmark"></i></button>
+                </div>
             </div>
+            
             <div class="admin-body">
                 <div id="formSection">
                     <input type="hidden" id="editId">
                     <div class="form-grid">
                         <div class="input-group">
-                            <label>Display Name</label>
-                            <input type="text" id="mName" placeholder="เช่น Ahfei">
+                            <input type="text" id="mName" placeholder="Display Name (เช่น Ahfei)">
                         </div>
                         <div class="input-group">
-                            <label>Category / Role</label>
                             <select id="mRoleSelect"></select>
                         </div>
                         <div class="input-group">
-                            <label>Image URL</label>
-                            <input type="text" id="mImg" placeholder="Link รูปโปรไฟล์">
+                            <input type="text" id="mImg" placeholder="Image URL (Link รูปโปรไฟล์)">
                         </div>
                         <div class="input-group">
-                            <label>Facebook Link</label>
-                            <input type="text" id="mFB" placeholder="Link Facebook">
+                            <input type="text" id="mFB" placeholder="Facebook Link">
                         </div>
                     </div>
                     <button class="btn-save" id="saveBtn" onclick="saveMember()">SAVE MEMBER</button>
                 </div>
 
                 <div class="manage-list">
-                    <h4 style="font-family:'Orbitron'; font-size: 0.8rem; color:#666; margin-bottom: 15px;">MANAGE MEMBERS</h4>
+                    <h4 style="font-family:'Orbitron'; font-size: 0.75rem; color:#666; margin-bottom: 15px; border-bottom: 1px solid #222; padding-bottom: 5px;">MANAGE MEMBERS</h4>
                     <div id="adminMemberList"></div>
                 </div>
                 
                 <div class="manage-list">
-                    <h4 style="font-family:'Orbitron'; font-size: 0.8rem; color:#666; margin-bottom: 15px;">SYSTEM CATEGORIES</h4>
-                    <div style="display: flex; gap: 10px;">
+                    <h4 style="font-family:'Orbitron'; font-size: 0.75rem; color:#666; margin-bottom: 15px; border-bottom: 1px solid #222; padding-bottom: 5px;">SYSTEM CATEGORIES</h4>
+                    <div style="display: flex; gap: 10px; margin-bottom: 15px;">
                         <input type="text" id="newCat" placeholder="Unit Name">
-                        <button onclick="addCategory()" style="background:#222; color:#fff; border:none; padding: 0 20px; border-radius: 8px; cursor: pointer;">ADD</button>
+                        <button onclick="addCategory()" style="background:#222; color:#fff; border:none; padding: 0 25px; border-radius: 8px; cursor: pointer; font-family:'Orbitron'; font-size:0.7rem;">ADD</button>
                     </div>
-                    <div id="adminCatList" style="margin-top: 10px;"></div>
+                    <div id="adminCatList" style="display: flex; flex-wrap: wrap; gap: 8px;"></div>
                 </div>
             </div>
         </div>
@@ -244,56 +227,48 @@
         let allMembers = [];
         let currentFilter = 'all';
         let isAdmin = false;
-
         const defaultCats = ["DEMOWATSUT", "DEMO", "WINTERFELL DEMO", "DOKKADON"];
 
-        function openAdmin() {
-            isAdmin ? document.getElementById('adminPanel').style.display='flex' : document.getElementById('loginModal').style.display='flex';
-        }
-        
-        function closeModals() {
-            document.querySelectorAll('.modal').forEach(m => m.style.display='none');
-        }
+        function openAdmin() { isAdmin ? document.getElementById('adminPanel').style.display='flex' : document.getElementById('loginModal').style.display='flex'; }
+        function closeModals() { document.querySelectorAll('.modal').forEach(m => m.style.display='none'); }
 
         function handleLogin() {
             if(document.getElementById('adminPass').value === 'demo912') {
                 isAdmin = true;
                 closeModals();
                 openAdmin();
-            } else {
-                alert("Incorrect Password");
-            }
+            } else { alert("Incorrect Password"); }
         }
 
+        // --- Category Management ---
         db.ref('categories').on('value', snap => {
             const data = snap.val();
-            let html = `<button class="f-btn active" onclick="setFilter('all', this)">All</button>`;
+            let filterHtml = `<button class="f-btn active" onclick="setFilter('all', this)">All</button>`;
             let selectHtml = '';
             let adminCatHtml = '';
-            
             let catNames = [...defaultCats];
+
             if(data) {
-                for(let id in data) {
-                    if(!catNames.includes(data[id].name)) catNames.push(data[id].name);
-                }
+                for(let id in data) { if(!catNames.includes(data[id].name)) catNames.push(data[id].name); }
             }
 
             catNames.forEach(name => {
-                html += `<button class="f-btn" onclick="setFilter('${name}', this)">${name}</button>`;
+                filterHtml += `<button class="f-btn" onclick="setFilter('${name}', this)">${name}</button>`;
                 selectHtml += `<option value="${name}">${name}</option>`;
             });
 
             if(data) {
                 for(let id in data) {
-                    adminCatHtml += `<div class="admin-item" style="padding:5px 15px; font-size:0.8rem;">${data[id].name} <i class="fa-solid fa-trash" onclick="deleteCat('${id}')"></i></div>`;
+                    adminCatHtml += `<div class="role-badge" style="display:flex; align-items:center; gap:8px; padding:5px 12px;">${data[id].name} <i class="fa-solid fa-xmark" style="cursor:pointer; font-size:0.6rem;" onclick="deleteCat('${id}')"></i></div>`;
                 }
             }
 
-            document.getElementById('filterArea').innerHTML = html;
+            document.getElementById('filterArea').innerHTML = filterHtml;
             document.getElementById('mRoleSelect').innerHTML = selectHtml;
             document.getElementById('adminCatList').innerHTML = adminCatHtml;
         });
 
+        // --- Member Management ---
         db.ref('members').on('value', snap => {
             allMembers = [];
             const data = snap.val();
@@ -304,12 +279,11 @@
                 adminListHtml += `
                     <div class="admin-item">
                         <div class="admin-item-info">
-                            <strong>${m.name}</strong><br>
-                            <span>${m.role}</span>
+                            <strong>${m.name}</strong> <span style="font-size:0.7rem; color:#444; margin-left:10px;">${m.role}</span>
                         </div>
                         <div class="admin-actions">
                             <i class="fa-solid fa-edit" onclick="editMember('${id}')"></i>
-                            <i class="fa-solid fa-trash" onclick="deleteMember('${id}')"></i>
+                            <i class="fa-solid fa-trash" style="margin-left:15px;" onclick="deleteMember('${id}')"></i>
                         </div>
                     </div>`;
             }
@@ -326,8 +300,7 @@
                 facebook: document.getElementById('mFB').value || '#'
             };
             if(!data.name) return alert("Please enter name");
-            if(id) await db.ref('members/'+id).set(data);
-            else await db.ref('members').push(data);
+            id ? await db.ref('members/'+id).set(data) : await db.ref('members').push(data);
             resetForm();
             alert("Success!");
         }
@@ -340,6 +313,7 @@
             document.getElementById('mImg').value = m.image;
             document.getElementById('mFB').value = m.facebook;
             document.getElementById('saveBtn').innerText = "UPDATE MEMBER";
+            document.getElementById('adminPanel').querySelector('.admin-body').scrollTop = 0;
         }
 
         async function deleteMember(id) { if(confirm("Delete this member?")) await db.ref('members/'+id).remove(); }
@@ -368,10 +342,7 @@
         function renderMembers() {
             const search = document.getElementById('searchInput').value.toLowerCase();
             const filtered = allMembers.filter(m => (currentFilter==='all' || m.role===currentFilter) && m.name.toLowerCase().includes(search));
-            
-            // อัปเดตตัวเลขที่ซ้ายบน
             document.getElementById('countNumber').innerText = filtered.length;
-            
             document.getElementById('memberList').innerHTML = filtered.map(m => `
                 <div class="member-card">
                     <div class="avatar-box">
