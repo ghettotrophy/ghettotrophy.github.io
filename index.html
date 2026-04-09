@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DEMOWATSUT</title>
+    <title>ระบบรายชื่อ - DEMOWATSUT</title>
     
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Bai+Jamjuree:wght@300;400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -14,11 +14,10 @@
     <style>
         :root {
             --accent: #ffffff;
-            --accent-glow: rgba(255, 255, 255, 0.2);
             --bg: #000000;
-            --card-bg: #111111;
-            --border: rgba(255, 255, 255, 0.1);
-            --transition: all 0.3s ease;
+            --card-bg: #0e0e0e;
+            --border: rgba(255, 255, 255, 0.08);
+            --transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -29,100 +28,103 @@
             color: #fff;
             font-family: 'Bai Jamjuree', sans-serif;
             min-height: 100vh;
+            overflow-x: hidden;
         }
 
-        /* --- Header & Navigation --- */
+        /* --- Navigation --- */
         .top-nav {
-            padding: 20px 5%;
+            padding: 15px 5%;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            background: rgba(0,0,0,0.8);
+            background: rgba(0,0,0,0.85);
+            backdrop-filter: blur(15px);
             border-bottom: 1px solid var(--border);
             position: sticky; top: 0; z-index: 100;
         }
 
         .member-counter-top {
             font-family: 'Orbitron';
-            font-size: 1.1rem;
+            font-size: 1rem;
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 10px;
             background: rgba(255,255,255,0.05);
-            padding: 5px 15px;
+            padding: 6px 18px;
             border-radius: 50px;
             border: 1px solid var(--border);
         }
 
-        .logo-text { font-family: 'Orbitron'; font-weight: 700; letter-spacing: 3px; font-size: 1.2rem; }
+        .logo-text { font-family: 'Orbitron'; font-weight: 900; letter-spacing: 4px; font-size: 1.2rem; }
         .nav-btns { display: flex; gap: 20px; }
-        .nav-btn { color: #888; text-decoration: none; cursor: pointer; transition: 0.3s; font-size: 0.9rem; }
-        .nav-btn:hover { color: #fff; }
+        .nav-btn { color: #888; text-decoration: none; cursor: pointer; transition: var(--transition); font-size: 0.85rem; font-weight: 600; }
+        .nav-btn:hover { color: #fff; transform: translateY(-2px); }
 
-        /* --- Hero Section --- */
-        .hero-section { text-align: center; padding: 60px 20px; }
-        .main-logo { width: 120px; margin-bottom: 20px; filter: drop-shadow(0 0 10px rgba(255,255,255,0.3)); }
-        .hero-title { font-family: 'Orbitron'; font-size: 2.5rem; letter-spacing: 8px; text-transform: uppercase; text-shadow: 0 0 20px var(--accent-glow); }
-        .hero-subtitle { font-size: 0.7rem; color: #666; letter-spacing: 4px; margin-top: 10px; font-family: 'Orbitron'; }
+        /* --- Hero --- */
+        .hero-section { text-align: center; padding: 50px 20px; }
+        .main-logo { width: 90px; margin-bottom: 15px; filter: drop-shadow(0 0 15px rgba(255,255,255,0.2)); }
+        .hero-title { font-family: 'Orbitron'; font-size: 2rem; letter-spacing: 10px; text-transform: uppercase; }
+        .hero-subtitle { font-size: 0.7rem; color: #555; letter-spacing: 4px; margin-top: 5px; font-weight: 400; }
 
-        /* --- Search & Filters --- */
-        .search-container { max-width: 600px; margin: 0 auto 40px; padding: 0 20px; }
+        /* --- Search --- */
+        .search-container { max-width: 650px; margin: 0 auto 40px; padding: 0 20px; }
         .search-box input {
-            width: 100%; padding: 15px 25px; background: #111; border: 1px solid #222;
-            border-radius: 100px; color: #fff; outline: none; transition: 0.3s;
+            width: 100%; padding: 14px 28px; background: #0a0a0a; border: 1px solid #1a1a1a;
+            border-radius: 100px; color: #fff; outline: none; transition: var(--transition); font-family: 'Bai Jamjuree';
         }
-        .filter-group { display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; margin-top: 20px; }
+        .search-box input:focus { border-color: #444; background: #111; box-shadow: 0 0 20px rgba(255,255,255,0.05); }
+        .filter-group { display: flex; justify-content: center; gap: 8px; flex-wrap: wrap; margin-top: 25px; }
         .f-btn {
-            background: #111; border: 1px solid #222; color: #666;
-            padding: 6px 20px; border-radius: 100px; cursor: pointer; font-size: 0.75rem; transition: 0.3s; font-family: 'Orbitron';
+            background: #0a0a0a; border: 1px solid #1a1a1a; color: #555;
+            padding: 7px 16px; border-radius: 100px; cursor: pointer; font-size: 0.75rem; transition: var(--transition);
         }
-        .f-btn.active { background: #ffc107; color: #000; border-color: #ffc107; }
+        .f-btn.active { background: #fff; color: #000; border-color: #fff; font-weight: 700; }
 
-        /* --- Member Grid --- */
+        /* --- Member Card --- */
         .grid-container {
-            display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-            gap: 20px; padding: 0 5% 100px; max-width: 1200px; margin: 0 auto;
+            display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+            gap: 20px; padding: 0 5% 100px; max-width: 1300px; margin: 0 auto;
         }
+
         .member-card {
-            background: #111; border: 1px solid #222; border-radius: 15px;
-            padding: 15px; display: flex; align-items: center; gap: 20px; transition: 0.3s;
+            background: var(--card-bg); border: 1px solid var(--border); border-radius: 18px;
+            padding: 18px; display: flex; align-items: center; gap: 18px; transition: var(--transition);
+            animation: fadeInUp 0.5s ease forwards; opacity: 0;
         }
-        .avatar-box { width: 70px; height: 70px; border-radius: 50%; overflow: hidden; border: 2px solid #222; flex-shrink: 0; }
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
+        .member-card:hover { transform: translateY(-5px); border-color: #333; box-shadow: 0 10px 30px rgba(0,0,0,0.6); }
+
+        .avatar-box { width: 70px; height: 70px; border-radius: 50%; overflow: hidden; border: 2px solid #1a1a1a; flex-shrink: 0; }
         .avatar-box img { width: 100%; height: 100%; object-fit: cover; }
-        .member-info h3 { font-size: 1.1rem; font-family: 'Orbitron'; margin-bottom: 5px; color: #eee; }
-        .tag-row { display: flex; flex-wrap: wrap; gap: 5px; align-items: center; }
-        .role-badge { background: #222; color: #aaa; padding: 2px 8px; border-radius: 4px; font-size: 0.6rem; font-weight: 600; text-transform: uppercase; }
-        .fb-link { color: #0084ff; text-decoration: none; font-size: 0.8rem; margin-left: auto; }
+
+        .member-info h3 { font-size: 1.1rem; font-family: 'Orbitron'; margin-bottom: 6px; color: #eee; }
+        
+        /* One-Line Tag System */
+        .tag-row { display: flex; align-items: center; gap: 6px; flex-wrap: nowrap; overflow: hidden; }
+        .role-badge { 
+            background: #1a1a1a; color: #888; padding: 3px 9px; border-radius: 5px; 
+            font-size: 0.65rem; font-weight: 600; white-space: nowrap; flex-shrink: 0;
+        }
+        
+        .plus-badge { 
+            background: #fff; color: #000; cursor: pointer; font-size: 0.7rem; font-weight: 900; 
+            width: 22px; height: 22px; display: flex; align-items: center; justify-content: center; 
+            border-radius: 5px; transition: 0.3s; flex-shrink: 0;
+        }
+
+        .hidden-roles { display: none; align-items: center; gap: 6px; }
+        .hidden-roles.show { display: flex; animation: slideRight 0.3s ease; }
+        @keyframes slideRight { from { opacity: 0; transform: translateX(-10px); } to { opacity: 1; transform: translateX(0); } }
+
+        .fb-link { color: #0084ff; text-decoration: none; font-size: 0.9rem; margin-left: auto; transition: 0.3s; }
 
         /* --- Admin UI --- */
-        .modal {
-            display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.95);
-            z-index: 1000; align-items: center; justify-content: center; backdrop-filter: blur(10px);
-        }
-        .admin-window {
-            background: #0a0a0a; width: 90%; max-width: 800px; max-height: 90vh;
-            border: 1px solid #222; border-radius: 15px; overflow: hidden; display: flex; flex-direction: column;
-        }
-        .admin-header { padding: 20px; border-bottom: 1px solid #222; display: flex; justify-content: space-between; align-items: center; background: #000; }
-        .admin-header-actions { display: flex; align-items: center; gap: 20px; }
-        .home-link { color: #fff; text-decoration: none; font-size: 0.8rem; font-family: 'Orbitron'; display: flex; align-items: center; gap: 5px; opacity: 0.7; transition: 0.3s; }
-        .home-link:hover { opacity: 1; }
-
+        .modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.92); z-index: 1000; align-items: center; justify-content: center; backdrop-filter: blur(10px); }
+        .admin-window { background: #080808; width: 90%; max-width: 700px; max-height: 85vh; border: 1px solid #222; border-radius: 20px; overflow: hidden; display: flex; flex-direction: column; }
         .admin-body { padding: 25px; overflow-y: auto; }
-        .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 15px; }
-        input, select { width: 100%; padding: 12px; background: #000; border: 1px solid #222; color: #fff; border-radius: 8px; outline: none; }
-        
-        /* Multi-Select Style */
-        .cat-selector-box {
-            grid-column: span 2; background: #111; border: 1px solid #222; border-radius: 8px; padding: 15px;
-        }
-        .cat-selector-label { font-size: 0.7rem; color: #555; text-transform: uppercase; margin-bottom: 10px; display: block; font-family: 'Orbitron'; }
-        .cat-options-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 10px; }
-        .cat-checkbox { display: flex; align-items: center; gap: 8px; font-size: 0.8rem; color: #ccc; cursor: pointer; }
-        .cat-checkbox input { width: auto; cursor: pointer; }
-
-        .btn-save { width: 100%; padding: 15px; background: #fff; color: #000; border: none; border-radius: 8px; font-weight: 900; cursor: pointer; font-family: 'Orbitron'; }
-        .admin-item { display: flex; justify-content: space-between; align-items: center; background: #111; padding: 12px 20px; border-radius: 8px; margin-bottom: 10px; }
+        input, select { width: 100%; padding: 12px; background: #000; border: 1px solid #222; color: #fff; border-radius: 10px; outline: none; font-family: 'Bai Jamjuree'; }
+        .btn-save { width: 100%; padding: 15px; background: #fff; color: #000; border: none; border-radius: 10px; font-weight: 900; cursor: pointer; font-family: 'Orbitron'; transition: 0.3s; }
+        .btn-save:hover { background: #ccc; }
     </style>
 </head>
 <body>
@@ -133,20 +135,20 @@
         </div>
         <div class="logo-text">DEMOWATSUT</div>
         <div class="nav-btns">
-            <a class="nav-btn" onclick="location.reload()"><i class="fa-solid fa-users"></i> Members</a>
-            <a class="nav-btn" onclick="openAdmin()"><i class="fa-solid fa-shield-halved"></i> Admin</a>
+            <a class="nav-btn" onclick="location.reload()"><i class="fa-solid fa-users"></i> สมาชิก</a>
+            <a class="nav-btn" onclick="openAdmin()"><i class="fa-solid fa-shield-halved"></i> ผู้ดูแล</a>
         </div>
     </nav>
 
     <header class="hero-section">
         <img src="https://img5.pic.in.th/file/secure-sv1/Untitled-17361494911.png" alt="Logo" class="main-logo">
         <h1 class="hero-title">DEMOWATSUT</h1>
-        <p class="hero-subtitle">STAND FOR WINTERFELL DEMO</p>
+        <p class="hero-subtitle">ฐานข้อมูลสมาชิกอย่างเป็นทางการ</p>
     </header>
 
     <div class="search-container">
         <div class="search-box">
-            <input type="text" id="searchInput" placeholder="Search members..." onkeyup="renderMembers()">
+            <input type="text" id="searchInput" placeholder="ค้นหาชื่อสมาชิกที่นี่..." onkeyup="renderMembers()">
         </div>
         <div class="filter-group" id="filterArea"></div>
     </div>
@@ -154,55 +156,39 @@
     <div class="grid-container" id="memberList"></div>
 
     <div id="loginModal" class="modal">
-        <div class="admin-window" style="max-width: 400px;">
+        <div class="admin-window" style="max-width: 380px;">
             <div class="admin-body" style="text-align: center;">
-                <h2 style="font-family:'Orbitron'; margin-bottom: 20px;">SYSTEM ACCESS</h2>
-                <input type="password" id="adminPass" placeholder="ENTER PASSWORD" style="text-align: center; margin-bottom: 15px;">
-                <button class="btn-save" onclick="handleLogin()">ACCESS</button>
-                <p onclick="closeModals()" style="margin-top: 15px; color: #444; cursor: pointer; font-size: 0.8rem;">CLOSE</p>
+                <h2 style="font-family:'Orbitron'; margin-bottom: 20px;">ยืนยันตัวตน</h2>
+                <input type="password" id="adminPass" placeholder="กรอกรหัสผ่าน" style="text-align: center; margin-bottom: 15px;">
+                <button class="btn-save" onclick="handleLogin()">เข้าใช้งาน</button>
+                <p onclick="closeModals()" style="margin-top: 15px; color: #444; cursor: pointer; font-size: 0.8rem;">ยกเลิก</p>
             </div>
         </div>
     </div>
 
     <div id="adminPanel" class="modal">
         <div class="admin-window">
-            <div class="admin-header">
-                <h3 style="font-family:'Orbitron';">DATABASE MANAGEMENT</h3>
-                <div class="admin-header-actions">
-                    <a href="javascript:void(0)" class="home-link" onclick="closeModals()"><i class="fa-solid fa-house"></i> HOME</a>
+            <div class="admin-body">
+                <div style="display: flex; justify-content: space-between; margin-bottom: 25px; align-items: center;">
+                    <h3 style="font-family:'Orbitron';">ระบบจัดการหลังบ้าน</h3>
                     <button onclick="closeModals()" style="background:none; border:none; color:#fff; cursor:pointer; font-size: 1.2rem;"><i class="fa-solid fa-xmark"></i></button>
                 </div>
-            </div>
-            
-            <div class="admin-body">
-                <div id="formSection">
+
+                <div id="formSection" style="margin-bottom: 30px;">
                     <input type="hidden" id="editId">
-                    <div class="form-grid">
-                        <input type="text" id="mName" placeholder="Display Name">
-                        <input type="text" id="mFB" placeholder="Facebook Link">
-                        <input type="text" id="mImg" placeholder="Image URL" style="grid-column: span 2;">
-                        
-                        <div class="cat-selector-box">
-                            <span class="cat-selector-label">Select Categories (ใส่ได้หลายหัวข้อ)</span>
-                            <div id="mRoleCheckboxes" class="cat-options-grid"></div>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 15px;">
+                        <input type="text" id="mName" placeholder="ชื่อที่แสดง">
+                        <input type="text" id="mFB" placeholder="ลิงก์ Facebook">
+                        <input type="text" id="mImg" placeholder="URL รูปภาพโปรไฟล์" style="grid-column: span 2;">
+                        <div style="grid-column: span 2; background: #0e0e0e; padding: 15px; border-radius: 12px; border: 1px solid #1a1a1a;">
+                            <span style="font-size:0.7rem; color:#555; display:block; margin-bottom:10px;">เลือกหัวข้อ (เลือกได้มากกว่า 1)</span>
+                            <div id="mRoleCheckboxes" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); gap: 8px;"></div>
                         </div>
                     </div>
-                    <button class="btn-save" id="saveBtn" onclick="saveMember()">SAVE MEMBER</button>
+                    <button class="btn-save" id="saveBtn" onclick="saveMember()">บันทึกข้อมูล</button>
                 </div>
 
-                <div style="margin-top: 30px;">
-                    <h4 style="font-family:'Orbitron'; font-size: 0.7rem; color:#666; margin-bottom: 10px;">MANAGE MEMBERS</h4>
-                    <div id="adminMemberList"></div>
-                </div>
-
-                <div style="margin-top: 30px; border-top: 1px solid #222; padding-top: 20px;">
-                    <h4 style="font-family:'Orbitron'; font-size: 0.7rem; color:#666; margin-bottom: 10px;">ADD CATEGORY</h4>
-                    <div style="display: flex; gap: 10px;">
-                        <input type="text" id="newCat" placeholder="Unit Name">
-                        <button onclick="addCategory()" style="background:#222; color:#fff; border:none; padding: 0 20px; border-radius: 8px; cursor: pointer;">ADD</button>
-                    </div>
-                    <div id="adminCatList" style="display: flex; flex-wrap: wrap; gap: 8px; margin-top: 15px;"></div>
-                </div>
+                <div id="adminMemberList" style="border-top: 1px solid #1a1a1a; padding-top: 20px;"></div>
             </div>
         </div>
     </div>
@@ -223,94 +209,63 @@
         function handleLogin() {
             if(document.getElementById('adminPass').value === 'demo912') {
                 isAdmin = true; closeModals(); openAdmin();
-            } else { alert("Incorrect Password"); }
+            } else { alert("รหัสผ่านไม่ถูกต้อง"); }
+        }
+
+        function toggleBadges(btn, id) {
+            const hiddenBox = document.getElementById('extra-'+id);
+            if(hiddenBox.classList.contains('show')) {
+                hiddenBox.classList.remove('show');
+                btn.innerText = '+';
+            } else {
+                hiddenBox.classList.add('show');
+                btn.innerText = '-';
+            }
         }
 
         db.ref('categories').on('value', snap => {
             const data = snap.val();
-            let filterHtml = `<button class="f-btn active" onclick="setFilter('all', this)">All</button>`;
+            let filterHtml = `<button class="f-btn active" onclick="setFilter('all', this)">ทั้งหมด</button>`;
             let checkHtml = '';
-            let adminCatHtml = '';
             let catNames = [...defaultCats];
-
             if(data) { for(let id in data) { if(!catNames.includes(data[id].name)) catNames.push(data[id].name); } }
 
             catNames.forEach(name => {
                 filterHtml += `<button class="f-btn" onclick="setFilter('${name}', this)">${name}</button>`;
-                checkHtml += `<label class="cat-checkbox"><input type="checkbox" name="roles" value="${name}"> ${name}</label>`;
+                checkHtml += `<label style="display:flex; align-items:center; gap:5px; font-size:0.75rem;"><input type="checkbox" name="roles" value="${name}"> ${name}</label>`;
             });
-
-            if(data) {
-                for(let id in data) {
-                    adminCatHtml += `<div class="role-badge" style="display:flex; align-items:center; gap:8px;">${data[id].name} <i class="fa-solid fa-xmark" style="cursor:pointer;" onclick="deleteCat('${id}')"></i></div>`;
-                }
-            }
-
             document.getElementById('filterArea').innerHTML = filterHtml;
             document.getElementById('mRoleCheckboxes').innerHTML = checkHtml;
-            document.getElementById('adminCatList').innerHTML = adminCatHtml;
         });
 
         db.ref('members').on('value', snap => {
             allMembers = [];
             const data = snap.val();
-            let adminListHtml = '';
+            let adminHtml = '';
             for(let id in data) {
                 const m = {...data[id], id};
                 allMembers.push(m);
-                const roleText = Array.isArray(m.role) ? m.role.join(', ') : m.role;
-                adminListHtml += `
-                    <div class="admin-item">
-                        <div><strong>${m.name}</strong> <span style="font-size:0.7rem; color:#444;">(${roleText})</span></div>
-                        <div class="admin-actions">
-                            <i class="fa-solid fa-edit" onclick="editMember('${id}')"></i>
-                            <i class="fa-solid fa-trash" style="margin-left:15px;" onclick="deleteMember('${id}')"></i>
-                        </div>
-                    </div>`;
+                adminHtml += `<div style="display:flex; justify-content:space-between; background:#111; padding:10px 15px; border-radius:8px; margin-bottom:8px; align-items:center;">
+                    <span style="font-size:0.85rem;">${m.name}</span>
+                    <div><i class="fa-solid fa-edit" onclick="editMember('${id}')" style="cursor:pointer; color:#888;"></i> <i class="fa-solid fa-trash" onclick="deleteMember('${id}')" style="margin-left:15px; cursor:pointer; color:#ff4444;"></i></div>
+                </div>`;
             }
-            document.getElementById('adminMemberList').innerHTML = adminListHtml;
+            document.getElementById('adminMemberList').innerHTML = adminHtml;
             renderMembers();
         });
 
         async function saveMember() {
             const id = document.getElementById('editId').value;
-            const selectedRoles = Array.from(document.querySelectorAll('input[name="roles"]:checked')).map(cb => cb.value);
-            
-            if(selectedRoles.length === 0) return alert("โปรดเลือกอย่างน้อย 1 หัวข้อ");
-
+            const roles = Array.from(document.querySelectorAll('input[name="roles"]:checked')).map(cb => cb.value);
             const data = {
                 name: document.getElementById('mName').value,
-                role: selectedRoles, // บันทึกเป็น Array
+                role: roles,
                 image: document.getElementById('mImg').value || 'https://via.placeholder.com/150',
                 facebook: document.getElementById('mFB').value || '#'
             };
-            if(!data.name) return alert("Please enter name");
+            if(!data.name || roles.length === 0) return alert("กรุณากรอกชื่อและเลือกหัวข้อ");
             id ? await db.ref('members/'+id).set(data) : await db.ref('members').push(data);
-            resetForm(); alert("Success!");
-        }
-
-        function editMember(id) {
-            const m = allMembers.find(item => item.id === id);
-            document.getElementById('editId').value = id;
-            document.getElementById('mName').value = m.name;
-            document.getElementById('mImg').value = m.image;
-            document.getElementById('mFB').value = m.facebook;
-            
-            // Reset & Set Checkboxes
-            document.querySelectorAll('input[name="roles"]').forEach(cb => {
-                cb.checked = Array.isArray(m.role) ? m.role.includes(cb.value) : m.role === cb.value;
-            });
-
-            document.getElementById('saveBtn').innerText = "UPDATE MEMBER";
-            document.getElementById('adminPanel').querySelector('.admin-body').scrollTop = 0;
-        }
-
-        async function deleteMember(id) { if(confirm("Delete?")) await db.ref('members/'+id).remove(); }
-        async function deleteCat(id) { if(confirm("Delete Category?")) await db.ref('categories/'+id).remove(); }
-        async function addCategory() {
-            const name = document.getElementById('newCat').value.toUpperCase();
-            if(name) await db.ref('categories').push({ name });
-            document.getElementById('newCat').value = '';
+            resetForm(); alert("ทำรายการสำเร็จ");
         }
 
         function resetForm() {
@@ -319,8 +274,20 @@
             document.getElementById('mImg').value = '';
             document.getElementById('mFB').value = '';
             document.querySelectorAll('input[name="roles"]').forEach(cb => cb.checked = false);
-            document.getElementById('saveBtn').innerText = "SAVE MEMBER";
+            document.getElementById('saveBtn').innerText = "บันทึกข้อมูล";
         }
+
+        function editMember(id) {
+            const m = allMembers.find(i => i.id === id);
+            document.getElementById('editId').value = id;
+            document.getElementById('mName').value = m.name;
+            document.getElementById('mImg').value = m.image;
+            document.getElementById('mFB').value = m.facebook;
+            document.querySelectorAll('input[name="roles"]').forEach(cb => cb.checked = m.role.includes(cb.value));
+            document.getElementById('saveBtn').innerText = "แก้ไขข้อมูล";
+        }
+
+        async function deleteMember(id) { if(confirm("ต้องการลบข้อมูลนี้ใช่หรือไม่?")) await db.ref('members/'+id).remove(); }
 
         function setFilter(role, btn) {
             currentFilter = role;
@@ -332,28 +299,36 @@
         function renderMembers() {
             const search = document.getElementById('searchInput').value.toLowerCase();
             const filtered = allMembers.filter(m => {
-                const matchSearch = m.name.toLowerCase().includes(search);
                 const roles = Array.isArray(m.role) ? m.role : [m.role];
-                const matchFilter = (currentFilter === 'all' || roles.includes(currentFilter));
-                return matchSearch && matchFilter;
+                return m.name.toLowerCase().includes(search) && (currentFilter==='all' || roles.includes(currentFilter));
             });
-            
+
             document.getElementById('countNumber').innerText = filtered.length;
-            document.getElementById('memberList').innerHTML = filtered.map(m => {
+            document.getElementById('memberList').innerHTML = filtered.map((m, idx) => {
                 const roles = Array.isArray(m.role) ? m.role : [m.role];
+                const firstRole = roles[0];
+                const otherRoles = roles.slice(1);
+                
                 return `
-                <div class="member-card">
+                <div class="member-card" style="animation-delay: ${idx * 0.05}s">
                     <div class="avatar-box">
                         <img src="${m.image}" onerror="this.src='https://via.placeholder.com/150'">
                     </div>
-                    <div class="member-info" style="flex:1;">
+                    <div class="member-info" style="flex:1; overflow:hidden;">
                         <h3>${m.name}</h3>
                         <div class="tag-row">
-                            ${roles.map(r => `<span class="role-badge">${r}</span>`).join('')}
-                            <a href="${m.facebook}" target="_blank" class="fb-link">Facebook</a>
+                            <span class="role-badge" style="color:#fff; border-color:#333;">${firstRole}</span>
+                            ${otherRoles.length > 0 ? `
+                                <div class="plus-badge" onclick="toggleBadges(this, '${m.id}')">+</div>
+                                <div class="hidden-roles" id="extra-${m.id}">
+                                    ${otherRoles.map(r => `<span class="role-badge">${r}</span>`).join('')}
+                                </div>
+                            ` : ''}
+                            <a href="${m.facebook}" target="_blank" class="fb-link"><i class="fa-brands fa-facebook"></i></a>
                         </div>
                     </div>
-                </div>`}).join('');
+                </div>`
+            }).join('');
         }
     </script>
 </body>
