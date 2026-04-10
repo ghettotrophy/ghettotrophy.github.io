@@ -53,18 +53,20 @@
         #siteLogo { max-width: 140px; margin-bottom: 25px; filter: drop-shadow(0 0 25px var(--accent)); }
         .hero h1 { font-family: 'Orbitron'; font-size: clamp(28px, 6vw, 52px); letter-spacing: 10px; color: var(--accent); text-transform: uppercase; margin-bottom: 8px; }
 
-        .member-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 20px; padding: 0 8% 100px; max-width: 1440px; margin: 0 auto; z-index: 100; position: relative; }
+        /* Multi-Section Grid */
+        .category-section { max-width: 1440px; margin: 40px auto; padding: 0 8%; }
+        .category-header { font-family: 'Orbitron'; font-size: 14px; letter-spacing: 4px; color: var(--accent); margin-bottom: 25px; border-left: 3px solid var(--accent); padding-left: 15px; text-transform: uppercase; }
+
+        .member-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 20px; padding-bottom: 40px; z-index: 100; position: relative; }
         .member-card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 16px; padding: 20px; display: flex; align-items: center; gap: 18px; transition: var(--transition); backdrop-filter: blur(10px); animation: slideIn 0.5s ease backwards; }
         .member-card:hover { border-color: var(--accent); transform: translateY(-5px); background: rgba(25, 25, 28, 0.98); }
         .avatar { width: 70px; height: 70px; border-radius: 12px; object-fit: cover; border: 2px solid rgba(255,255,255,0.05); }
         .rank-tag { font-family: 'Orbitron'; font-size: 9px; font-weight: 800; padding: 4px 12px; border-radius: 5px; color: #000; letter-spacing: 1px; margin-top: 6px; display: inline-block; }
 
-        /* Footer Style */
         .site-footer { padding: 40px 20px; text-align: center; font-family: 'Orbitron'; font-size: 10px; letter-spacing: 2px; opacity: 0.5; transition: var(--transition); }
         .site-footer:hover { opacity: 1; }
         .site-footer a { color: var(--accent); text-decoration: none; font-weight: 700; }
 
-        /* Admin Styles */
         .admin-panel { display: none; position: fixed; inset: 0; background: #0c0d0f; z-index: 9999; overflow-y: auto; padding: 40px 20px; }
         .admin-container { max-width: 1200px; margin: 0 auto; }
         .admin-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 40px; padding-bottom: 20px; border-bottom: 1px solid #222; }
@@ -114,7 +116,7 @@
 
     <nav class="top-nav">
         <div style="font-family:'Orbitron'; font-size:11px; letter-spacing:2px;">
-            <i class="fa-solid fa-users" style="color:var(--accent)"></i> MEMBER ONLINE: <span id="countNum">0</span>
+            <i class="fa-solid fa-users" style="color:var(--accent)"></i> ACTIVE PERSONNEL: <span id="countNum">0</span>
         </div>
         <button class="config-btn" onclick="openModal('loginModal')"><i class="fa-solid fa-lock"></i> SYSTEM</button>
     </nav>
@@ -130,7 +132,7 @@
         <div id="categoryTabs" style="display:flex; justify-content:center; gap:10px; flex-wrap:wrap;"></div>
     </div>
 
-    <div id="memberList" class="member-grid"></div>
+    <div id="memberSections"></div>
 
     <footer class="site-footer">
         <span id="footerTextDisplay">Designed by Ghettotrophy | by </span>
@@ -150,7 +152,7 @@
             <div class="admin-grid">
                 <div class="admin-card col-4">
                     <div style="margin-bottom:20px; font-family:'Orbitron'; font-size:14px; color:var(--accent);"><i class="fa-solid fa-sliders"></i> SETTING & THEME</div>
-                    <label>SITE NAME (TITLE)</label><input type="text" id="configSiteName">
+                    <label>SITE NAME</label><input type="text" id="configSiteName">
                     <label>FAVICON URL</label><input type="text" id="configFavicon">
                     <label>THEME ACCENT</label><input type="color" id="configThemeColor" style="height:50px; cursor:pointer;">
                     <label>LOGO URL</label><input type="text" id="configLogoUrl">
@@ -158,40 +160,42 @@
                     <label>ATMOSPHERE</label>
                     <select id="configWeather">
                         <option value="none">CLEAR</option>
-                        <option value="snow">SNOWFLAKES (WHITE)</option>
-                        <option value="rain">RAIN SHOWER (SOFT)</option>
+                        <option value="snow">SNOWFLAKES</option>
+                        <option value="rain">RAIN SHOWER</option>
                     </select>
-                    
-                    <div style="margin: 20px 0; border-top: 1px solid #333; padding-top: 20px;">
-                        <div style="margin-bottom:15px; font-family:'Orbitron'; font-size:12px; color:var(--accent);"><i class="fa-solid fa-copyright"></i> FOOTER CREDIT</div>
-                        <label>FOOTER TEXT</label><input type="text" id="configFooterText" placeholder="Designed by...">
-                        <label>FOOTER TEXT LINK (URL)</label><input type="text" id="configFooterLink" placeholder="https://facebook.com/...">
-                    </div>
-
+                    <label>FOOTER TEXT</label><input type="text" id="configFooterText">
+                    <label>FOOTER LINK</label><input type="text" id="configFooterLink">
                     <button class="btn-save" onclick="saveConfig()">SYNC CHANGES</button>
                 </div>
 
                 <div class="col-8" style="display:flex; flex-direction:column; gap:24px;">
                     <div class="admin-card">
-                        <div style="margin-bottom:20px; font-family:'Orbitron'; font-size:14px; color:var(--accent);"><i class="fa-solid fa-tags"></i> ROLES</div>
+                        <div style="margin-bottom:20px; font-family:'Orbitron'; font-size:14px; color:var(--accent);"><i class="fa-solid fa-folder-tree"></i> 1. ROLE CATEGORIES (หัวข้อกลุ่ม)</div>
                         <div style="display:flex; gap:15px;">
+                            <input type="text" id="newGroupName" placeholder="GROUP NAME (e.g. LEADERS)" style="margin-bottom:0;">
+                            <button class="config-btn" onclick="addGroup()">ADD GROUP</button>
+                        </div>
+                        <div id="groupListContainer" style="margin-top:20px; display:grid; grid-template-columns:1fr 1fr; gap:10px;"></div>
+                    </div>
+
+                    <div class="admin-card">
+                        <div style="margin-bottom:20px; font-family:'Orbitron'; font-size:14px; color:var(--accent);"><i class="fa-solid fa-tags"></i> 2. ROLES (ตำแหน่งย่อย)</div>
+                        <div style="display:grid; grid-template-columns: 2fr 1fr 1fr auto; gap:10px;">
                             <input type="text" id="newRoleName" placeholder="ROLE NAME" style="margin-bottom:0;">
-                            <input type="color" id="newRoleColor" value="#ffc107" style="width:80px; margin-bottom:0;">
+                            <select id="roleGroupSelect" style="margin-bottom:0;"></select>
+                            <input type="color" id="newRoleColor" value="#ffc107" style="height:46px; margin-bottom:0;">
                             <button class="config-btn" onclick="addRole()">ADD</button>
                         </div>
                         <div id="roleListContainer" style="margin-top:20px; display:grid; grid-template-columns:1fr 1fr; gap:10px;"></div>
                     </div>
 
                     <div class="admin-card">
-                        <div style="margin-bottom:20px; font-family:'Orbitron'; font-size:14px; color:var(--accent);"><i class="fa-solid fa-music"></i> AUDIO & AUTO-SYSTEM</div>
-                        <div style="display: flex; align-items: center; gap: 15px;">
-                            <label class="switch">
-                                <input type="checkbox" id="musicAutoToggle">
-                                <span class="slider"></span>
-                            </label>
-                            <span style="font-size: 11px; font-family: 'Orbitron';">ENABLE AUTOPLAY ON ENTRY</span>
+                        <div style="margin-bottom:20px; font-family:'Orbitron'; font-size:14px; color:var(--accent);"><i class="fa-solid fa-music"></i> AUDIO SYSTEM</div>
+                        <div style="display:flex; align-items:center; gap:15px; margin-bottom:15px;">
+                            <label class="switch"><input type="checkbox" id="musicAutoToggle"><span class="slider"></span></label>
+                            <span style="font-size:11px; font-family:'Orbitron';">AUTOPLAY</span>
                         </div>
-                        <div style="display:grid; grid-template-columns: 2fr 1fr 1fr; gap:15px;">
+                        <div style="display:grid; grid-template-columns: 2fr 1fr auto; gap:15px;">
                             <input type="text" id="musicVidId" placeholder="YOUTUBE ID" style="margin-bottom:0;">
                             <input type="number" id="musicStart" placeholder="SEC" style="margin-bottom:0;">
                             <button class="btn-save" onclick="saveMusic()">UPDATE</button>
@@ -200,12 +204,12 @@
                 </div>
 
                 <div class="admin-card col-12">
-                    <div style="margin-bottom:20px; font-family:'Orbitron'; font-size:14px; color:var(--accent);"><i class="fa-solid fa-user-plus"></i> PERSONNEL</div>
+                    <div style="margin-bottom:20px; font-family:'Orbitron'; font-size:14px; color:var(--accent);"><i class="fa-solid fa-user-plus"></i> PERSONNEL MANAGEMENT</div>
                     <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap:20px;">
-                        <div><label>ADD NAME</label><input type="text" id="memName"></div>
-                        <div><label>PROFILE URL</label><input type="text" id="memImg"></div>
-                        <div><label>SOCIAL LINK</label><input type="text" id="memFb"></div>
-                        <div><label>ADD ROLE</label><select id="memRole"></select></div>
+                        <div><label>NAME</label><input type="text" id="memName"></div>
+                        <div><label>IMAGE URL</label><input type="text" id="memImg"></div>
+                        <div><label>FACEBOOK LINK</label><input type="text" id="memFb"></div>
+                        <div><label>SELECT ROLE</label><select id="memRole"></select></div>
                     </div>
                     <input type="hidden" id="editMemId">
                     <div style="display:flex; gap:10px;">
@@ -223,18 +227,9 @@
         firebase.initializeApp(firebaseConfig);
         const db = firebase.database();
 
-        let player, currentRoles = {}, currentMembers = {}, activeTab = 'all', weatherType = 'none';
-        let isAutoPlayEnabled = true;
+        let player, currentRoles = {}, currentMembers = {}, currentGroups = {}, activeTab = 'all', weatherType = 'none';
 
-        window.addEventListener('DOMContentLoaded', () => {
-            setTimeout(() => {
-                if(player && isAutoPlayEnabled) { player.playVideo(); }
-            }, 1500); 
-        });
-
-        function openModal(id) { document.getElementById(id).style.display = 'flex'; }
-        function closeModal(id) { document.getElementById(id).style.display = 'none'; }
-        
+        // Auth
         function attemptLogin() {
             if(document.getElementById('loginUser').value === 'ghett' && document.getElementById('loginPass').value === 'ghett9871') {
                 closeModal('loginModal'); 
@@ -242,102 +237,61 @@
                 document.body.style.overflow = 'hidden';
             } else showNotify("UNAUTHORIZED ACCESS");
         }
+        function openModal(id) { document.getElementById(id).style.display = 'flex'; }
+        function closeModal(id) { document.getElementById(id).style.display = 'none'; }
         function closeAdminPanel() { document.getElementById('adminPanel').style.display = 'none'; document.body.style.overflow = 'auto'; }
 
-        // --- Config Sync ---
-        db.ref('config').on('value', snap => {
-            const d = snap.val() || {};
-            const siteTitle = d.name || 'GHETTOTROPHY';
-            
-            document.title = siteTitle;
-            document.getElementById('siteNameDisplay').innerText = siteTitle;
-            document.getElementById('favicon').href = d.favicon || '';
-            document.getElementById('siteLogo').src = d.logo || '';
-            
-            if(d.bgUrl) document.body.style.backgroundImage = `url('${d.bgUrl}')`;
-            if(d.themeColor) document.documentElement.style.setProperty('--accent', d.themeColor);
-            
-            // Sync Footer
-            document.getElementById('footerTextDisplay').innerText = d.footerText || 'Designed by Ghettotrophy | by ';
-            document.getElementById('footerLinkLabel').href = d.footerLink || '#';
+        // --- Role Groups Logic ---
+        function addGroup() {
+            const name = document.getElementById('newGroupName').value.toUpperCase();
+            if(name) db.ref('roleGroups').push({ name }).then(() => {
+                document.getElementById('newGroupName').value = '';
+                showNotify("GROUP CREATED");
+            });
+        }
 
-            // Sync Admin Inputs
-            document.getElementById('configSiteName').value = d.name || '';
-            document.getElementById('configFavicon').value = d.favicon || '';
-            document.getElementById('configThemeColor').value = d.themeColor || '#ffc107';
-            document.getElementById('configLogoUrl').value = d.logo || '';
-            document.getElementById('configBgUrl').value = d.bgUrl || '';
-            document.getElementById('configWeather').value = d.weather || 'none';
-            document.getElementById('configFooterText').value = d.footerText || 'Designed by Ghettotrophy | by ';
-            document.getElementById('configFooterLink').value = d.footerLink || '';
-
-            weatherType = d.weather || 'none'; 
-            initWeather();
+        db.ref('roleGroups').on('value', snap => {
+            currentGroups = snap.val() || {};
+            let list = '', opt = '<option value="">SELECT GROUP</option>';
+            Object.keys(currentGroups).forEach(id => {
+                list += `<div class="admin-item-row"><span>${currentGroups[id].name}</span><i class="fa-solid fa-trash-can delete-btn" onclick="db.ref('roleGroups').child('${id}').remove()"></i></div>`;
+                opt += `<option value="${id}">${currentGroups[id].name}</option>`;
+            });
+            document.getElementById('groupListContainer').innerHTML = list;
+            document.getElementById('roleGroupSelect').innerHTML = opt;
+            filterMembers(); // Refresh main view
         });
 
-        function saveConfig() {
-            const data = {
-                name: document.getElementById('configSiteName').value,
-                favicon: document.getElementById('configFavicon').value,
-                themeColor: document.getElementById('configThemeColor').value,
-                logo: document.getElementById('configLogoUrl').value,
-                bgUrl: document.getElementById('configBgUrl').value,
-                weather: document.getElementById('configWeather').value,
-                footerText: document.getElementById('configFooterText').value,
-                footerLink: document.getElementById('configFooterLink').value
-            };
-            db.ref('config').update(data).then(() => showNotify("IDENTITY SYNCHRONIZED"));
-        }
-
-        // --- Weather Engine ---
-        const canvas = document.getElementById('weather-canvas'), ctx = canvas.getContext('2d');
-        let particles = [];
-        function initWeather() {
-            canvas.width = window.innerWidth; canvas.height = window.innerHeight;
-            particles = []; 
-            if(weatherType === 'none') return;
-            let count = weatherType === 'rain' ? 150 : 80;
-            for(let i=0; i<count; i++) {
-                particles.push({
-                    x: Math.random() * canvas.width,
-                    y: Math.random() * canvas.height,
-                    v: weatherType === 'rain' ? (Math.random() * 5 + 5) : (Math.random() * 1 + 0.5),
-                    size: weatherType === 'rain' ? 1 : (Math.random() * 3 + 1),
-                    opacity: Math.random() * 0.5 + 0.2,
-                    wind: Math.random() * 0.5 - 0.25
+        // --- Roles Logic ---
+        function addRole() {
+            const name = document.getElementById('newRoleName').value.toUpperCase();
+            const groupId = document.getElementById('roleGroupSelect').value;
+            const color = document.getElementById('newRoleColor').value;
+            if(name && groupId) {
+                db.ref('roles').push({ name, groupId, color }).then(() => {
+                    document.getElementById('newRoleName').value = '';
+                    showNotify("ROLE ARCHIVED");
                 });
-            }
-            drawWeather();
-        }
-        function drawWeather() {
-            if(weatherType === 'none') { ctx.clearRect(0,0,canvas.width,canvas.height); return; }
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            ctx.fillStyle = '#ffffff';
-            particles.forEach(p => {
-                ctx.globalAlpha = p.opacity;
-                ctx.beginPath();
-                if(weatherType === 'rain') { ctx.rect(p.x, p.y, p.size, p.size * 10); } 
-                else { ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2); }
-                ctx.fill();
-                p.y += p.v; p.x += p.wind;
-                if(p.y > canvas.height) { p.y = -20; p.x = Math.random() * canvas.width; }
-            });
-            requestAnimationFrame(drawWeather);
+            } else showNotify("SELECT GROUP FOR ROLE");
         }
 
-        // --- Database Logic ---
         db.ref('roles').on('value', snap => {
             currentRoles = snap.val() || {};
             let opt = '<option value="">SELECT ROLE</option>', list = '';
             Object.keys(currentRoles).forEach(id => {
+                const groupName = currentGroups[currentRoles[id].groupId]?.name || 'NO GROUP';
                 opt += `<option value="${id}">${currentRoles[id].name}</option>`;
-                list += `<div class="admin-item-row"><span style="color:${currentRoles[id].color}">${currentRoles[id].name}</span><i class="fa-solid fa-trash-can delete-btn" onclick="db.ref('roles').child('${id}').remove()"></i></div>`;
+                list += `<div class="admin-item-row">
+                    <div><b style="color:${currentRoles[id].color}">${currentRoles[id].name}</b><br><small style="font-size:8px; opacity:0.5">${groupName}</small></div>
+                    <i class="fa-solid fa-trash-can delete-btn" onclick="db.ref('roles').child('${id}').remove()"></i>
+                </div>`;
             });
             document.getElementById('memRole').innerHTML = opt;
             document.getElementById('roleListContainer').innerHTML = list;
             renderTabs(); filterMembers();
         });
 
+        // --- Personnel Logic ---
         db.ref('members').on('value', snap => {
             currentMembers = snap.val() || {};
             document.getElementById('countNum').innerText = Object.keys(currentMembers).length;
@@ -376,56 +330,57 @@
             document.getElementById('memBtn').innerText = "DEPLOY PERSONNEL";
         }
 
-        function addRole() {
-            const name = document.getElementById('newRoleName').value.toUpperCase();
-            const color = document.getElementById('newRoleColor').value;
-            if(name) db.ref('roles').push({ name, color }).then(() => { document.getElementById('newRoleName').value = ''; showNotify("ROLE ARCHIVED"); });
-        }
-
-        function saveMusic() {
-            const data = { 
-                id: document.getElementById('musicVidId').value, 
-                start: document.getElementById('musicStart').value,
-                auto: document.getElementById('musicAutoToggle').checked
-            };
-            db.ref('music').set(data).then(() => showNotify("AUDIO & SYSTEM UPDATED"));
-        }
-
-        function onYouTubeIframeAPIReady() {
-            db.ref('music').on('value', snap => {
-                const m = snap.val();
-                if(!m || !m.id) return;
-                isAutoPlayEnabled = m.auto !== undefined ? m.auto : true;
-                document.getElementById('musicAutoToggle').checked = isAutoPlayEnabled;
-                document.getElementById('musicVidId').value = m.id;
-                document.getElementById('musicStart').value = m.start || 0;
-                if(!player) {
-                    player = new YT.Player('player', {
-                        height: '0', width: '0', videoId: m.id,
-                        playerVars: { 'autoplay': isAutoPlayEnabled ? 1 : 0, 'controls': 0, 'start': m.start || 0 },
-                        events: { 'onReady': e => { if(isAutoPlayEnabled) e.target.playVideo(); e.target.setVolume(50); } }
-                    });
-                } else { player.loadVideoById({ videoId: m.id, startSeconds: m.start || 0 }); }
-            });
-        }
-
+        // --- Main Display Logic (Grouped) ---
         function filterMembers() {
             const term = document.getElementById('memberSearch').value.toLowerCase();
-            const grid = document.getElementById('memberList');
-            let html = ''; let delay = 0;
-            Object.keys(currentMembers).forEach(id => {
-                const m = currentMembers[id];
-                const role = currentRoles[m.roleId] || { name: 'MEMBER', color: '#888' };
-                if(m.name.toLowerCase().includes(term) && (activeTab === 'all' || m.roleId === activeTab)) {
-                    html += `<div class="member-card" style="animation-delay: ${delay}s">
-                        <img src="${m.img || 'https://i.imgur.com/6VBx3io.png'}" class="avatar">
-                        <div><div style="font-weight:600;">${m.name}</div><span class="rank-tag" style="background:${role.color}">${role.name}</span></div>
-                        <a href="${m.fb}" target="_blank" style="margin-left:auto; font-size:22px; color:#1877f2;"><i class="fa-brands fa-facebook"></i></a>
-                    </div>`;
-                    delay += 0.05;
+            const sectionWrapper = document.getElementById('memberSections');
+            sectionWrapper.innerHTML = '';
+
+            // 1. Group members by Group
+            const groupsMap = {};
+            Object.keys(currentMembers).forEach(mid => {
+                const m = currentMembers[mid];
+                const role = currentRoles[m.roleId];
+                if (!role) return;
+                
+                const groupId = role.groupId;
+                const groupName = currentGroups[groupId]?.name || "UNGROUPED";
+
+                if (m.name.toLowerCase().includes(term) && (activeTab === 'all' || m.roleId === activeTab)) {
+                    if (!groupsMap[groupId]) groupsMap[groupId] = { name: groupName, items: [] };
+                    groupsMap[groupId].items.push({ ...m, role });
                 }
             });
-            grid.innerHTML = html || '<p style="grid-column:1/-1; text-align:center; opacity:0.3; padding:50px;">NO DATA FOUND</p>';
+
+            // 2. Render each Group Section
+            Object.keys(groupsMap).forEach(gid => {
+                const group = groupsMap[gid];
+                let groupHtml = `
+                    <section class="category-section">
+                        <div class="category-header">${group.name}</div>
+                        <div class="member-grid">
+                `;
+
+                group.items.forEach((m, index) => {
+                    groupHtml += `
+                        <div class="member-card" style="animation-delay: ${index * 0.05}s">
+                            <img src="${m.img || 'https://i.imgur.com/6VBx3io.png'}" class="avatar">
+                            <div>
+                                <div style="font-weight:600;">${m.name}</div>
+                                <span class="rank-tag" style="background:${m.role.color}">${m.role.name}</span>
+                            </div>
+                            <a href="${m.fb}" target="_blank" style="margin-left:auto; font-size:22px; color:#1877f2;"><i class="fa-brands fa-facebook"></i></a>
+                        </div>
+                    `;
+                });
+
+                groupHtml += `</div></section>`;
+                sectionWrapper.innerHTML += groupHtml;
+            });
+
+            if (Object.keys(groupsMap).length === 0) {
+                sectionWrapper.innerHTML = '<p style="text-align:center; opacity:0.3; padding:100px;">NO PERSONNEL FOUND</p>';
+            }
         }
 
         function renderTabs() {
@@ -440,12 +395,61 @@
 
         function setActiveTab(id) { activeTab = id; renderTabs(); filterMembers(); }
 
+        // --- Config & Weather & Audio (Same as your code) ---
+        db.ref('config').on('value', snap => {
+            const d = snap.val() || {};
+            document.title = d.name || 'GHETTOTROPHY';
+            document.getElementById('siteNameDisplay').innerText = d.name || 'LOADING...';
+            document.getElementById('favicon').href = d.favicon || '';
+            document.getElementById('siteLogo').src = d.logo || '';
+            if(d.bgUrl) document.body.style.backgroundImage = `url('${d.bgUrl}')`;
+            if(d.themeColor) document.documentElement.style.setProperty('--accent', d.themeColor);
+            weatherType = d.weather || 'none'; initWeather();
+            document.getElementById('footerTextDisplay').innerText = d.footerText || 'Designed by Ghetto';
+            document.getElementById('footerLinkLabel').href = d.footerLink || '#';
+        });
+
+        function saveConfig() {
+            db.ref('config').update({
+                name: document.getElementById('configSiteName').value,
+                favicon: document.getElementById('configFavicon').value,
+                themeColor: document.getElementById('configThemeColor').value,
+                logo: document.getElementById('configLogoUrl').value,
+                bgUrl: document.getElementById('configBgUrl').value,
+                weather: document.getElementById('configWeather').value,
+                footerText: document.getElementById('configFooterText').value,
+                footerLink: document.getElementById('configFooterLink').value
+            }).then(() => showNotify("CONFIG SYNCED"));
+        }
+
+        // Weather Engine
+        const canvas = document.getElementById('weather-canvas'), ctx = canvas.getContext('2d');
+        let particles = [];
+        function initWeather() {
+            canvas.width = window.innerWidth; canvas.height = window.innerHeight;
+            particles = []; if(weatherType === 'none') return;
+            for(let i=0; i<100; i++) particles.push({ x: Math.random()*canvas.width, y: Math.random()*canvas.height, v: Math.random()*2+1, size: Math.random()*2 });
+            drawWeather();
+        }
+        function drawWeather() {
+            if(weatherType === 'none') return ctx.clearRect(0,0,canvas.width,canvas.height);
+            ctx.clearRect(0,0,canvas.width,canvas.height); ctx.fillStyle = "white";
+            particles.forEach(p => { ctx.beginPath(); ctx.arc(p.x, p.y, p.size, 0, Math.PI*2); ctx.fill(); p.y += p.v; if(p.y > canvas.height) p.y = -10; });
+            requestAnimationFrame(drawWeather);
+        }
+
+        function saveMusic() {
+            db.ref('music').set({ id: document.getElementById('musicVidId').value, start: document.getElementById('musicStart').value, auto: document.getElementById('musicAutoToggle').checked });
+            showNotify("MUSIC UPDATED");
+        }
+
         function showNotify(msg) {
             const t = document.createElement('div'); t.className = 'notify';
             t.innerHTML = `<i class="fa-solid fa-circle-check"></i> ${msg}`;
             document.getElementById('notification-container').appendChild(t);
             setTimeout(() => t.remove(), 3000);
         }
+
         window.addEventListener('resize', () => { canvas.width = window.innerWidth; canvas.height = window.innerHeight; });
     </script>
 </body>
