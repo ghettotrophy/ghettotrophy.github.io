@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="th">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -126,7 +126,7 @@
     <header class="hero">
         <img src="" id="siteLogo">
         <h1 id="siteNameDisplay">LOADING...</h1>
-        <p id="siteDescDisplay" style="font-family:'Orbitron'; font-size:11px; opacity:0.6; letter-spacing:6px;">PERSONNEL DIRECTORY SYSTEM</p>
+        <p id="siteDescDisplay" style="font-family:'Orbitron'; font-size:11px; opacity:0.6; letter-spacing:6px;">Not a perfect gang but try to be the best.</p>
     </header>
 
     <div style="max-width:700px; margin:0 auto 60px; padding:0 20px;">
@@ -211,7 +211,7 @@
                         <div><label>FULL NAME</label><input type="text" id="memName"></div>
                         <div><label>AVATAR URL</label><input type="text" id="memImg"></div>
                         <div><label>ASSIGN ROLE</label><select id="memRole"></select></div>
-                        <div><label><i class="fa-brands fa-facebook"></i> FB URL</label><input type="text" id="memFb"></div>
+                        <div><label><i class="fa-brands fa-facebook"></i> FB URL (REQUIRED)</label><input type="text" id="memFb"></div>
                         <div><label><i class="fa-brands fa-youtube"></i> YT URL</label><input type="text" id="memYt"></div>
                         <div><label><i class="fa-brands fa-tiktok"></i> TK URL</label><input type="text" id="memTk"></div>
                     </div>
@@ -227,7 +227,6 @@
     </div>
 
     <script>
-        // Firebase Setup
         const firebaseConfig = { databaseURL: "https://demoadmin-a4b1f-default-rtdb.asia-southeast1.firebasedatabase.app/" };
         firebase.initializeApp(firebaseConfig);
         const db = firebase.database();
@@ -235,7 +234,6 @@
         let player, currentRoles = {}, currentMembers = {}, currentGroups = {}, activeTab = 'all', weatherType = 'none';
         let isPlaying = false;
 
-        // --- Auth ---
         function attemptLogin() {
             const u = document.getElementById('loginUser').value;
             const p = document.getElementById('loginPass').value;
@@ -245,6 +243,15 @@
                 document.body.style.overflow = 'hidden';
                 loadConfigToInputs();
             } else showNotify("ACCESS DENIED: WRONG CREDENTIALS");
+        }
+
+        function showNotify(msg) {
+            const container = document.getElementById('notification-container');
+            const el = document.createElement('div');
+            el.className = 'notify';
+            el.innerHTML = `<i class="fa-solid fa-bell"></i> ${msg}`;
+            container.appendChild(el);
+            setTimeout(() => el.remove(), 3000);
         }
 
         function loadConfigToInputs() {
@@ -274,7 +281,6 @@
             document.body.style.overflow = 'auto'; 
         }
 
-        // --- Database Listeners ---
         db.ref('roleGroups').on('value', snap => {
             currentGroups = snap.val() || {};
             let list = '', opt = '<option value="">SELECT GROUP</option>';
@@ -311,7 +317,6 @@
             filterMembers();
         });
 
-        // --- Logic Functions ---
         function addGroup() {
             const name = document.getElementById('newGroupName').value.toUpperCase();
             if(name) db.ref('roleGroups').push({ name }).then(() => {
@@ -338,7 +343,11 @@
                 yt: document.getElementById('memYt').value || "",
                 tk: document.getElementById('memTk').value || ""
             };
-            if(!data.name || !data.roleId) return showNotify("DATA INCOMPLETE: NAME & ROLE REQUIRED");
+
+            // Requirement: Name, Role, and Facebook Link must be provided
+            if(!data.name || !data.roleId) return showNotify("ERROR: NAME & ROLE REQUIRED");
+            if(!data.fb) return showNotify("ERROR: FACEBOOK LINK IS REQUIRED TO ADD MEMBER");
+
             const ref = id ? db.ref('members').child(id) : db.ref('members').push();
             ref.set(data).then(() => { 
                 showNotify("PERSONNEL DATABASE UPDATED"); 
@@ -370,27 +379,22 @@
             document.getElementById('memBtn').style.background = "var(--accent)";
         }
 
-        // --- UI Rendering ---
         function filterMembers() {
             const term = document.getElementById('memberSearch').value.toLowerCase();
             const wrapper = document.getElementById('memberSections');
             wrapper.innerHTML = '';
-
             const structure = {};
             Object.keys(currentMembers).forEach(id => {
                 const m = currentMembers[id];
                 const role = currentRoles[m.roleId];
                 if(!role) return;
-
                 const gId = role.groupId;
                 const gName = currentGroups[gId]?.name || "UNASSIGNED";
-
                 if(m.name.toLowerCase().includes(term) && (activeTab === 'all' || m.roleId === activeTab)) {
                     if(!structure[gId]) structure[gId] = { name: gName, items: [] };
                     structure[gId].items.push({...m, role});
                 }
             });
-
             Object.keys(structure).forEach(gId => {
                 const group = structure[gId];
                 let html = `<section class="category-section"><div class="category-header">${group.name}</div><div class="member-grid">`;
@@ -427,7 +431,6 @@
 
         function setActiveTab(id) { activeTab = id; renderTabs(); filterMembers(); }
 
-        // --- Music Control ---
         function toggleMusic() {
             if(!player) return;
             const icon = document.getElementById('musicIcon');
@@ -451,27 +454,17 @@
                     playerVars: { 'autoplay': m.auto ? 1 : 0, 'start': m.start || 0, 'loop': 1, 'playlist': m.id },
                     events: { 
                         'onReady': (e) => { 
-                            if(m.auto) {
-                                e.target.playVideo();
-                                isPlaying = true;
-                                document.getElementById('musicIcon').className = 'fa-solid fa-pause';
-                            }
+                            if(m.auto) { e.target.playVideo(); isPlaying = true; document.getElementById('musicIcon').className = 'fa-solid fa-pause'; }
                         },
                         'onStateChange': (e) => {
-                            if(e.data === YT.PlayerState.PLAYING) {
-                                isPlaying = true;
-                                document.getElementById('musicIcon').className = 'fa-solid fa-pause';
-                            } else {
-                                isPlaying = false;
-                                document.getElementById('musicIcon').className = 'fa-solid fa-play';
-                            }
+                            if(e.data === YT.PlayerState.PLAYING) { isPlaying = true; document.getElementById('musicIcon').className = 'fa-solid fa-pause'; }
+                            else { isPlaying = false; document.getElementById('musicIcon').className = 'fa-solid fa-play'; }
                         }
                     }
                 });
             });
         }
 
-        // --- Config Watcher ---
         db.ref('config').on('value', snap => {
             const d = snap.val() || {};
             document.title = d.name || 'GHETTOTROPHY';
@@ -506,33 +499,36 @@
             }).then(() => showNotify("AUDIO ENGINE UPDATED"));
         }
 
-        // --- Atmosphere & System ---
         const canvas = document.getElementById('weather-canvas'), ctx = canvas.getContext('2d');
         let particles = [];
         function initWeather() {
             canvas.width = window.innerWidth; canvas.height = window.innerHeight;
             particles = []; if(weatherType === 'none') return;
-            for(let i=0; i<80; i++) particles.push({ x: Math.random()*canvas.width, y: Math.random()*canvas.height, v: Math.random()*2+1, s: Math.random()*2 });
-            drawWeather();
+            for(let i=0; i<80; i++) {
+                particles.push({
+                    x: Math.random() * canvas.width,
+                    y: Math.random() * canvas.height,
+                    speed: Math.random() * 2 + 1,
+                    radius: Math.random() * 2 + 1
+                });
+            }
         }
+
         function drawWeather() {
-            if(weatherType === 'none') return ctx.clearRect(0,0,canvas.width,canvas.height);
-            ctx.clearRect(0,0,canvas.width,canvas.height); ctx.fillStyle = "rgba(255,255,255,0.6)";
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            if(weatherType === 'none') return requestAnimationFrame(drawWeather);
+            ctx.fillStyle = "rgba(255, 255, 255, 0.5)";
             particles.forEach(p => {
-                ctx.beginPath(); ctx.arc(p.x, p.y, p.s, 0, Math.PI*2); ctx.fill();
-                p.y += p.v; if(p.y > canvas.height) p.y = -10;
+                ctx.beginPath();
+                ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+                ctx.fill();
+                p.y += p.speed;
+                if(p.y > canvas.height) p.y = -10;
             });
             requestAnimationFrame(drawWeather);
         }
-
-        function showNotify(msg) {
-            const t = document.createElement('div'); t.className = 'notify';
-            t.innerHTML = `<i class="fa-solid fa-circle-check"></i> ${msg}`;
-            document.getElementById('notification-container').appendChild(t);
-            setTimeout(() => t.remove(), 3000);
-        }
-
-        window.onresize = () => { canvas.width = window.innerWidth; canvas.height = window.innerHeight; };
+        window.addEventListener('resize', initWeather);
+        drawWeather();
     </script>
 </body>
 </html>
