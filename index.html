@@ -463,7 +463,15 @@
             document.getElementById('notification-container').appendChild(t);
             setTimeout(() => t.remove(), 3000);
         }
+<div id="enter-overlay" style="position:fixed; inset:0; background:var(--bg); z-index:99999; display:flex; align-items:center; justify-content:center; flex-direction:column; transition: opacity 0.8s ease;">
+    <div style="font-family:'Orbitron'; color:var(--accent); font-size:40px; letter-spacing:15px; margin-bottom:30px; text-shadow: 0 0 20px var(--accent);">GHETTOTROPHY</div>
+    <button class="config-btn" style="padding:15px 40px; font-size:14px;" onclick="startSystem()">ENTER SYSTEM</button>
+</div>
 
+<div id="music-controller" style="position:fixed; bottom:25px; right:25px; z-index:1000; display:flex; align-items:center; gap:10px; background:rgba(0,0,0,0.7); padding:10px 15px; border-radius:50px; border:1px solid var(--border); backdrop-filter:blur(10px);">
+    <div id="track-info" style="font-size:10px; font-family:'Orbitron'; color:var(--accent); max-width:100px; overflow:hidden; white-space:nowrap; text-overflow:ellipsis;">CONNECTING...</div>
+    <button onclick="toggleMusic()" id="play-btn" style="background:none; border:none; color:white; cursor:pointer; font-size:18px;"><i class="fa-solid fa-play"></i></button>
+</div>
         window.addEventListener('resize', () => { canvas.width = window.innerWidth; canvas.height = window.innerHeight; });
     </script>
 </body>
