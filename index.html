@@ -104,17 +104,17 @@
 
     <div id="loginModal" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.9); z-index:10000; align-items:center; justify-content:center; backdrop-filter:blur(10px);">
         <div class="admin-card" style="width:100%; max-width:400px;">
-            <h2 style="font-family:'Orbitron'; text-align:center; color:var(--accent); margin-bottom:30px;">AUTHENTICATION</h2>
-            <label>IDENTITY</label><input type="text" id="loginUser">
-            <label>SECURITY KEY</label><input type="password" id="loginPass">
-            <button class="btn-save" onclick="attemptLogin()">ACCESS SYSTEM</button>
+            <h2 style="font-family:'Orbitron'; text-align:center; color:var(--accent); margin-bottom:30px;">LOGIN</h2>
+            <label>USERNAME</label><input type="text" id="loginUser">
+            <label>PASSWORD</label><input type="password" id="loginPass">
+            <button class="btn-save" onclick="attemptLogin()">ENTER</button>
             <button style="width:100%; background:none; border:none; color:#555; margin-top:15px; cursor:pointer;" onclick="closeModal('loginModal')">CANCEL</button>
         </div>
     </div>
 
     <nav class="top-nav">
         <div style="font-family:'Orbitron'; font-size:11px; letter-spacing:2px;">
-            <i class="fa-solid fa-users" style="color:var(--accent)"></i> ACTIVE: <span id="countNum">0</span>
+            <i class="fa-solid fa-users" style="color:var(--accent)"></i> MEMBER ONLINE: <span id="countNum">0</span>
         </div>
         <button class="config-btn" onclick="openModal('loginModal')"><i class="fa-solid fa-lock"></i> SYSTEM</button>
     </nav>
@@ -144,12 +144,12 @@
                     <h2 style="font-family:'Orbitron'; color:var(--accent); font-size:24px;">CENTRAL COMMAND</h2>
                     <p style="font-size:12px; color:#555;">Real-time Database & Site Management</p>
                 </div>
-                <button class="config-btn" style="background:var(--danger); color:#fff;" onclick="closeAdminPanel()">TERMINATE SESSION</button>
+                <button class="config-btn" style="background:var(--danger); color:#fff;" onclick="closeAdminPanel()">CLOSE</button>
             </header>
 
             <div class="admin-grid">
                 <div class="admin-card col-4">
-                    <div style="margin-bottom:20px; font-family:'Orbitron'; font-size:14px; color:var(--accent);"><i class="fa-solid fa-sliders"></i> IDENTITY & THEME</div>
+                    <div style="margin-bottom:20px; font-family:'Orbitron'; font-size:14px; color:var(--accent);"><i class="fa-solid fa-sliders"></i> SETTING & THEME</div>
                     <label>SITE NAME (TITLE)</label><input type="text" id="configSiteName">
                     <label>FAVICON URL</label><input type="text" id="configFavicon">
                     <label>THEME ACCENT</label><input type="color" id="configThemeColor" style="height:50px; cursor:pointer;">
@@ -165,7 +165,7 @@
                     <div style="margin: 20px 0; border-top: 1px solid #333; padding-top: 20px;">
                         <div style="margin-bottom:15px; font-family:'Orbitron'; font-size:12px; color:var(--accent);"><i class="fa-solid fa-copyright"></i> FOOTER CREDIT</div>
                         <label>FOOTER TEXT</label><input type="text" id="configFooterText" placeholder="Designed by...">
-                        <label>GHETTO LINK (URL)</label><input type="text" id="configFooterLink" placeholder="https://facebook.com/...">
+                        <label>FOOTER TEXT LINK (URL)</label><input type="text" id="configFooterLink" placeholder="https://facebook.com/...">
                     </div>
 
                     <button class="btn-save" onclick="saveConfig()">SYNC CHANGES</button>
@@ -202,10 +202,10 @@
                 <div class="admin-card col-12">
                     <div style="margin-bottom:20px; font-family:'Orbitron'; font-size:14px; color:var(--accent);"><i class="fa-solid fa-user-plus"></i> PERSONNEL</div>
                     <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap:20px;">
-                        <div><label>FULL NAME</label><input type="text" id="memName"></div>
-                        <div><label>AVATAR URL</label><input type="text" id="memImg"></div>
+                        <div><label>ADD NAME</label><input type="text" id="memName"></div>
+                        <div><label>PROFILE URL</label><input type="text" id="memImg"></div>
                         <div><label>SOCIAL LINK</label><input type="text" id="memFb"></div>
-                        <div><label>ASSIGN ROLE</label><select id="memRole"></select></div>
+                        <div><label>ADD ROLE</label><select id="memRole"></select></div>
                     </div>
                     <input type="hidden" id="editMemId">
                     <div style="display:flex; gap:10px;">
