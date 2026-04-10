@@ -25,67 +25,56 @@
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; -webkit-font-smoothing: antialiased; }
-        html { scroll-behavior: smooth; }
         body { 
             background-color: var(--bg); 
-            background-size: cover; 
-            background-position: center; 
-            background-attachment: fixed;
-            color: #fff; 
-            font-family: 'Inter', sans-serif; 
-            overflow-x: hidden; 
-            line-height: 1.6; 
-            transition: background 0.5s ease;
+            background-size: cover; background-position: center; background-attachment: fixed;
+            color: #fff; font-family: 'Inter', sans-serif; overflow-x: hidden; line-height: 1.6; 
         }
 
         #weather-canvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 50; }
 
-        @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        /* Search & Filter Styles */
+        .search-section { max-width: 600px; margin: 0 auto 40px; text-align: center; }
+        .search-box { 
+            width: 100%; background: #141619; border: 1px solid #2a2d31; padding: 12px 20px;
+            border-radius: 30px; color: #fff; font-family: 'Inter'; font-size: 14px; margin-bottom: 20px;
+            outline: none; transition: var(--transition);
+        }
+        .search-box:focus { border-color: var(--accent); box-shadow: 0 0 15px rgba(255, 193, 7, 0.2); }
 
-        #notification-container { position: fixed; bottom: 30px; left: 30px; z-index: 10000; }
-        .notify { background: #202124; border-radius: 4px; padding: 12px 24px; color: #fff; font-size: 14px; box-shadow: 0 4px 15px rgba(0,0,0,0.5); display: flex; align-items: center; gap: 12px; margin-top: 10px; animation: slideUp 0.3s ease-out; min-width: 250px; }
-
-        .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.85); display: none; align-items: center; justify-content: center; z-index: 7000; backdrop-filter: blur(8px); animation: fadeIn 0.3s ease; }
-        .custom-modal { background: #1a1c1e; padding: 30px; border-radius: 16px; width: 90%; max-width: 400px; border: 1px solid var(--border); text-align: center; }
+        .filter-tabs { display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; margin-bottom: 30px; }
+        .tab-btn { 
+            background: transparent; border: 1px solid #2a2d31; color: #888; 
+            padding: 8px 25px; border-radius: 20px; cursor: pointer; font-family: 'Orbitron';
+            font-size: 11px; transition: var(--transition); text-transform: uppercase;
+        }
+        .tab-btn.active { background: var(--accent); color: #000; border-color: var(--accent); font-weight: bold; }
+        .tab-btn:hover:not(.active) { border-color: #555; color: #fff; }
 
         .top-nav { position: fixed; top: 0; width: 100%; padding: 15px 40px; display: flex; justify-content: space-between; align-items: center; z-index: 1000; background: rgba(10,10,10,0.7); backdrop-filter: blur(15px); border-bottom: 1px solid var(--border); }
         .config-btn { background: var(--accent); color: #000; border: none; padding: 8px 18px; border-radius: 6px; font-family: 'Orbitron'; cursor: pointer; transition: var(--transition); font-size: 11px; font-weight: bold; }
-        .config-btn:hover { transform: scale(1.05); box-shadow: 0 0 15px var(--accent); }
-
-        .hero { padding: 160px 20px 60px; text-align: center; animation: slideUp 0.8s ease; position: relative; z-index: 100; }
-        .hero img { max-width: 140px; margin-bottom: 25px; filter: drop-shadow(0 0 20px var(--accent)); transition: var(--transition); }
-        .hero h1 { font-family: 'Orbitron'; font-size: clamp(28px, 6vw, 60px); letter-spacing: 12px; margin-bottom: 10px; color: var(--accent); }
+        
+        .hero { padding: 140px 20px 40px; text-align: center; position: relative; z-index: 100; }
+        .hero img { max-width: 120px; margin-bottom: 15px; filter: drop-shadow(0 0 15px var(--accent)); }
+        .hero h1 { font-family: 'Orbitron'; font-size: clamp(24px, 5vw, 50px); letter-spacing: 10px; color: #fff; margin-bottom: 5px; }
 
         .member-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px; padding: 0 8% 100px; max-width: 1400px; margin: 0 auto; position: relative; z-index: 100; }
-        .member-card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 12px; padding: 15px; display: flex; align-items: center; gap: 15px; transition: var(--transition); position: relative; backdrop-filter: blur(5px); }
-        .member-card:hover { border-color: var(--accent); transform: translateY(-8px); box-shadow: 0 10px 30px rgba(0,0,0,0.4); }
-        .avatar { width: 60px; height: 60px; border-radius: 10px; object-fit: cover; border: 1px solid rgba(255,255,255,0.1); }
-        
-        .rank-tag { font-family: 'Orbitron'; font-size: 9px; font-weight: bold; padding: 3px 10px; border-radius: 4px; color: #000; text-transform: uppercase; letter-spacing: 1px; }
-        .fb-link { color: var(--fb-color); font-size: 20px; margin-left: auto; transition: var(--transition); }
+        .member-card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 12px; padding: 15px; display: flex; align-items: center; gap: 15px; transition: var(--transition); backdrop-filter: blur(5px); }
+        .member-card:hover { border-color: var(--accent); transform: translateY(-5px); }
+        .avatar { width: 60px; height: 60px; border-radius: 10px; object-fit: cover; }
+        .rank-tag { font-family: 'Orbitron'; font-size: 9px; font-weight: bold; padding: 3px 10px; border-radius: 4px; color: #000; text-transform: uppercase; }
 
-        /* Admin Dashboard UI */
+        /* Admin UI */
         .admin-panel { display: none; position: fixed; inset: 0; background: #0a0a0a; z-index: 6000; overflow-y: auto; padding: 40px; }
         .admin-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 25px; max-width: 1400px; margin: 0 auto; }
-        .admin-card { background: #141414; padding: 25px; border-radius: 15px; border: 1px solid #222; margin-bottom: 20px;}
+        .admin-card { background: #141414; padding: 25px; border-radius: 15px; border: 1px solid #222; }
+        input, select { width: 100%; padding: 12px; background: #0a0a0a; border: 1px solid #333; color: #fff; border-radius: 6px; margin-bottom: 15px; }
+        .btn-save { width: 100%; padding: 12px; border: none; border-radius: 6px; cursor: pointer; font-family: 'Orbitron'; font-weight: bold; }
+        .notify { position: fixed; bottom: 30px; left: 30px; background: #202124; padding: 12px 24px; color: #fff; border-radius: 4px; z-index: 10000; display: flex; align-items: center; gap: 10px; animation: fadeIn 0.3s; }
         
-        input, select { width: 100%; padding: 12px; background: #0a0a0a; border: 1px solid #333; color: #fff; border-radius: 6px; margin-bottom: 15px; font-family: 'Inter'; }
-        label { display: block; font-size: 10px; color: var(--accent); margin-bottom: 5px; font-family: 'Orbitron'; letter-spacing: 1px; }
-        
-        .btn-save { width: 100%; padding: 12px; border: none; border-radius: 6px; cursor: pointer; font-family: 'Orbitron'; font-weight: bold; transition: 0.3s; }
-        .btn-clear { background: #333 !important; color: #ccc !important; }
-        .btn-clear:hover { background: #444 !important; color: #fff !important; }
-
-        .music-ctrl { position: fixed; bottom: 30px; right: 30px; width: 55px; height: 55px; background: var(--accent); color: #000; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; z-index: 1000; transition: var(--transition); box-shadow: 0 0 20px rgba(0,0,0,0.5); }
-        #yt-player-container { position: absolute; width: 0; height: 0; pointer-events: none; opacity: 0; }
-
-        .admin-mem-item { background:#000; padding:12px; margin-bottom:8px; border-radius:8px; display:flex; justify-content:space-between; align-items:center; border: 1px solid #222;}
-        .action-icons i { cursor: pointer; margin-left: 12px; transition: 0.2s; }
-        .fa-trash:hover { color: #ff4444; }
-        .fa-pen-to-square:hover { color: #44aaff; }
-
-        .section-header { border-left: 4px solid var(--accent); padding-left: 15px; margin-bottom: 20px; font-family: 'Orbitron'; font-size: 14px; color: #fff; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        .music-ctrl { position: fixed; bottom: 30px; right: 30px; width: 55px; height: 55px; background: var(--accent); border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; z-index: 1000; color: #000; }
+        .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.85); display: none; align-items: center; justify-content: center; z-index: 7000; backdrop-filter: blur(8px); }
     </style>
 </head>
 <body>
@@ -95,10 +84,10 @@
     <div id="yt-player-container"><div id="player"></div></div>
 
     <div id="loginModal" class="modal-overlay">
-        <div class="custom-modal" style="text-align: left;">
-            <h2 style="font-family:'Orbitron'; color:var(--accent); margin-bottom:20px; text-align: center;">ADMIN LOGIN</h2>
-            <label>USERNAME</label><input type="text" id="loginUser">
-            <label>PASSWORD</label><input type="password" id="loginPass">
+        <div style="background: #1a1c1e; padding: 30px; border-radius: 16px; width: 350px; text-align: center;">
+            <h2 style="font-family:'Orbitron'; color:var(--accent); margin-bottom:20px;">ADMIN LOGIN</h2>
+            <input type="text" id="loginUser" placeholder="Username">
+            <input type="password" id="loginPass" placeholder="Password">
             <button class="config-btn" style="width:100%; padding:12px;" onclick="attemptLogin()">ENTER SYSTEM</button>
         </div>
     </div>
@@ -107,7 +96,7 @@
         <div style="font-family: 'Orbitron'; font-size: 10px; letter-spacing: 2px;">
             MEMBERS: <span id="countNum" style="color:var(--accent)">0</span>
         </div>
-        <button class="config-btn" onclick="openModal('loginModal')"><i class="fa-solid fa-shield-halved"></i> ADMIN</button>
+        <button class="config-btn" onclick="document.getElementById('loginModal').style.display='flex'"><i class="fa-solid fa-shield-halved"></i> ADMIN</button>
     </nav>
 
     <header class="hero">
@@ -115,6 +104,13 @@
         <h1 id="siteNameDisplay">GHETTOTROPHY</h1>
         <p id="siteDescDisplay" style="font-family:'Orbitron'; font-size:10px; opacity:0.5; letter-spacing:5px;">MEMBER ROLE SYSTEM</p>
     </header>
+
+    <div class="search-section">
+        <input type="text" class="search-box" id="memberSearch" placeholder="Search members..." oninput="renderMembers()">
+        <div class="filter-tabs" id="filterTabs">
+            <button class="tab-btn active" onclick="filterByRole('all', this)">ALL</button>
+            </div>
+    </div>
 
     <div id="memberList" class="member-grid"></div>
 
@@ -125,67 +121,39 @@
     <div id="adminPanel" class="admin-panel">
         <div style="display: flex; justify-content: space-between; align-items: center; max-width: 1400px; margin: 0 auto 30px;">
             <h2 style="font-family: 'Orbitron'; color: var(--accent);">ADMIN DASHBOARD</h2>
-            <button class="config-btn" style="background:#ff4444; color:#fff;" onclick="logoutAdmin()">CLOSE PANEL</button>
+            <button class="config-btn" style="background:#ff4444; color:#fff;" onclick="location.reload()">CLOSE PANEL</button>
         </div>
 
         <div class="admin-grid">
             <div class="admin-card">
-                <div class="section-header">SITE CONFIGURATION</div>
-                <label>SITE NAME</label><input type="text" id="configSiteName">
-                <label>DESCRIPTION</label><input type="text" id="configSiteDesc">
-                <label>THEME COLOR</label><input type="color" id="configThemeColor" style="height:45px; padding:5px;">
-                <label>FAVICON URL</label><input type="text" id="configFavicon" placeholder="ลิ้งก์ไอคอน .ico หรือ .png">
-                <label>BACKGROUND URL</label><input type="text" id="configBgUrl" placeholder="ลิ้งก์รูปพื้นหลัง">
-                <label>เปิด/ปิด[หิมะและอื่นๆ]</label>
-                <select id="configWeather">
-                    <option value="none">OFF (ปิด)</option>
-                    <option value="snow">SNOW (หิมะตก)</option>
-                    <option value="rain">RAIN (ฝนตก)</option>
-                    <option value="sun">SUNLIGHT (แดดส่อง)</option>
-                </select>
-                <label>LOGO URL</label><input type="text" id="configLogoUrl" placeholder="ลิ้งก์รูปโลโก้หน้าเว็บ">
-                <button class="btn-save" style="background:var(--accent);" onclick="saveConfig()">SAVE SITE SETTINGS</button>
+                <div style="border-left:4px solid var(--accent); padding-left:15px; margin-bottom:20px; font-family:'Orbitron'; font-size:14px;">SITE CONFIG</div>
+                <label style="font-size:10px; color:var(--accent);">SITE NAME</label><input type="text" id="configSiteName">
+                <label style="font-size:10px; color:var(--accent);">DESCRIPTION</label><input type="text" id="configSiteDesc">
+                <label style="font-size:10px; color:var(--accent);">LOGO URL</label><input type="text" id="configLogoUrl">
+                <button class="btn-save" style="background:var(--accent);" onclick="saveConfig()">SAVE CONFIG</button>
             </div>
 
-            <div style="display: flex; flex-direction: column; gap: 20px;">
-                <div class="admin-card">
-                    <div class="section-header">ROLES MANAGER</div>
-                    <div style="display: flex; gap: 10px;">
-                        <input type="text" id="newRoleName" placeholder="Role Name" style="margin-bottom:0;">
-                        <input type="color" id="newRoleColor" value="#ffc107" style="width:80px; height:45px; padding:5px; margin-bottom:0;">
-                    </div>
-                    <button class="btn-save" style="background:#fff; color:#000; margin-top:15px;" onclick="addRole()">+ ADD ROLE</button>
-                    <div id="roleListContainer" style="margin-top:15px; max-height: 150px; overflow-y: auto;"></div>
+            <div class="admin-card">
+                <div style="border-left:4px solid var(--accent); padding-left:15px; margin-bottom:20px; font-family:'Orbitron'; font-size:14px;">ROLES & HEADERS</div>
+                <div style="display: flex; gap: 10px;">
+                    <input type="text" id="newRoleName" placeholder="Role/Header Name" style="margin-bottom:0;">
+                    <input type="color" id="newRoleColor" value="#ffc107" style="width:80px; height:45px; padding:5px; margin-bottom:0;">
                 </div>
-
-                <div class="admin-card">
-                    <div class="section-header">MUSIC SETTINGS</div>
-                    <label>YOUTUBE VIDEO ID</label><input type="text" id="configMusicId" placeholder="เช่น PAMYc_MkqkM">
-                    <label>START TIME (SECONDS)</label><input type="number" id="configMusicStart" placeholder="เช่น 40">
-                    <button class="btn-save" style="background:var(--accent);" onclick="saveMusicConfig()">UPDATE MUSIC</button>
-                </div>
+                <button class="btn-save" style="background:#fff; color:#000; margin-top:15px;" onclick="addRole()">+ ADD ROLE/HEADER</button>
+                <div id="roleListContainer" style="margin-top:15px; max-height: 200px; overflow-y: auto;"></div>
             </div>
 
             <div class="admin-card" style="grid-column: 1 / -1;">
-                <div class="section-header">MEMBER MANAGEMENT</div>
-                <div class="admin-grid" style="grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));">
-                    <div>
-                        <label>ชื่อนาม-นามสกุล</label><input type="text" id="memName">
-                        <label>ใส่ Link โปร์ไฟล์</label><input type="text" id="memImg">
-                    </div>
-                    <div>
-                        <label>ใส่ Link Facebook</label><input type="text" id="memFb">
-                        <label>ROLE</label><select id="memRole"></select>
-                    </div>
+                <div style="border-left:4px solid var(--accent); padding-left:15px; margin-bottom:20px; font-family:'Orbitron'; font-size:14px;">MEMBER MANAGEMENT</div>
+                <div style="display:grid; grid-template-columns: 1fr 1fr; gap:15px;">
+                    <input type="text" id="memName" placeholder="Name">
+                    <input type="text" id="memImg" placeholder="Avatar URL">
+                    <input type="text" id="memFb" placeholder="Facebook URL">
+                    <select id="memRole"></select>
                 </div>
                 <input type="hidden" id="editMemId">
-                <div style="display: flex; gap: 10px;">
-                    <button id="memBtn" class="btn-save" style="background:var(--accent); flex: 2;" onclick="saveMember()">ADD NEW MEMBER</button>
-                    <button class="btn-save btn-clear" style="flex: 1;" onclick="clearMemForm()">CLEAR FORM</button>
-                </div>
-                
-                <h4 style="margin-top:30px; font-family:'Orbitron'; font-size:12px; color:var(--accent); border-bottom: 1px solid #222; padding-bottom: 10px;">CURRENT MEMBERS LIST</h4>
-                <div id="adminMemberList" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 10px; margin-top: 15px;"></div>
+                <button id="memBtn" class="btn-save" style="background:var(--accent);" onclick="saveMember()">ADD NEW MEMBER</button>
+                <div id="adminMemberList" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 10px; margin-top: 20px;"></div>
             </div>
         </div>
     </div>
@@ -195,88 +163,105 @@
         firebase.initializeApp(firebaseConfig);
         const db = firebase.database();
 
-        let player, musicData = { id: 'PAMYc_MkqkM', start: 40 }, currentRoles = {}, currentMembers = {};
-
-        // --- Weather ---
-        const canvas = document.getElementById('weather-canvas'), ctx = canvas.getContext('2d');
-        let particles = [], weatherType = 'none';
-
-        function initWeather() {
-            canvas.width = window.innerWidth; canvas.height = window.innerHeight;
-            particles = []; if(weatherType === 'none') return;
-            for(let i=0; i<(weatherType==='rain'?150:80); i++) particles.push({ x: Math.random()*canvas.width, y: Math.random()*canvas.height, v: Math.random()*2+1, size: Math.random()*3+1, opacity: Math.random() });
-        }
-        function drawWeather() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            if(weatherType !== 'none') {
-                ctx.fillStyle = weatherType === 'rain' ? '#44aaff' : '#ffffff';
-                particles.forEach(p => {
-                    ctx.globalAlpha = p.opacity; ctx.beginPath();
-                    if(weatherType === 'rain') { ctx.rect(p.x, p.y, 1, p.size*5); p.y += p.v*5; }
-                    else if(weatherType === 'sun') { ctx.arc(p.x, p.y, p.size*5, 0, Math.PI*2); p.y -= p.v*0.5; p.x += Math.sin(p.y/50); }
-                    else { ctx.arc(p.x, p.y, p.size, 0, Math.PI*2); p.y += p.v; p.x += Math.sin(p.y/100); }
-                    ctx.fill(); if(p.y > canvas.height) p.y = -20; if(p.y < -50) p.y = canvas.height + 20;
-                });
-                requestAnimationFrame(drawWeather);
-            }
-        }
-        window.addEventListener('resize', initWeather);
+        let player, currentRoles = {}, currentMembers = {}, activeFilter = 'all';
 
         // --- Site Engine ---
         db.ref('config').on('value', snap => {
             const d = snap.val() || {};
             document.getElementById('siteNameDisplay').innerText = d.name || 'GHETTOTROPHY';
-            document.getElementById('siteDescDisplay').innerText = d.desc || '';
+            document.getElementById('siteDescDisplay').innerText = d.desc || 'MEMBER ROLE SYSTEM';
             document.getElementById('siteLogo').src = d.logo || '';
-            document.getElementById('favicon').href = d.favicon || '';
-            document.getElementById('pageTitle').innerText = d.name || 'GHETTOTROPHY';
-            if(d.bgUrl) document.body.style.backgroundImage = `url('${d.bgUrl}')`;
-            if(d.themeColor) document.documentElement.style.setProperty('--accent', d.themeColor);
-            weatherType = d.weather || 'none'; initWeather(); drawWeather();
-
             document.getElementById('configSiteName').value = d.name || '';
             document.getElementById('configSiteDesc').value = d.desc || '';
-            document.getElementById('configThemeColor').value = d.themeColor || '#ffc107';
-            document.getElementById('configFavicon').value = d.favicon || '';
-            document.getElementById('configBgUrl').value = d.bgUrl || '';
-            document.getElementById('configWeather').value = d.weather || 'none';
             document.getElementById('configLogoUrl').value = d.logo || '';
         });
 
         function saveConfig() {
-            db.ref('config').set({
+            db.ref('config').update({
                 name: document.getElementById('configSiteName').value,
                 desc: document.getElementById('configSiteDesc').value,
-                themeColor: document.getElementById('configThemeColor').value,
-                logo: document.getElementById('configLogoUrl').value,
-                favicon: document.getElementById('configFavicon').value,
-                bgUrl: document.getElementById('configBgUrl').value,
-                weather: document.getElementById('configWeather').value
-            }).then(() => showNotify("SITE CONFIG SAVED"));
+                logo: document.getElementById('configLogoUrl').value
+            }).then(() => showNotify("CONFIG SAVED"));
         }
 
-        // --- Roles ---
+        // --- Roles & Tabs ---
+        db.ref('roles').on('value', snap => {
+            currentRoles = snap.val() || {};
+            let options = '<option value="">NO ROLE</option>', listHtml = '', tabsHtml = '<button class="tab-btn active" onclick="filterByRole(\'all\', this)">ALL</button>';
+            
+            Object.keys(currentRoles).forEach(id => {
+                const r = currentRoles[id];
+                options += `<option value="${id}">${r.name}</option>`;
+                listHtml += `<div style="display:flex; justify-content:space-between; padding:10px; background:#000; margin-bottom:5px; border-radius:5px;">
+                    <span style="color:${r.color}">${r.name}</span>
+                    <i class="fa-solid fa-trash" style="cursor:pointer; color:#ff4444" onclick="db.ref('roles').child('${id}').remove()"></i>
+                </div>`;
+                tabsHtml += `<button class="tab-btn" onclick="filterByRole('${id}', this)">${r.name}</button>`;
+            });
+
+            document.getElementById('memRole').innerHTML = options;
+            document.getElementById('roleListContainer').innerHTML = listHtml;
+            document.getElementById('filterTabs').innerHTML = tabsHtml;
+            renderMembers();
+        });
+
         function addRole() {
             const name = document.getElementById('newRoleName').value;
             const color = document.getElementById('newRoleColor').value;
-            if(name) db.ref('roles').push({ name, color }).then(() => { document.getElementById('newRoleName').value = ''; });
+            if(name) db.ref('roles').push({ name, color }).then(() => document.getElementById('newRoleName').value = '');
         }
 
-        db.ref('roles').on('value', snap => {
-            currentRoles = snap.val() || {};
-            let options = '<option value="">NO ROLE</option>', listHtml = '';
-            Object.keys(currentRoles).forEach(id => {
-                options += `<option value="${id}">${currentRoles[id].name}</option>`;
-                listHtml += `<div style="display:flex; justify-content:space-between; padding:8px; background:#000; margin-bottom:5px; border-radius:5px; border:1px solid #222;">
-                    <span style="color:${currentRoles[id].color}">${currentRoles[id].name}</span>
-                    <i class="fa-solid fa-trash" style="cursor:pointer;" onclick="db.ref('roles').child('${id}').remove()"></i>
-                </div>`;
-            });
-            document.getElementById('memRole').innerHTML = options;
-            document.getElementById('roleListContainer').innerHTML = listHtml;
+        // --- Members logic ---
+        db.ref('members').on('value', snap => {
+            currentMembers = snap.val() || {};
+            renderMembers();
         });
 
-        // --- Members ---
+        function filterByRole(roleId, btn) {
+            activeFilter = roleId;
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            renderMembers();
+        }
+
+        function renderMembers() {
+            const search = document.getElementById('memberSearch').value.toLowerCase();
+            let html = '', adminHtml = '', count = 0;
+
+            Object.keys(currentMembers).forEach(id => {
+                const m = currentMembers[id];
+                const role = currentRoles[m.roleId] || { name: 'MEMBER', color: '#888' };
+                
+                // Filter logic
+                const matchesSearch = m.name.toLowerCase().includes(search);
+                const matchesRole = activeFilter === 'all' || m.roleId === activeFilter;
+
+                if(matchesSearch && matchesRole) {
+                    count++;
+                    html += `<div class="member-card">
+                        <img src="${m.img || 'https://i.imgur.com/6VBx3io.png'}" class="avatar">
+                        <div>
+                            <div style="font-weight:600; font-size:14px;">${m.name}</div>
+                            <span class="rank-tag" style="background:${role.color}">${role.name}</span>
+                        </div>
+                        <a href="${m.fb}" target="_blank" class="fb-link"><i class="fa-brands fa-facebook"></i></a>
+                    </div>`;
+                }
+
+                adminHtml += `<div style="background:#000; padding:10px; border-radius:8px; display:flex; justify-content:space-between;">
+                    <span>${m.name}</span>
+                    <div>
+                        <i class="fa-solid fa-pen" style="cursor:pointer; margin-right:10px; color:#4af" onclick="editMember('${id}')"></i>
+                        <i class="fa-solid fa-trash" style="cursor:pointer; color:#f44" onclick="db.ref('members').child('${id}').remove()"></i>
+                    </div>
+                </div>`;
+            });
+
+            document.getElementById('memberList').innerHTML = html;
+            document.getElementById('adminMemberList').innerHTML = adminHtml;
+            document.getElementById('countNum').innerText = count;
+        }
+
         function saveMember() {
             const id = document.getElementById('editMemId').value;
             const data = {
@@ -285,12 +270,15 @@
                 fb: document.getElementById('memFb').value,
                 roleId: document.getElementById('memRole').value
             };
-            if(!data.name) return showNotify("PLEASE ENTER NAME");
-            
+            if(!data.name) return alert("Please enter name");
             const ref = id ? db.ref('members').child(id) : db.ref('members').push();
             ref.set(data).then(() => {
-                showNotify(id ? "MEMBER UPDATED" : "MEMBER ADDED");
-                clearMemForm();
+                showNotify("MEMBER SAVED");
+                document.getElementById('editMemId').value = '';
+                document.getElementById('memName').value = '';
+                document.getElementById('memImg').value = '';
+                document.getElementById('memFb').value = '';
+                document.getElementById('memBtn').innerText = "ADD NEW MEMBER";
             });
         }
 
@@ -302,82 +290,34 @@
             document.getElementById('memFb').value = m.fb;
             document.getElementById('memRole').value = m.roleId;
             document.getElementById('memBtn').innerText = "UPDATE MEMBER";
-            document.getElementById('memBtn').style.background = "#44aaff";
             showNotify("EDITING: " + m.name);
         }
 
-        function clearMemForm() {
-            document.getElementById('editMemId').value = '';
-            document.getElementById('memName').value = '';
-            document.getElementById('memImg').value = '';
-            document.getElementById('memFb').value = '';
-            document.getElementById('memRole').value = '';
-            document.getElementById('memBtn').innerText = "ADD NEW MEMBER";
-            document.getElementById('memBtn').style.background = "var(--accent)";
-            showNotify("FORM CLEARED");
+        // --- Auth & UI ---
+        function attemptLogin() {
+            if(document.getElementById('loginUser').value === 'ghett' && document.getElementById('loginPass').value === 'ghett9871') {
+                document.getElementById('loginModal').style.display='none';
+                document.getElementById('adminPanel').style.display='block';
+            } else { alert("WRONG PASSWORD"); }
         }
 
-        db.ref('members').on('value', snap => {
-            currentMembers = snap.val() || {};
-            document.getElementById('countNum').innerText = Object.keys(currentMembers).length;
-            let html = '', adminHtml = '';
-            Object.keys(currentMembers).forEach(id => {
-                const m = currentMembers[id], role = currentRoles[m.roleId] || { name: 'NO ROLE', color: '#555' };
-                html += `<div class="member-card">
-                    <img src="${m.img || 'https://i.imgur.com/6VBx3io.png'}" class="avatar">
-                    <div><div style="font-weight:600;">${m.name}</div><span class="rank-tag" style="background:${role.color}">${role.name}</span></div>
-                    <a href="${m.fb}" target="_blank" class="fb-link"><i class="fa-brands fa-facebook"></i></a>
-                </div>`;
-                adminHtml += `<div class="admin-mem-item">
-                    <span>${m.name}</span>
-                    <div class="action-icons">
-                        <i class="fa-solid fa-pen-to-square" onclick="editMember('${id}')"></i>
-                        <i class="fa-solid fa-trash" onclick="db.ref('members').child('${id}').remove()"></i>
-                    </div>
-                </div>`;
-            });
-            document.getElementById('memberList').innerHTML = html;
-            document.getElementById('adminMemberList').innerHTML = adminHtml;
-        });
-
-        // --- YouTube ---
-        function onYouTubeIframeAPIReady() {
-            db.ref('music').on('value', snap => {
-                const d = snap.val(); if(!d) return; musicData = d;
-                if(player) { player.loadVideoById({ videoId: musicData.id, startSeconds: parseInt(musicData.start) }); player.pauseVideo(); }
-                else {
-                    player = new YT.Player('player', {
-                        height: '0', width: '0', videoId: musicData.id,
-                        playerVars: { 'autoplay': 1, 'loop': 1, 'playlist': musicData.id, 'start': parseInt(musicData.start) }
-                    });
-                }
-            });
+        function showNotify(msg) {
+            const t = document.createElement('div'); t.className = 'notify';
+            t.innerHTML = `<i class="fa-solid fa-check-circle" style="color:var(--accent)"></i> ${msg}`;
+            document.getElementById('notification-container').appendChild(t);
+            setTimeout(() => t.remove(), 3000);
         }
+
+        // --- YouTube & Weather ---
         function toggleMusic() {
             if(!player) return;
             const icon = document.getElementById('musicIcon');
             if(player.getPlayerState() === 1) { player.pauseVideo(); icon.className = 'fa-solid fa-play'; }
-            else { player.playVideo(); icon.className = 'fa-solid fa-pause'; showNotify("MUSIC STARTED"); }
+            else { player.playVideo(); icon.className = 'fa-solid fa-pause'; }
         }
-        function saveMusicConfig() {
-            db.ref('music').set({ id: document.getElementById('configMusicId').value, start: document.getElementById('configMusicStart').value }).then(() => showNotify("MUSIC UPDATED"));
+        function onYouTubeIframeAPIReady() {
+            player = new YT.Player('player', { height: '0', width: '0', videoId: 'PAMYc_MkqkM', playerVars: { 'autoplay': 1, 'loop': 1 } });
         }
-
-        // --- Helpers ---
-        function attemptLogin() {
-            if(document.getElementById('loginUser').value === 'ghett' && document.getElementById('loginPass').value === 'ghett9871') {
-                closeModal('loginModal'); document.getElementById('adminPanel').style.display = 'block';
-            } else showNotify("WRONG PASSWORD");
-        }
-        function showNotify(msg) {
-            const toast = document.createElement('div'); toast.className = 'notify';
-            toast.innerHTML = `<i class="fa-solid fa-circle-check" style="color:var(--accent)"></i> ${msg}`;
-            document.getElementById('notification-container').appendChild(toast);
-            setTimeout(() => toast.remove(), 3000);
-        }
-        function openModal(id) { document.getElementById(id).style.display = 'flex'; }
-        function closeModal(id) { document.getElementById(id).style.display = 'none'; }
-        function logoutAdmin() { location.reload(); }
     </script>
 </body>
 </html>
