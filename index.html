@@ -421,7 +421,7 @@
 
         function renderTabs() {
             const container = document.getElementById('categoryTabs');
-            let html = `<button class="config-btn" style="background:${activeTab==='all'?'var(--accent)':'#222'}; color:${activeTab==='all'?'#000':'#888'}" onclick="setActiveTab('all')">VIEW ALL</button>`;
+            let html = `<button class="config-btn" style="background:${activeTab==='all'?'var(--accent)':'#222'}; color:${activeTab==='all'?'#000':'#888'}" onclick="setActiveTab('all')">ALL</button>`;
             Object.keys(currentRoles).forEach(id => {
                 const active = activeTab === id;
                 html += `<button class="config-btn" style="background:${active?'var(--accent)':'#222'}; color:${active?'#000':'#888'}" onclick="setActiveTab('${id}')">${currentRoles[id].name}</button>`;
