@@ -26,7 +26,6 @@
             --success: #2ed573;
         }
 
-        /* [สไตล์เดิมของคุณคงไว้ทั้งหมด...] */
         * { margin: 0; padding: 0; box-sizing: border-box; -webkit-font-smoothing: antialiased; }
         body { background-color: var(--bg); background-size: cover; background-position: center; background-attachment: fixed; color: #fff; font-family: 'Inter', sans-serif; overflow-x: hidden; line-height: 1.6; transition: background 0.5s ease; opacity: 0; animation: fadeInPage 1.2s ease forwards; }
         @keyframes fadeInPage { from { opacity: 0; } to { opacity: 1; } }
@@ -45,6 +44,9 @@
         .member-card:hover { border-color: var(--accent); transform: translateY(-5px); background: rgba(25, 25, 28, 0.98); }
         .avatar { width: 70px; height: 70px; border-radius: 12px; object-fit: cover; border: 2px solid rgba(255,255,255,0.05); }
         .rank-tag { font-family: 'Orbitron'; font-size: 9px; font-weight: 800; padding: 4px 12px; border-radius: 5px; color: #000; letter-spacing: 1px; margin-top: 6px; display: inline-block; }
+        .social-links { margin-left: auto; display: flex; gap: 12px; font-size: 20px; }
+        .social-links a { transition: var(--transition); }
+        .social-links a:hover { transform: scale(1.2); }
         .site-footer { padding: 40px 20px; text-align: center; font-family: 'Orbitron'; font-size: 10px; letter-spacing: 2px; opacity: 0.5; transition: var(--transition); }
         .site-footer a { color: var(--accent); text-decoration: none; font-weight: 700; }
         .admin-panel { display: none; position: fixed; inset: 0; background: #0c0d0f; z-index: 9999; overflow-y: auto; padding: 40px 20px; }
@@ -182,8 +184,10 @@
                     <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap:20px;">
                         <div><label>NAME</label><input type="text" id="memName"></div>
                         <div><label>IMAGE URL</label><input type="text" id="memImg"></div>
-                        <div><label>FACEBOOK LINK</label><input type="text" id="memFb"></div>
                         <div><label>SELECT ROLE</label><select id="memRole"></select></div>
+                        <div><label><i class="fa-brands fa-facebook"></i> FACEBOOK URL</label><input type="text" id="memFb"></div>
+                        <div><label><i class="fa-brands fa-youtube"></i> YOUTUBE URL</label><input type="text" id="memYt"></div>
+                        <div><label><i class="fa-brands fa-tiktok"></i> TIKTOK URL</label><input type="text" id="memTk"></div>
                     </div>
                     <input type="hidden" id="editMemId">
                     <div style="display:flex; gap:10px;">
@@ -209,13 +213,11 @@
                 closeModal('loginModal'); 
                 document.getElementById('adminPanel').style.display = 'block';
                 document.body.style.overflow = 'hidden';
-                loadConfigToInputs(); // <--- ดึงข้อมูลล่าสุดมาใส่ในช่องกรอกเมื่อเปิด Admin
+                loadConfigToInputs();
             } else showNotify("UNAUTHORIZED ACCESS");
         }
 
-        // ฟังก์ชันใหม่: ดึงข้อมูลจาก DB มากรอกลง Input อัตโนมัติ
         function loadConfigToInputs() {
-            // โหลด Config ทั่วไป
             db.ref('config').once('value', snap => {
                 const d = snap.val() || {};
                 document.getElementById('configSiteName').value = d.name || '';
@@ -227,8 +229,6 @@
                 document.getElementById('configFooterText').value = d.footerText || '';
                 document.getElementById('configFooterLink').value = d.footerLink || '';
             });
-
-            // โหลด Music Config
             db.ref('music').once('value', snap => {
                 const m = snap.val() || {};
                 document.getElementById('musicVidId').value = m.id || '';
@@ -309,7 +309,14 @@
 
         function saveMember() {
             const id = document.getElementById('editMemId').value;
-            const data = { name: document.getElementById('memName').value, img: document.getElementById('memImg').value, fb: document.getElementById('memFb').value, roleId: document.getElementById('memRole').value };
+            const data = { 
+                name: document.getElementById('memName').value, 
+                img: document.getElementById('memImg').value, 
+                fb: document.getElementById('memFb').value || "", 
+                yt: document.getElementById('memYt').value || "", 
+                tk: document.getElementById('memTk').value || "", 
+                roleId: document.getElementById('memRole').value 
+            };
             if(!data.name || !data.roleId) return showNotify("DATA INCOMPLETE");
             const ref = id ? db.ref('members').child(id) : db.ref('members').push();
             ref.set(data).then(() => { showNotify("REGISTRY UPDATED"); clearMemForm(); });
@@ -318,12 +325,13 @@
         function editMember(id) {
             const m = currentMembers[id];
             document.getElementById('editMemId').value = id;
-            document.getElementById('memName').value = m.name;
-            document.getElementById('memImg').value = m.img;
-            document.getElementById('memFb').value = m.fb;
+            document.getElementById('memName').value = m.name || "";
+            document.getElementById('memImg').value = m.img || "";
+            document.getElementById('memFb').value = m.fb || "";
+            document.getElementById('memYt').value = m.yt || "";
+            document.getElementById('memTk').value = m.tk || "";
             document.getElementById('memRole').value = m.roleId;
             document.getElementById('memBtn').innerText = "UPDATE PERSONNEL";
-            // Scroll to form
             document.querySelector('.admin-panel').scrollTo({ top: 1000, behavior: 'smooth' });
         }
 
@@ -332,6 +340,8 @@
             document.getElementById('memName').value = '';
             document.getElementById('memImg').value = '';
             document.getElementById('memFb').value = '';
+            document.getElementById('memYt').value = '';
+            document.getElementById('memTk').value = '';
             document.getElementById('memBtn').innerText = "DEPLOY PERSONNEL";
         }
 
@@ -367,7 +377,11 @@
                                 <div style="font-weight:600;">${m.name}</div>
                                 <span class="rank-tag" style="background:${m.role.color}">${m.role.name}</span>
                             </div>
-                            <a href="${m.fb}" target="_blank" style="margin-left:auto; font-size:22px; color:#1877f2;"><i class="fa-brands fa-facebook"></i></a>
+                            <div class="social-links">
+                                ${m.fb ? `<a href="${m.fb}" target="_blank" style="color:#1877f2;"><i class="fa-brands fa-facebook"></i></a>` : ''}
+                                ${m.yt ? `<a href="${m.yt}" target="_blank" style="color:#ff0000;"><i class="fa-brands fa-youtube"></i></a>` : ''}
+                                ${m.tk ? `<a href="${m.tk}" target="_blank" style="color:#fff; filter: drop-shadow(0 0 2px #000);"><i class="fa-brands fa-tiktok"></i></a>` : ''}
+                            </div>
                         </div>
                     `;
                 });
