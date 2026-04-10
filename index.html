@@ -17,19 +17,13 @@
         :root {
             --accent: #ffc107;
             --bg: #0a0a0a;
-            --card-bg: rgba(20, 20, 22, 0.7);
+            --card-bg: rgba(20, 20, 22, 0.95);
             --admin-card: #1c1e22;
             --input-bg: #111214;
             --border: rgba(255, 255, 255, 0.08);
-            --transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             --danger: #ff4757;
             --success: #2ed573;
-        }
-
-        /* Smooth Entry Animation */
-        @keyframes globalFadeIn {
-            0% { opacity: 0; transform: translateY(10px); filter: blur(5px); }
-            100% { opacity: 1; transform: translateY(0); filter: blur(0); }
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; -webkit-font-smoothing: antialiased; }
@@ -37,91 +31,68 @@
         body { 
             background-color: var(--bg); background-size: cover; background-position: center; 
             background-attachment: fixed; color: #fff; font-family: 'Inter', sans-serif; 
-            overflow-x: hidden; line-height: 1.6; transition: background 0.8s ease;
-            opacity: 0; /* เริ่มต้นที่ 0 เพื่อรอการ Fade-in */
-            animation: globalFadeIn 1.2s ease forwards;
+            overflow-x: hidden; line-height: 1.6; transition: background 0.5s ease;
+            /* Smooth Loading */
+            opacity: 0;
+            animation: fadeInPage 1.2s ease forwards;
+        }
+
+        @keyframes fadeInPage {
+            from { opacity: 0; }
+            to { opacity: 1; }
         }
 
         #weather-canvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 50; }
 
-        /* Navbar & Nav Elements */
-        .top-nav { 
-            position: fixed; top: 0; width: 100%; padding: 15px 40px; 
-            display: flex; justify-content: space-between; align-items: center; 
-            z-index: 1000; background: rgba(10,10,10,0.6); 
-            backdrop-filter: blur(15px); border-bottom: 1px solid var(--border); 
+        @keyframes slideIn { 
+            from { opacity: 0; transform: translateY(15px); filter: blur(10px); } 
+            to { opacity: 1; transform: translateY(0); filter: blur(0); } 
         }
 
-        .config-btn { 
-            background: var(--accent); color: #000; border: none; padding: 10px 20px; 
-            border-radius: 8px; font-family: 'Orbitron'; cursor: pointer; 
-            transition: var(--transition); font-size: 11px; font-weight: 700; 
-            text-transform: uppercase; letter-spacing: 1px;
-        }
-        .config-btn:hover { transform: translateY(-2px); box-shadow: 0 5px 15px rgba(255, 193, 7, 0.3); }
+        .top-nav { position: fixed; top: 0; width: 100%; padding: 15px 40px; display: flex; justify-content: space-between; align-items: center; z-index: 1000; background: rgba(10,10,10,0.8); backdrop-filter: blur(20px); border-bottom: 1px solid var(--border); }
+        .config-btn { background: var(--accent); color: #000; border: none; padding: 10px 20px; border-radius: 8px; font-family: 'Orbitron'; cursor: pointer; transition: var(--transition); font-size: 11px; font-weight: 700; text-transform: uppercase; }
+        .config-btn:hover { transform: scale(1.02); box-shadow: 0 0 20px rgba(255, 193, 7, 0.4); }
 
-        /* Hero Section */
-        .hero { padding: 160px 20px 60px; text-align: center; }
-        #siteLogo { 
-            max-width: 140px; margin-bottom: 25px; 
-            filter: drop-shadow(0 0 20px var(--accent));
-            transition: var(--transition);
-        }
-        .hero h1 { 
-            font-family: 'Orbitron'; font-size: clamp(32px, 6vw, 56px); 
-            letter-spacing: 12px; color: var(--accent); text-transform: uppercase; 
-            margin-bottom: 8px; text-shadow: 0 0 30px rgba(255, 193, 7, 0.2);
-        }
+        .hero { padding: 140px 20px 60px; text-align: center; animation: slideIn 1s cubic-bezier(0.22, 1, 0.36, 1); }
+        #siteLogo { max-width: 140px; margin-bottom: 25px; filter: drop-shadow(0 0 25px var(--accent)); }
+        .hero h1 { font-family: 'Orbitron'; font-size: clamp(28px, 6vw, 52px); letter-spacing: 10px; color: var(--accent); text-transform: uppercase; margin-bottom: 8px; }
 
-        /* Member Grid & Cards */
-        .member-grid { 
-            display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); 
-            gap: 25px; padding: 0 8% 100px; max-width: 1440px; margin: 0 auto; 
-            z-index: 100; position: relative; 
-        }
-        .member-card { 
-            background: var(--card-bg); border: 1px solid var(--border); 
-            border-radius: 20px; padding: 24px; display: flex; align-items: center; 
-            gap: 20px; transition: var(--transition); backdrop-filter: blur(12px); 
-        }
-        .member-card:hover { 
-            border-color: var(--accent); transform: scale(1.03); 
-            background: rgba(30, 30, 35, 0.9); box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-        }
-        .avatar { width: 75px; height: 75px; border-radius: 15px; object-fit: cover; border: 2px solid rgba(255,255,255,0.1); }
-        .rank-tag { 
-            font-family: 'Orbitron'; font-size: 9px; font-weight: 800; 
-            padding: 5px 14px; border-radius: 6px; color: #000; 
-            letter-spacing: 1px; margin-top: 8px; display: inline-block; 
-        }
+        .member-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 20px; padding: 0 8% 100px; max-width: 1440px; margin: 0 auto; z-index: 100; position: relative; }
+        .member-card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 16px; padding: 20px; display: flex; align-items: center; gap: 18px; transition: var(--transition); backdrop-filter: blur(10px); animation: slideIn 0.5s ease backwards; }
+        .member-card:hover { border-color: var(--accent); transform: translateY(-5px); background: rgba(25, 25, 28, 0.98); }
+        .avatar { width: 70px; height: 70px; border-radius: 12px; object-fit: cover; border: 2px solid rgba(255,255,255,0.05); }
+        .rank-tag { font-family: 'Orbitron'; font-size: 9px; font-weight: 800; padding: 4px 12px; border-radius: 5px; color: #000; letter-spacing: 1px; margin-top: 6px; display: inline-block; }
 
-        /* Admin & UI Components */
-        .admin-panel { display: none; position: fixed; inset: 0; background: rgba(12, 13, 15, 0.98); z-index: 9999; overflow-y: auto; padding: 40px 20px; backdrop-filter: blur(20px); }
-        .admin-card { background: var(--admin-card); padding: 30px; border-radius: 24px; border: 1px solid var(--border); }
+        /* Admin Styles */
+        .admin-panel { display: none; position: fixed; inset: 0; background: #0c0d0f; z-index: 9999; overflow-y: auto; padding: 40px 20px; }
+        .admin-container { max-width: 1200px; margin: 0 auto; }
+        .admin-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 40px; padding-bottom: 20px; border-bottom: 1px solid #222; }
+        .admin-grid { display: grid; grid-template-columns: repeat(12, 1fr); gap: 24px; }
+        .admin-card { background: var(--admin-card); padding: 28px; border-radius: 20px; border: 1px solid var(--border); }
         
-        input, select { 
-            width: 100%; padding: 16px; background: var(--input-bg); 
-            border: 1px solid #2d2f34; color: #fff; border-radius: 12px; 
-            margin-bottom: 20px; font-size: 14px; transition: var(--transition);
-        }
-        input:focus { border-color: var(--accent); box-shadow: 0 0 10px rgba(255, 193, 7, 0.1); outline: none; }
-        
-        #notification-container { position: fixed; top: 30px; right: 30px; z-index: 10000; }
-        .notify { 
-            background: var(--accent); color: #000; border-radius: 12px; 
-            padding: 16px 28px; font-weight: 700; font-size: 13px; 
-            display: flex; align-items: center; gap: 12px; margin-top: 12px; 
-            box-shadow: 0 10px 25px rgba(0,0,0,0.3); animation: globalFadeIn 0.4s ease;
-        }
+        .col-4 { grid-column: span 4; }
+        .col-8 { grid-column: span 8; }
+        .col-12 { grid-column: span 12; }
 
-        .switch { position: relative; display: inline-block; width: 50px; height: 26px; }
+        label { display: block; font-family: 'Orbitron'; font-size: 10px; color: var(--accent); margin-bottom: 8px; letter-spacing: 1px; }
+        input, select { width: 100%; padding: 14px; background: var(--input-bg); border: 1px solid #2d2f34; color: #fff; border-radius: 10px; margin-bottom: 20px; font-size: 14px; }
+        input:focus { border-color: var(--accent); outline: none; }
+        
+        .btn-save { width: 100%; padding: 14px; border: none; border-radius: 10px; cursor: pointer; font-family: 'Orbitron'; font-weight: 700; transition: var(--transition); background: var(--accent); color: #000; }
+        .admin-item-row { background: #111214; padding: 15px 20px; border-radius: 12px; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center; border: 1px solid #222; }
+        .delete-btn { color: var(--danger); cursor: pointer; padding: 8px; }
+
+        #notification-container { position: fixed; bottom: 30px; left: 30px; z-index: 10000; }
+        .notify { background: var(--accent); color: #000; border-radius: 8px; padding: 14px 24px; font-weight: 600; font-size: 13px; display: flex; align-items: center; gap: 12px; margin-top: 10px; animation: slideIn 0.3s ease; }
+
+        .switch { position: relative; display: inline-block; width: 50px; height: 24px; margin-bottom: 15px; }
         .switch input { opacity: 0; width: 0; height: 0; }
         .slider { position: absolute; cursor: pointer; inset: 0; background-color: #333; transition: .4s; border-radius: 34px; }
-        .slider:before { position: absolute; content: ""; height: 18px; width: 18px; left: 4px; bottom: 4px; background-color: white; transition: .4s; border-radius: 50%; }
+        .slider:before { position: absolute; content: ""; height: 18px; width: 18px; left: 3px; bottom: 3px; background-color: white; transition: .4s; border-radius: 50%; }
         input:checked + .slider { background-color: var(--success); }
-        input:checked + .slider:before { transform: translateX(24px); }
+        input:checked + .slider:before { transform: translateX(26px); }
 
-        @media (max-width: 768px) { .member-grid { padding: 0 20px 100px; } .top-nav { padding: 15px 20px; } }
+        @media (max-width: 992px) { .col-4, .col-8 { grid-column: span 12; } }
     </style>
 </head>
 <body>
@@ -130,51 +101,107 @@
     <div id="notification-container"></div>
     <div id="yt-player-container" style="display:none; visibility: hidden;"><div id="player"></div></div>
 
-    <div id="loginModal" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.85); z-index:10000; align-items:center; justify-content:center; backdrop-filter:blur(15px);">
-        <div class="admin-card" style="width:90%; max-width:400px; animation: globalFadeIn 0.5s ease;">
-            <h2 style="font-family:'Orbitron'; text-align:center; color:var(--accent); margin-bottom:30px; letter-spacing: 2px;">AUTHENTICATION</h2>
-            <label style="font-size: 10px; font-family: 'Orbitron'; color: var(--accent);">IDENTITY</label>
-            <input type="text" id="loginUser" placeholder="Enter Username">
-            <label style="font-size: 10px; font-family: 'Orbitron'; color: var(--accent);">SECURITY KEY</label>
-            <input type="password" id="loginPass" placeholder="••••••••">
-            <button class="config-btn" style="width:100%; padding: 15px;" onclick="attemptLogin()">ACCESS SYSTEM</button>
-            <button style="width:100%; background:none; border:none; color:#777; margin-top:15px; cursor:pointer; font-size: 12px;" onclick="closeModal('loginModal')">BACK TO TERMINAL</button>
+    <div id="loginModal" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.9); z-index:10000; align-items:center; justify-content:center; backdrop-filter:blur(10px);">
+        <div class="admin-card" style="width:100%; max-width:400px;">
+            <h2 style="font-family:'Orbitron'; text-align:center; color:var(--accent); margin-bottom:30px;">AUTHENTICATION</h2>
+            <label>IDENTITY</label><input type="text" id="loginUser">
+            <label>SECURITY KEY</label><input type="password" id="loginPass">
+            <button class="btn-save" onclick="attemptLogin()">ACCESS SYSTEM</button>
+            <button style="width:100%; background:none; border:none; color:#555; margin-top:15px; cursor:pointer;" onclick="closeModal('loginModal')">CANCEL</button>
         </div>
     </div>
 
     <nav class="top-nav">
-        <div style="font-family:'Orbitron'; font-size:11px; letter-spacing:2px; font-weight: 700;">
-            <i class="fa-solid fa-signal" style="color:var(--accent); margin-right: 8px;"></i> STATUS: <span id="countNum" style="color: var(--accent)">0</span> ONLINE
+        <div style="font-family:'Orbitron'; font-size:11px; letter-spacing:2px;">
+            <i class="fa-solid fa-users" style="color:var(--accent)"></i> ACTIVE: <span id="countNum">0</span>
         </div>
-        <button class="config-btn" onclick="openModal('loginModal')"><i class="fa-solid fa-shield-halved"></i> COMMAND</button>
+        <button class="config-btn" onclick="openModal('loginModal')"><i class="fa-solid fa-lock"></i> SYSTEM</button>
     </nav>
 
     <header class="hero">
         <img src="" id="siteLogo">
-        <h1 id="siteNameDisplay">...</h1>
-        <p id="siteDescDisplay" style="font-family:'Orbitron'; font-size:11px; opacity:0.5; letter-spacing:8px; margin-top: 10px;">OPERATIONAL DIRECTORY</p>
+        <h1 id="siteNameDisplay">LOADING...</h1>
+        <p id="siteDescDisplay" style="font-family:'Orbitron'; font-size:11px; opacity:0.6; letter-spacing:6px;">PERSONNEL DIRECTORY</p>
     </header>
 
     <div style="max-width:700px; margin:0 auto 60px; padding:0 20px;">
-        <div style="position: relative;">
-            <i class="fa-solid fa-magnifying-glass" style="position: absolute; left: 20px; top: 18px; opacity: 0.4;"></i>
-            <input type="text" id="memberSearch" placeholder="SEARCH PERSONNEL..." oninput="filterMembers()" style="border-radius:50px; padding-left:55px; background:rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.05);">
-        </div>
-        <div id="categoryTabs" style="display:flex; justify-content:center; gap:12px; flex-wrap:wrap;"></div>
+        <input type="text" id="memberSearch" placeholder="FIND COLLEAGUE..." oninput="filterMembers()" style="border-radius:50px; padding-left:30px; background:rgba(255,255,255,0.03);">
+        <div id="categoryTabs" style="display:flex; justify-content:center; gap:10px; flex-wrap:wrap;"></div>
     </div>
 
     <div id="memberList" class="member-grid"></div>
 
     <div id="adminPanel" class="admin-panel">
-        <div style="max-width: 1200px; margin: 0 auto;">
-            <header style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 40px;">
-                <h2 style="font-family:'Orbitron'; color:var(--accent); letter-spacing: 2px;">CENTRAL COMMAND</h2>
-                <button class="config-btn" style="background:#ff4757; color:#fff;" onclick="closeAdminPanel()">EXIT SESSION</button>
-            </header>
-            
-            <div style="color: #666; text-align: center; padding: 100px;">
-                <p>Admin Interface Active. Use the panels to sync database.</p>
+        <div class="admin-container">
+            <header class="admin-header">
+                <div>
+                    <h2 style="font-family:'Orbitron'; color:var(--accent); font-size:24px;">CENTRAL COMMAND</h2>
+                    <p style="font-size:12px; color:#555;">Real-time Database & Site Management</p>
                 </div>
+                <button class="config-btn" style="background:var(--danger); color:#fff;" onclick="closeAdminPanel()">TERMINATE SESSION</button>
+            </header>
+
+            <div class="admin-grid">
+                <div class="admin-card col-4">
+                    <div style="margin-bottom:20px; font-family:'Orbitron'; font-size:14px; color:var(--accent);"><i class="fa-solid fa-sliders"></i> IDENTITY & THEME</div>
+                    <label>SITE NAME (TITLE)</label><input type="text" id="configSiteName">
+                    <label>FAVICON URL</label><input type="text" id="configFavicon">
+                    <label>THEME ACCENT</label><input type="color" id="configThemeColor" style="height:50px; cursor:pointer;">
+                    <label>LOGO URL</label><input type="text" id="configLogoUrl">
+                    <label>WALLPAPER URL</label><input type="text" id="configBgUrl">
+                    <label>ATMOSPHERE</label>
+                    <select id="configWeather">
+                        <option value="none">CLEAR</option>
+                        <option value="snow">SNOWFLAKES (WHITE)</option>
+                        <option value="rain">RAIN SHOWER (SOFT)</option>
+                    </select>
+                    <button class="btn-save" onclick="saveConfig()">SYNC CHANGES</button>
+                </div>
+
+                <div class="col-8" style="display:flex; flex-direction:column; gap:24px;">
+                    <div class="admin-card">
+                        <div style="margin-bottom:20px; font-family:'Orbitron'; font-size:14px; color:var(--accent);"><i class="fa-solid fa-tags"></i> ROLES</div>
+                        <div style="display:flex; gap:15px;">
+                            <input type="text" id="newRoleName" placeholder="ROLE NAME" style="margin-bottom:0;">
+                            <input type="color" id="newRoleColor" value="#ffc107" style="width:80px; margin-bottom:0;">
+                            <button class="config-btn" onclick="addRole()">ADD</button>
+                        </div>
+                        <div id="roleListContainer" style="margin-top:20px; display:grid; grid-template-columns:1fr 1fr; gap:10px;"></div>
+                    </div>
+
+                    <div class="admin-card">
+                        <div style="margin-bottom:20px; font-family:'Orbitron'; font-size:14px; color:var(--accent);"><i class="fa-solid fa-music"></i> AUDIO & AUTO-SYSTEM</div>
+                        <div style="display: flex; align-items: center; gap: 15px;">
+                            <label class="switch">
+                                <input type="checkbox" id="musicAutoToggle">
+                                <span class="slider"></span>
+                            </label>
+                            <span style="font-size: 11px; font-family: 'Orbitron';">ENABLE AUTOPLAY ON ENTRY</span>
+                        </div>
+                        <div style="display:grid; grid-template-columns: 2fr 1fr 1fr; gap:15px;">
+                            <input type="text" id="musicVidId" placeholder="YOUTUBE ID" style="margin-bottom:0;">
+                            <input type="number" id="musicStart" placeholder="SEC" style="margin-bottom:0;">
+                            <button class="btn-save" onclick="saveMusic()">UPDATE</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="admin-card col-12">
+                    <div style="margin-bottom:20px; font-family:'Orbitron'; font-size:14px; color:var(--accent);"><i class="fa-solid fa-user-plus"></i> PERSONNEL</div>
+                    <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap:20px;">
+                        <div><label>FULL NAME</label><input type="text" id="memName"></div>
+                        <div><label>AVATAR URL</label><input type="text" id="memImg"></div>
+                        <div><label>SOCIAL LINK</label><input type="text" id="memFb"></div>
+                        <div><label>ASSIGN ROLE</label><select id="memRole"></select></div>
+                    </div>
+                    <input type="hidden" id="editMemId">
+                    <div style="display:flex; gap:10px;">
+                        <button id="memBtn" class="btn-save" style="flex:3;" onclick="saveMember()">DEPLOY PERSONNEL</button>
+                        <button class="btn-save" style="flex:1; background:#333; color:#fff;" onclick="clearMemForm()">RESET</button>
+                    </div>
+                    <div id="adminMemberList" style="margin-top:30px; display:grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap:12px;"></div>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -184,8 +211,19 @@
         const db = firebase.database();
 
         let player, currentRoles = {}, currentMembers = {}, activeTab = 'all', weatherType = 'none';
+        let isAutoPlayEnabled = true;
 
-        // --- Auth & Navigation ---
+        // --- Auto Start System ---
+        window.addEventListener('DOMContentLoaded', () => {
+            // โหลดระบบอัตโนมัติทันที
+            setTimeout(() => {
+                if(player && isAutoPlayEnabled) {
+                    player.playVideo();
+                }
+            }, 1500); 
+        });
+
+        // --- Auth & Modals ---
         function openModal(id) { document.getElementById(id).style.display = 'flex'; }
         function closeModal(id) { document.getElementById(id).style.display = 'none'; }
         
@@ -194,105 +232,64 @@
                 closeModal('loginModal'); 
                 document.getElementById('adminPanel').style.display = 'block';
                 document.body.style.overflow = 'hidden';
-            } else { showNotify("ACCESS DENIED"); }
+            } else showNotify("UNAUTHORIZED ACCESS");
         }
         function closeAdminPanel() { document.getElementById('adminPanel').style.display = 'none'; document.body.style.overflow = 'auto'; }
 
-        // --- Real-time Config Sync ---
+        // --- Config Sync ---
         db.ref('config').on('value', snap => {
             const d = snap.val() || {};
-            document.title = d.name || 'GHETTOTROPHY';
-            document.getElementById('siteNameDisplay').innerText = d.name || 'GHETTOTROPHY';
+            const siteTitle = d.name || 'GHETTOTROPHY';
+            
+            document.title = siteTitle;
+            document.getElementById('siteNameDisplay').innerText = siteTitle;
             document.getElementById('favicon').href = d.favicon || '';
             document.getElementById('siteLogo').src = d.logo || '';
             
             if(d.bgUrl) document.body.style.backgroundImage = `url('${d.bgUrl}')`;
             if(d.themeColor) document.documentElement.style.setProperty('--accent', d.themeColor);
             
+            document.getElementById('configSiteName').value = d.name || '';
+            document.getElementById('configFavicon').value = d.favicon || '';
+            document.getElementById('configThemeColor').value = d.themeColor || '#ffc107';
+            document.getElementById('configLogoUrl').value = d.logo || '';
+            document.getElementById('configBgUrl').value = d.bgUrl || '';
+            document.getElementById('configWeather').value = d.weather || 'none';
+
             weatherType = d.weather || 'none'; 
             initWeather();
         });
 
-        // --- Database Logic ---
-        db.ref('roles').on('value', snap => {
-            currentRoles = snap.val() || {};
-            renderTabs(); filterMembers();
-        });
-
-        db.ref('members').on('value', snap => {
-            currentMembers = snap.val() || {};
-            document.getElementById('countNum').innerText = Object.keys(currentMembers).length;
-            filterMembers();
-        });
-
-        // --- YouTube & Autoplay (Silent) ---
-        function onYouTubeIframeAPIReady() {
-            db.ref('music').on('value', snap => {
-                const m = snap.val();
-                if(!m || !m.id) return;
-                if(!player) {
-                    player = new YT.Player('player', {
-                        height: '0', width: '0', videoId: m.id,
-                        playerVars: { 'autoplay': 1, 'controls': 0, 'start': m.start || 0 },
-                        events: { 'onReady': e => { e.target.setVolume(50); e.target.playVideo(); } }
-                    });
-                } else {
-                    player.loadVideoById({ videoId: m.id, startSeconds: m.start || 0 });
-                }
-            });
+        function saveConfig() {
+            const data = {
+                name: document.getElementById('configSiteName').value,
+                favicon: document.getElementById('configFavicon').value,
+                themeColor: document.getElementById('configThemeColor').value,
+                logo: document.getElementById('configLogoUrl').value,
+                bgUrl: document.getElementById('configBgUrl').value,
+                weather: document.getElementById('configWeather').value
+            };
+            db.ref('config').update(data).then(() => showNotify("IDENTITY SYNCHRONIZED"));
         }
 
-        // --- UI Utils ---
-        function filterMembers() {
-            const term = document.getElementById('memberSearch').value.toLowerCase();
-            const grid = document.getElementById('memberList');
-            let html = '';
-            Object.keys(currentMembers).forEach(id => {
-                const m = currentMembers[id];
-                const role = currentRoles[m.roleId] || { name: 'MEMBER', color: '#888' };
-                if(m.name.toLowerCase().includes(term) && (activeTab === 'all' || m.roleId === activeTab)) {
-                    html += `<div class="member-card">
-                        <img src="${m.img || 'https://i.imgur.com/6VBx3io.png'}" class="avatar">
-                        <div><div style="font-weight:600; font-size: 15px;">${m.name}</div><span class="rank-tag" style="background:${role.color}">${role.name}</span></div>
-                        <a href="${m.fb}" target="_blank" style="margin-left:auto; font-size:24px; color:#1877f2; transition: 0.3s;"><i class="fa-brands fa-facebook"></i></a>
-                    </div>`;
-                }
-            });
-            grid.innerHTML = html || '<p style="grid-column:1/-1; text-align:center; opacity:0.3; padding:100px; font-family: Orbitron;">NO PERSONNEL FOUND</p>';
-        }
-
-        function renderTabs() {
-            const container = document.getElementById('categoryTabs');
-            let html = `<button class="config-btn" style="background:${activeTab === 'all' ? 'var(--accent)' : 'rgba(255,255,255,0.05)'}; color:${activeTab === 'all' ? '#000' : '#888'}" onclick="setActiveTab('all')">ALL</button>`;
-            Object.keys(currentRoles).forEach(id => {
-                const active = activeTab === id;
-                html += `<button class="config-btn" style="background:${active ? 'var(--accent)' : 'rgba(255,255,255,0.05)'}; color:${active ? '#000' : '#888'}" onclick="setActiveTab('${id}')">${currentRoles[id].name}</button>`;
-            });
-            container.innerHTML = html;
-        }
-
-        function setActiveTab(id) { activeTab = id; renderTabs(); filterMembers(); }
-
-        function showNotify(msg) {
-            const t = document.createElement('div'); t.className = 'notify';
-            t.innerHTML = `<i class="fa-solid fa-circle-check"></i> ${msg}`;
-            document.getElementById('notification-container').appendChild(t);
-            setTimeout(() => { t.style.opacity = '0'; setTimeout(() => t.remove(), 500); }, 3000);
-        }
-
-        // --- Weather Engine (Optimized) ---
+        // --- Weather Engine ---
         const canvas = document.getElementById('weather-canvas'), ctx = canvas.getContext('2d');
         let particles = [];
+        
         function initWeather() {
             canvas.width = window.innerWidth; canvas.height = window.innerHeight;
-            particles = []; if(weatherType === 'none') return;
-            let count = weatherType === 'rain' ? 100 : 60;
+            particles = []; 
+            if(weatherType === 'none') return;
+            
+            let count = weatherType === 'rain' ? 150 : 80;
             for(let i=0; i<count; i++) {
                 particles.push({
-                    x: Math.random() * canvas.width, y: Math.random() * canvas.height,
-                    v: weatherType === 'rain' ? (Math.random() * 4 + 4) : (Math.random() * 0.8 + 0.4),
-                    size: weatherType === 'rain' ? 1 : (Math.random() * 2 + 1),
-                    opacity: Math.random() * 0.4 + 0.1, wind: Math.random() * 0.4 - 0.2
+                    x: Math.random() * canvas.width,
+                    y: Math.random() * canvas.height,
+                    v: weatherType === 'rain' ? (Math.random() * 5 + 5) : (Math.random() * 1 + 0.5),
+                    size: weatherType === 'rain' ? 1 : (Math.random() * 3 + 1),
+                    opacity: Math.random() * 0.5 + 0.2,
+                    wind: Math.random() * 0.5 - 0.25
                 });
             }
             drawWeather();
@@ -305,13 +302,145 @@
             particles.forEach(p => {
                 ctx.globalAlpha = p.opacity;
                 ctx.beginPath();
-                if(weatherType === 'rain') { ctx.rect(p.x, p.y, p.size, p.size * 12); }
-                else { ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2); }
+                if(weatherType === 'rain') {
+                    ctx.rect(p.x, p.y, p.size, p.size * 10);
+                } else {
+                    ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+                }
                 ctx.fill();
-                p.y += p.v; p.x += p.wind;
+                p.y += p.v;
+                p.x += p.wind;
                 if(p.y > canvas.height) { p.y = -20; p.x = Math.random() * canvas.width; }
             });
             requestAnimationFrame(drawWeather);
+        }
+
+        // --- Database Logic ---
+        db.ref('roles').on('value', snap => {
+            currentRoles = snap.val() || {};
+            let opt = '<option value="">SELECT ROLE</option>', list = '';
+            Object.keys(currentRoles).forEach(id => {
+                opt += `<option value="${id}">${currentRoles[id].name}</option>`;
+                list += `<div class="admin-item-row"><span style="color:${currentRoles[id].color}">${currentRoles[id].name}</span><i class="fa-solid fa-trash-can delete-btn" onclick="db.ref('roles').child('${id}').remove()"></i></div>`;
+            });
+            document.getElementById('memRole').innerHTML = opt;
+            document.getElementById('roleListContainer').innerHTML = list;
+            renderTabs(); filterMembers();
+        });
+
+        db.ref('members').on('value', snap => {
+            currentMembers = snap.val() || {};
+            document.getElementById('countNum').innerText = Object.keys(currentMembers).length;
+            let adminList = '';
+            Object.keys(currentMembers).forEach(id => {
+                const m = currentMembers[id];
+                adminList += `<div class="admin-item-row"><span>${m.name}</span><div><i class="fa-solid fa-pen-to-square" style="cursor:pointer; margin-right:12px; color:var(--accent)" onclick="editMember('${id}')"></i><i class="fa-solid fa-trash-can delete-btn" onclick="db.ref('members').child('${id}').remove()"></i></div></div>`;
+            });
+            document.getElementById('adminMemberList').innerHTML = adminList;
+            filterMembers();
+        });
+
+        function saveMember() {
+            const id = document.getElementById('editMemId').value;
+            const data = { name: document.getElementById('memName').value, img: document.getElementById('memImg').value, fb: document.getElementById('memFb').value, roleId: document.getElementById('memRole').value };
+            if(!data.name || !data.roleId) return showNotify("DATA INCOMPLETE");
+            const ref = id ? db.ref('members').child(id) : db.ref('members').push();
+            ref.set(data).then(() => { showNotify("REGISTRY UPDATED"); clearMemForm(); });
+        }
+
+        function editMember(id) {
+            const m = currentMembers[id];
+            document.getElementById('editMemId').value = id;
+            document.getElementById('memName').value = m.name;
+            document.getElementById('memImg').value = m.img;
+            document.getElementById('memFb').value = m.fb;
+            document.getElementById('memRole').value = m.roleId;
+            document.getElementById('memBtn').innerText = "UPDATE PERSONNEL";
+        }
+
+        function clearMemForm() {
+            document.getElementById('editMemId').value = '';
+            document.getElementById('memName').value = '';
+            document.getElementById('memImg').value = '';
+            document.getElementById('memFb').value = '';
+            document.getElementById('memBtn').innerText = "DEPLOY PERSONNEL";
+        }
+
+        function addRole() {
+            const name = document.getElementById('newRoleName').value.toUpperCase();
+            const color = document.getElementById('newRoleColor').value;
+            if(name) db.ref('roles').push({ name, color }).then(() => { document.getElementById('newRoleName').value = ''; showNotify("ROLE ARCHIVED"); });
+        }
+
+        function saveMusic() {
+            const data = { 
+                id: document.getElementById('musicVidId').value, 
+                start: document.getElementById('musicStart').value,
+                auto: document.getElementById('musicAutoToggle').checked
+            };
+            db.ref('music').set(data).then(() => showNotify("AUDIO & SYSTEM UPDATED"));
+        }
+
+        // --- Music Player ---
+        function onYouTubeIframeAPIReady() {
+            db.ref('music').on('value', snap => {
+                const m = snap.val();
+                if(!m || !m.id) return;
+                isAutoPlayEnabled = m.auto !== undefined ? m.auto : true;
+                document.getElementById('musicAutoToggle').checked = isAutoPlayEnabled;
+                document.getElementById('musicVidId').value = m.id;
+                document.getElementById('musicStart').value = m.start || 0;
+
+                if(!player) {
+                    player = new YT.Player('player', {
+                        height: '0', width: '0', videoId: m.id,
+                        playerVars: { 'autoplay': isAutoPlayEnabled ? 1 : 0, 'controls': 0, 'start': m.start || 0 },
+                        events: { 'onReady': e => { if(isAutoPlayEnabled) e.target.playVideo(); e.target.setVolume(50); } }
+                    });
+                } else {
+                    player.loadVideoById({ videoId: m.id, startSeconds: m.start || 0 });
+                }
+            });
+        }
+
+        // --- UI Utils ---
+        function filterMembers() {
+            const term = document.getElementById('memberSearch').value.toLowerCase();
+            const grid = document.getElementById('memberList');
+            let html = '';
+            let delay = 0;
+            Object.keys(currentMembers).forEach(id => {
+                const m = currentMembers[id];
+                const role = currentRoles[m.roleId] || { name: 'MEMBER', color: '#888' };
+                if(m.name.toLowerCase().includes(term) && (activeTab === 'all' || m.roleId === activeTab)) {
+                    html += `<div class="member-card" style="animation-delay: ${delay}s">
+                        <img src="${m.img || 'https://i.imgur.com/6VBx3io.png'}" class="avatar">
+                        <div><div style="font-weight:600;">${m.name}</div><span class="rank-tag" style="background:${role.color}">${role.name}</span></div>
+                        <a href="${m.fb}" target="_blank" style="margin-left:auto; font-size:22px; color:#1877f2;"><i class="fa-brands fa-facebook"></i></a>
+                    </div>`;
+                    delay += 0.05;
+                }
+            });
+            grid.innerHTML = html || '<p style="grid-column:1/-1; text-align:center; opacity:0.3; padding:50px;">NO DATA FOUND</p>';
+        }
+
+        function renderTabs() {
+            const container = document.getElementById('categoryTabs');
+            let html = `<button class="config-btn" style="background:${activeTab === 'all' ? 'var(--accent)' : '#222'}; color:${activeTab === 'all' ? '#000' : '#888'}" onclick="setActiveTab('all')">ALL</button>`;
+            Object.keys(currentRoles).forEach(id => {
+                const active = activeTab === id;
+                html += `<button class="config-btn" style="background:${active ? 'var(--accent)' : '#222'}; color:${active ? '#000' : '#888'}" onclick="setActiveTab('${id}')">${currentRoles[id].name}</button>`;
+            });
+            container.innerHTML = html;
+        }
+
+        function setActiveTab(id) { activeTab = id; renderTabs(); filterMembers(); }
+
+        function showNotify(msg) {
+            const t = document.createElement('div'); t.className = 'notify';
+            t.innerHTML = `<i class="fa-solid fa-circle-check"></i> ${msg}`;
+            document.getElementById('notification-container').appendChild(t);
+            setTimeout(() => t.remove(), 3000);
         }
 
         window.addEventListener('resize', () => { canvas.width = window.innerWidth; canvas.height = window.innerHeight; });
